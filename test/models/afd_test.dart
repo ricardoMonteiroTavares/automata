@@ -1,8 +1,8 @@
-import 'package:automata/models/afd.dart';
+import 'package:automata/models/dfa.dart';
 import 'package:test/test.dart';
 
 void main() {
-  AFD obj = AFD();
+  DFA obj = DFA();
   test('Criar o objeto AFD', () {
     expect(obj.initialState, "");
     expect(obj.states, []);
@@ -34,7 +34,11 @@ void main() {
   });
 
   test('Modificar a tabela de transações', () {
-    obj.tableTransactions = {"q0": {"0": "q1"}};
-    expect(obj.tableTransactions, {"q0": {"0": "q1"}});
+    obj.tableTransactions = {
+      "q0": {"0": "q1"}
+    };
+    expect(obj.tableTransactions, {
+      "q0": {"0": "q1"}
+    });
   });
 }

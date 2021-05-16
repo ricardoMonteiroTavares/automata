@@ -1,5 +1,5 @@
 /**
- * Objeto que representa um Autômato Finito Determinístico.
+ * Objeto que representa um Autômato Finito Determinístico (DFA).
  * 
  * Definição:
  * Um Autômato Finito Determinístico A é uma 5-tuple (ou quíntupla), (Q, Σ, δ, q0, F) consistindo de:
@@ -10,7 +10,7 @@
     um estado inicial (q0 ∈ Q) e
     um conjunto de estados de aceitação (F ⊆ Q)
  */
-class AFD {
+class DFA {
   List<String> _q = [];
   List<String> _sigma = [];
   String _q0 = "";
