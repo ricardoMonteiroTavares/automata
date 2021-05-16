@@ -1,3 +1,15 @@
+/**
+ * Objeto que representa um Autômato Finito Determinístico.
+ * 
+ * Definição:
+ * Um Autômato Finito Determinístico A é uma 5-tuple (ou quíntupla), (Q, Σ, δ, q0, F) consistindo de:
+
+    um conjunto finito de símbolos de entrada chamado Alfabeto (Σ)
+    um conjunto finito de estados (Q)
+    uma função de transição (δ : Q × Σ → Q)
+    um estado inicial (q0 ∈ Q) e
+    um conjunto de estados de aceitação (F ⊆ Q)
+ */
 class AFD {
   List<String> _q = [];
   List<String> _sigma = [];
