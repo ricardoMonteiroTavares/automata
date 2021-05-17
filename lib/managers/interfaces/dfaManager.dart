@@ -62,7 +62,11 @@ abstract class DFAManager {
   /// caso o DFA não tenha sido criado [NotFoundAutomataException].
   void removeFinalState(String state);
 
-  /// Verifico se existe alguma DFA no manager
+  /// Verifico se não existe alguma DFA no manager
   @protected
   bool notExistDFA();
+
+  /// Verifico se existe um estado no DFA
+  @protected
+  bool existState(String state);
 }
