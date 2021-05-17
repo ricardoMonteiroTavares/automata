@@ -1,4 +1,3 @@
-import 'package:automata/exceptions/notFoundFinalStateException.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/models/dfa.dart';
 import 'package:automata/models/transaction.dart';
