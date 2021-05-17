@@ -1,5 +1,7 @@
 import 'package:automata/enums/target.dart';
 
+/// Objeto que armazena os dados necessários para realizar a execução de validação
+/// da entrada [input] com o autômato
 class UnitTest {
   late String _input;
   late bool _debug;
