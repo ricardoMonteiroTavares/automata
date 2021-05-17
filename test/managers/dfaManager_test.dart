@@ -98,10 +98,27 @@ void main() {
     expect(obj.dfa!.finalStates.length, 0);
   });
 
-  test('Remover um estado que tem transações na tabela de transações e que é estado inicial', () {
+  test(
+      'Remover um estado que tem transações na tabela de transações e que é estado inicial',
+      () {
     obj.addState("q1");
     Transaction t = Transaction(from: "q0", to: "q1", parameter: "0");
     obj.addTransaction(t);
+    obj.removeState("q0");
+
+    expect(obj.dfa!.states.length, 1);
+    expect(obj.dfa!.states, ["q1"]);
+    expect(obj.dfa!.initialState, "");
+    expect(obj.dfa!.transactions.length, 0);
+    expect(obj.dfa!.tableTransactions, {});
+  });
+
+  test('Remover um estado que tem várias transações na tabela de transações',
+      () {
+    obj.addState("q0");
+    Transaction t = Transaction(from: "q0", to: "q1", parameter: "0");
+    obj.addTransaction(t);
+    t = Transaction(from: "q1", to: "q0", parameter: "1");
     obj.removeState("q0");
 
     expect(obj.dfa!.states.length, 1);
