@@ -1,9 +1,10 @@
-import 'package:automata/models/dfa.dart';
+import 'package:automata/managers/implementations/dfaManagerImpl.dart';
 import 'package:automata/models/transaction.dart';
+import 'package:flutter/widgets.dart';
 
 /// Classe que manipula um Autômato Finito Determinístico (DFA).
 abstract class DFAManager {
-  DFA? _dfa;
+  factory DFAManager() = DFAManagerImpl;
 
   /// Gero um novo DFA
   void newDFA();
