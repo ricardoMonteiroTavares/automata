@@ -1,4 +1,5 @@
 import 'package:automata/managers/implementations/dfaManagerImpl.dart';
+import 'package:automata/models/dfa.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:flutter/widgets.dart';
 
@@ -69,4 +70,7 @@ abstract class DFAManager {
   /// Verifico se existe um estado no DFA
   @protected
   bool existState(String state);
+
+  @visibleForTesting
+  DFA? get dfa;
 }

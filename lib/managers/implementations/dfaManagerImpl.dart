@@ -146,4 +146,7 @@ class DFAManagerImpl implements DFAManager {
 
   @override
   bool existState(String state) => _dfa!.states.indexOf(state) != -1;
+
+  @override
+  DFA? get dfa => _dfa;
 }
