@@ -71,6 +71,20 @@ abstract class DFAManager {
   @protected
   bool existState(String state);
 
+  /// Remove uma ou mais transações no DFA.
+  ///
+  /// Caso apenas o campo from esteja preenchido, significa que esta removendo todas as transações
+  /// que partem ou chegam no estado a ser removido.
+  /// Caso todos os campos estejam preenchidos, signifca que estou removendo uma transação específica
+  /// Lança uma exceção [NotFoundTransactionException] caso a transação específica não exista no DFA.
+  @protected
+  void removeTransactions(String from, [String? to, String? parameter]);
+
+  /// Remove um parâmetro na lista de transações, caso não exista mais nenhuma transação
+  /// que utilize o parâmetro informado [parameter];
+  @protected
+  void removeTransactionsInList(String parameter);
+
   @visibleForTesting
   DFA? get dfa;
 }

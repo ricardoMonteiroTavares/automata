@@ -83,6 +83,13 @@ class DFAManagerImpl implements DFAManager {
     } else if (!existState(state)) {
       throw NotFoundStateException();
     }
+    try {
+      removeFinalState(state);
+    } catch (e) {}
+
+    try {
+      removeTransactions(state);
+    } catch (e) {}
 
     _dfa!.states.remove(state);
 
@@ -99,24 +106,10 @@ class DFAManagerImpl implements DFAManager {
       throw NotFoundStateException();
     }
 
-    if (_dfa!.tableTransactions.containsKey(t.from) &&
-        _dfa!.tableTransactions[t.from]!.containsKey(t.parameter)) {
-      _dfa!.tableTransactions[t.from]!.remove(t.parameter);
-    } else {
-      throw NotFoundTransactionException();
-    }
-
-    if (_dfa!.transactions.indexOf(t.parameter) != -1) {
-      bool flag = false;
-      for (Map<String, String> val in _dfa!.tableTransactions.values) {
-        if (val.containsKey(t.parameter)) {
-          flag = true;
-          break;
-        }
-      }
-      if (!flag) {
-        _dfa!.transactions.remove(t.parameter);
-      }
+    try {
+      removeTransactions(t.from, t.to, t.parameter);
+    } catch (e) {
+      throw e;
     }
   }
 
@@ -149,4 +142,47 @@ class DFAManagerImpl implements DFAManager {
 
   @override
   DFA? get dfa => _dfa;
+
+  @override
+  void removeTransactions(String from, [String? to, String? parameter]) {
+    if (to != null && parameter != null) {
+      if (_dfa!.tableTransactions.containsKey(from) &&
+          _dfa!.tableTransactions[from]!.containsKey(parameter) &&
+          (_dfa!.tableTransactions[from]![parameter]! == to)) {
+        _dfa!.tableTransactions[from]!.remove(parameter);
+      } else {
+        throw NotFoundTransactionException();
+      }
+      removeTransactionsInList(parameter);
+    } else {
+      if (_dfa!.tableTransactions.containsKey(from)) {
+        Map<String, String> mapFrom = _dfa!.tableTransactions[from]!;
+        _dfa!.tableTransactions.remove(from);
+
+        for (Map<String, String> val in _dfa!.tableTransactions.values) {
+            val.removeWhere((key, value) => value == from);
+        }
+
+        for (String key in mapFrom.keys) {
+          removeTransactionsInList(key);
+        }
+      }
+    }
+  }
+
+  @override
+  void removeTransactionsInList(String parameter) {
+    if (_dfa!.transactions.indexOf(parameter) != -1) {
+      bool flag = false;
+      for (Map<String, String> val in _dfa!.tableTransactions.values) {
+        if (val.containsKey(parameter)) {
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        _dfa!.transactions.remove(parameter);
+      }
+    }
+  }
 }
