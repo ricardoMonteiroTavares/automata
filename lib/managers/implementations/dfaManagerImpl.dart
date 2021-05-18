@@ -1,7 +1,10 @@
+import 'package:automata/enums/resultTest.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/models/dfa.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:automata/exceptions/exceptions.dart';
+import 'package:automata/models/unitTest.dart';
+import 'package:automata/services/interfaces/executeUnitTestService.dart';
 
 class DFAManagerImpl implements DFAManager {
   DFA? _dfa;
@@ -159,7 +162,7 @@ class DFAManagerImpl implements DFAManager {
         _dfa!.tableTransactions.remove(from);
 
         for (Map<String, String> val in _dfa!.tableTransactions.values) {
-            val.removeWhere((key, value) => value == from);
+          val.removeWhere((key, value) => value == from);
         }
 
         for (String key in mapFrom.keys) {
@@ -183,5 +186,18 @@ class DFAManagerImpl implements DFAManager {
         _dfa!.transactions.remove(parameter);
       }
     }
+  }
+
+  @override
+  Map<UnitTest, ResultTest> run(List<UnitTest> tests) {
+    late ExecuteUnitTestService exTest;
+
+    try {
+      exTest = ExecuteUnitTestService(_dfa!, tests);
+    } catch (e) {
+      throw e;
+    }
+
+    return exTest.run();
   }
 }

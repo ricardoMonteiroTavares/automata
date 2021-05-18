@@ -1,6 +1,8 @@
+import 'package:automata/enums/resultTest.dart';
 import 'package:automata/managers/implementations/dfaManagerImpl.dart';
 import 'package:automata/models/dfa.dart';
 import 'package:automata/models/transaction.dart';
+import 'package:automata/models/unitTest.dart';
 import 'package:flutter/widgets.dart';
 
 /// Classe que manipula um Autômato Finito Determinístico (DFA).
@@ -62,6 +64,12 @@ abstract class DFAManager {
   /// caso o estado não esteja presente na lista de estados finais [NotFoundFinalStateException] ou
   /// caso o DFA não tenha sido criado [NotFoundAutomataException].
   void removeFinalState(String state);
+
+  /// Executo os testes em cima do DFA criado pelo usuário.
+  ///
+  /// Lança uma exceção [AssertionError] caso falte algum dado necessário no DFA ou se a lista de
+  /// testes [tests] estiver vazio.
+  Map<UnitTest, ResultTest> run(List<UnitTest> tests);
 
   /// Verifico se não existe alguma DFA no manager
   @protected
