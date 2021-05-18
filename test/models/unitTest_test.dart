@@ -3,7 +3,7 @@ import 'package:automata/models/unitTest.dart';
 import 'package:test/test.dart';
 
 void main() {
-  UnitTest obj = UnitTest();
+  UnitTest obj = UnitTest("abc", false, ResultTest.passed);
   test('Criar o objeto UnitTest', () {
     expect(obj, isA<UnitTest>());
   });

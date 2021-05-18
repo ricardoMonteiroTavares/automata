@@ -7,6 +7,12 @@ class UnitTest {
   late bool _debug;
   late ResultTest _target;
 
+  UnitTest(String input, bool debug, ResultTest target) {
+    _input = input;
+    _debug = debug;
+    _target = target;
+  }
+
   String get input => _input;
   bool get debug => _debug;
   ResultTest get target => _target;
