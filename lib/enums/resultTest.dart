@@ -1,1 +1,1 @@
-enum ResultTest { failure, passed }
+enum ResultTest { failure, passed, error }
