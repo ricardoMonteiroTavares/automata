@@ -1,3 +1,4 @@
+import 'package:automata/widgets/stateWidget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -93,13 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            StateWidget(name: "q0")
           ],
         ),
       ),
