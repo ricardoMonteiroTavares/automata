@@ -1,1 +1,0 @@
-enum Target { failure, passed }

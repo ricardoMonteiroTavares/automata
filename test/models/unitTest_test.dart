@@ -1,4 +1,4 @@
-import 'package:automata/enums/target.dart';
+import 'package:automata/enums/resultTest.dart';
 import 'package:automata/models/unitTest.dart';
 import 'package:test/test.dart';
 
@@ -19,7 +19,7 @@ void main() {
   });
 
   test('Modificar o valor do target', () {
-    obj.target = Target.failure;
-    expect(obj.target, Target.failure);
+    obj.target = ResultTest.failure;
+    expect(obj.target, ResultTest.failure);
   });
 }
