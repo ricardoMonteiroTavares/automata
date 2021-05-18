@@ -8,10 +8,12 @@ class ExecuteUnitTestServiceImpl implements ExecuteUnitTestService {
   late List<UnitTest> _tests;
 
   ExecuteUnitTestServiceImpl(DFA dfa, List<UnitTest> tests) {
-    assert(tests.isNotEmpty);
-    assert(dfa.finalStates.isNotEmpty);
-    assert(dfa.initialState != "");
-    assert(dfa.transactions.isNotEmpty);
+    assert(tests.isNotEmpty, "A lista de testes não pode estar vazia");
+    assert(dfa.finalStates.isNotEmpty,
+        "O AFD precisa ter ao menos 1 estado final");
+    assert(dfa.initialState != "", "O AFD deve ter um estado inicial");
+    assert(
+        dfa.transactions.isNotEmpty, "O AFD precisa ter ao menos 1 transição");
     _dfa = dfa;
     _tests = tests;
   }
@@ -24,7 +26,6 @@ class ExecuteUnitTestServiceImpl implements ExecuteUnitTestService {
       ResultTest res = runUnitTest(u);
 
       results.addAll({u: res});
-      
     }
     return results;
   }
