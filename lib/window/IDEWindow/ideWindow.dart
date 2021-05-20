@@ -1,4 +1,5 @@
 import 'package:automata/layout/ideLayoutDelegate.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
@@ -11,20 +12,32 @@ class IDEWindow extends StatefulWidget {
 
 class _IDEWindowState extends State<IDEWindow> {
   final IDEWindowController _controller = IDEWindowController();
+  FocusNode node = FocusNode();
+
+  void keyPressed(RawKeyEvent key) {
+    if (key.logicalKey == LogicalKeyboardKey.delete) {
+      _controller.delete();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).requestFocus(node);
     return GestureDetector(
         onTapDown: (details) {
           _controller.add(details);
         },
         child: Scaffold(
-          body: Observer(
+            body: RawKeyboardListener(
+          autofocus: true,
+          focusNode: node,
+          onKey: keyPressed,
+          child: Observer(
               builder: (_) => CustomMultiChildLayout(
                     delegate:
                         IDELayoutDelegate(positions: _controller.positions),
                     children: _controller.states,
                   )),
-        ));
+        )));
   }
 }

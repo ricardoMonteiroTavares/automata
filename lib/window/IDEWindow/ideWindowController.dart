@@ -11,11 +11,11 @@ class IDEWindowController = _IDEWindowController with _$IDEWindowController;
 
 abstract class _IDEWindowController with Store {
   @observable
-  ObservableList<StateWidget> _states = ObservableList<StateWidget>();
+  ObservableMap<int, StateWidget> _states = ObservableMap<int, StateWidget>();
 
   @computed
   List<LayoutId> get states =>
-      _states.map((e) => LayoutId(id: e.id, child: e)).toList();
+      _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
 
   @observable
   ObservableMap<int, Offset> positions = ObservableMap<int, Offset>();
@@ -38,20 +38,32 @@ abstract class _IDEWindowController with Store {
   }
 
   @action
+  void delete() {
+    if (_selectedState != null) {
+      int id = _selectedState!.widget.id;
+      _states.remove(id);
+      positions.remove(id);
+      _selectedState = null;
+    }
+  }
+
+  @action
   void _addState(TapDownDetails details) {
     int id;
     if (_states.isEmpty) {
       id = 0;
     } else {
-      var obj = _states[_states.length - 1].id;
+      var obj = _states.values.elementAt(_states.length - 1).id;
       id = int.parse(obj.toString()) + 1;
     }
     positions.addAll({id: details.localPosition});
-    _states.add(StateWidget(
-      id: id,
-      name: "q$id",
-      f: _selected,
-    ));
+    _states.addAll({
+      id: StateWidget(
+        id: id,
+        name: "q$id",
+        f: _selected,
+      )
+    });
   }
 
   @action

@@ -20,13 +20,13 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   final _$_statesAtom = Atom(name: '_IDEWindowController._states');
 
   @override
-  ObservableList<StateWidget> get _states {
+  ObservableMap<int, StateWidget> get _states {
     _$_statesAtom.reportRead();
     return super._states;
   }
 
   @override
-  set _states(ObservableList<StateWidget> value) {
+  set _states(ObservableMap<int, StateWidget> value) {
     _$_statesAtom.reportWrite(value, super._states, () {
       super._states = value;
     });
@@ -72,6 +72,17 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
         name: '_IDEWindowController.add');
     try {
       return super.add(details);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void delete() {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController.delete');
+    try {
+      return super.delete();
     } finally {
       _$_IDEWindowControllerActionController.endAction(_$actionInfo);
     }
