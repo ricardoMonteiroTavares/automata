@@ -1,6 +1,5 @@
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 
 import 'ideWindowController.dart';
@@ -17,7 +16,7 @@ class _IDEWindowState extends State<IDEWindow> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTapDown: (details) {
-          _controller.addState(details);
+          _controller.add(details);
         },
         child: Scaffold(
           body: Observer(
