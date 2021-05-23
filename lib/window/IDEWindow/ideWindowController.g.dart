@@ -122,6 +122,17 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   }
 
   @override
+  void _setPosition(int id, Offset pos) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController._setPosition');
+    try {
+      return super._setPosition(id, pos);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 positions: ${positions},

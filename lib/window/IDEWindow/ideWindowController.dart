@@ -61,7 +61,8 @@ abstract class _IDEWindowController with Store {
       id: StateWidget(
         id: id,
         name: "q$id",
-        f: _selected,
+        onSelect: _selected,
+        onDragEnd: _setPosition,
       )
     });
   }
@@ -91,5 +92,10 @@ abstract class _IDEWindowController with Store {
       _selectedState!.updateColor();
     }
     _selectedState = selected;
+  }
+
+  @action
+  void _setPosition(int id, Offset pos) {
+    positions[id] = pos;
   }
 }
