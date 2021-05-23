@@ -65,10 +65,14 @@ class StateWidgetState extends State<StateWidget> {
       height: _size,
       width: _size,
       child: Center(
-        child: Text(
-          widget._name,
-          style: TextStyle(
-              fontFamily: 'Courier New', color: Colors.grey[800], fontSize: 12),
+        child: Material(
+          child: Text(
+            widget._name,
+            style: TextStyle(
+                fontFamily: 'Courier New',
+                color: Colors.grey[800],
+                fontSize: 12),
+          ),
         ),
       ),
       decoration: BoxDecoration(
