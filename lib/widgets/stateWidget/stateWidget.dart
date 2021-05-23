@@ -1,6 +1,8 @@
 import 'package:automata/elements/circle.dart';
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
+import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
@@ -66,27 +68,14 @@ class StateWidgetState extends State<StateWidget> {
   Widget _state(Color color) {
     switch (widget._type) {
       case StateType.normal:
-        return Circle(
-          child: _text(),
-          size: _size,
-          color: _color,
-        );
+        return NormalState(size: _size, child: _text(), color: _color);
+
       case StateType.end:
-        return Circle(
-          size: _size,
-          child: Circle(
-            child: _text(),
-            size: (_size - 10),
-            color: color,
-          ),
-          color: color,
-        );
+        return FinalState(size: _size, child: _text(), color: _color);
+
       case StateType.start:
-        return InitialState(
-          child: _text(),
-          size: _size,
-          color: color,
-        );
+        return InitialState(size: _size, child: _text(), color: color);
+
       default:
         return Container();
     }
