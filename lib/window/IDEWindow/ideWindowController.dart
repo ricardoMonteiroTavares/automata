@@ -29,7 +29,7 @@ abstract class _IDEWindowController with Store {
 
     if (id == -1) {
       if (_selectedState != null) {
-        _selectedState!.updateColor();
+        _selectedState!.unselect();
         _selectedState = null;
       } else {
         _addState(details);
@@ -87,11 +87,12 @@ abstract class _IDEWindowController with Store {
 
   @action
   void _selected(StateWidgetState selected) {
-    selected.updateColor();
-    if (_selectedState != null) {
-      _selectedState!.updateColor();
+    if (_selectedState == null) {
+      _selectedState = selected;
+    } else if (_selectedState != selected) {
+      _selectedState!.unselect();
+      _selectedState = selected;
     }
-    _selectedState = selected;
   }
 
   @action

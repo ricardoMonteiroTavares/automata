@@ -28,25 +28,29 @@ class StateWidgetState extends State<StateWidget> {
 
   Color _color = Colors.black;
 
-  updateColor() {
+  void select() {
     setState(() {
-      if (_color == Colors.black) {
-        _color = Colors.blue;
-      } else {
-        _color = Colors.black;
-      }
+      _color = Colors.blue;
+    });
+
+    widget._onSelect(this);
+  }
+
+  void unselect() {
+    setState(() {
+      _color = Colors.black;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {widget._onSelect(this)},
+      onTap: select,
       child: Draggable(
         child: _circle(_color),
         feedback: _circle(Colors.blue),
         childWhenDragging: Container(),
-        onDragStarted: () => {widget._onSelect(this)},
+        onDragStarted: select,
         onDragEnd: (details) {
           Offset offset = details.offset;
           offset = offset + Offset((_size / 2), (_size / 2));
