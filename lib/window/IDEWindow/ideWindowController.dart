@@ -11,23 +11,24 @@ class IDEWindowController = _IDEWindowController with _$IDEWindowController;
 
 abstract class _IDEWindowController with Store {
   @observable
-  ObservableMap<int, StateWidget> _states = ObservableMap<int, StateWidget>();
+  ObservableMap<String, StateWidget> _states =
+      ObservableMap<String, StateWidget>();
 
   @computed
   List<LayoutId> get states =>
       _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
 
   @observable
-  ObservableMap<int, Offset> positions = ObservableMap<int, Offset>();
+  ObservableMap<String, Offset> positions = ObservableMap<String, Offset>();
 
   @observable
   StateWidgetState? _selectedState;
 
   @action
   void add(TapDownDetails details) {
-    int id = _selectState(details);
+    String id = _selectState(details);
 
-    if (id == -1) {
+    if (id.isEmpty) {
       if (_selectedState != null) {
         _selectedState!.unselect();
         _selectedState = null;
@@ -40,7 +41,7 @@ abstract class _IDEWindowController with Store {
   @action
   void delete() {
     if (_selectedState != null) {
-      int id = _selectedState!.widget.id;
+      String id = _selectedState!.widget.id;
       _states.remove(id);
       positions.remove(id);
       _selectedState = null;
@@ -49,18 +50,17 @@ abstract class _IDEWindowController with Store {
 
   @action
   void _addState(TapDownDetails details) {
-    int id;
+    String id;
     if (_states.isEmpty) {
-      id = 0;
+      id = "q0";
     } else {
       var obj = _states.values.elementAt(_states.length - 1).id;
-      id = int.parse(obj.toString()) + 1;
+      id = "q${int.parse(obj.toString().substring(1)) + 1}";
     }
     positions.addAll({id: details.localPosition});
     _states.addAll({
       id: StateWidget(
         id: id,
-        name: "q$id",
         onSelect: _selected,
         onDragEnd: _setPosition,
       )
@@ -68,11 +68,11 @@ abstract class _IDEWindowController with Store {
   }
 
   @action
-  int _selectState(TapDownDetails details) {
+  String _selectState(TapDownDetails details) {
     Offset click = details.localPosition;
 
-    int id = -1;
-    for (int key in positions.keys) {
+    String id = "";
+    for (String key in positions.keys) {
       Offset statePosition = positions[key]!;
       double distance = (statePosition - click).distance.abs();
 
@@ -96,7 +96,7 @@ abstract class _IDEWindowController with Store {
   }
 
   @action
-  void _setPosition(int id, Offset pos) {
+  void _setPosition(String id, Offset pos) {
     positions[id] = pos;
   }
 }

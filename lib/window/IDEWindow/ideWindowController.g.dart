@@ -20,13 +20,13 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   final _$_statesAtom = Atom(name: '_IDEWindowController._states');
 
   @override
-  ObservableMap<int, StateWidget> get _states {
+  ObservableMap<String, StateWidget> get _states {
     _$_statesAtom.reportRead();
     return super._states;
   }
 
   @override
-  set _states(ObservableMap<int, StateWidget> value) {
+  set _states(ObservableMap<String, StateWidget> value) {
     _$_statesAtom.reportWrite(value, super._states, () {
       super._states = value;
     });
@@ -35,13 +35,13 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   final _$positionsAtom = Atom(name: '_IDEWindowController.positions');
 
   @override
-  ObservableMap<int, Offset> get positions {
+  ObservableMap<String, Offset> get positions {
     _$positionsAtom.reportRead();
     return super.positions;
   }
 
   @override
-  set positions(ObservableMap<int, Offset> value) {
+  set positions(ObservableMap<String, Offset> value) {
     _$positionsAtom.reportWrite(value, super.positions, () {
       super.positions = value;
     });
@@ -100,7 +100,7 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   }
 
   @override
-  int _selectState(TapDownDetails details) {
+  String _selectState(TapDownDetails details) {
     final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
         name: '_IDEWindowController._selectState');
     try {
@@ -122,7 +122,7 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   }
 
   @override
-  void _setPosition(int id, Offset pos) {
+  void _setPosition(String id, Offset pos) {
     final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
         name: '_IDEWindowController._setPosition');
     try {

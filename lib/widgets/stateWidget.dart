@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
   late final Function(StateWidgetState) _onSelect;
-  late final Function(int id, Offset pos) _onDragEnd;
-  late final int _id;
-  late final String _name;
+  late final Function(String id, Offset pos) _onDragEnd;
+  late final String _id;
 
   StateWidget(
-      {required int id,
-      required String name,
+      {required String id,
       required Function(StateWidgetState) onSelect,
-      required Function(int id, Offset pos) onDragEnd}) {
+      required Function(String id, Offset pos) onDragEnd}) {
     _id = id;
-    _name = name;
     _onSelect = onSelect;
     _onDragEnd = onDragEnd;
   }
 
-  int get id => _id;
+  String get id => _id;
 
   @override
   StateWidgetState createState() => StateWidgetState();
@@ -67,7 +64,7 @@ class StateWidgetState extends State<StateWidget> {
       child: Center(
         child: Material(
           child: Text(
-            widget._name,
+            widget._id,
             style: TextStyle(
                 fontFamily: 'Courier New',
                 color: Colors.grey[800],
