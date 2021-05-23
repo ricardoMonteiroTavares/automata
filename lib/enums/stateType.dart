@@ -1,0 +1,1 @@
+enum StateType { end, start, normal }
