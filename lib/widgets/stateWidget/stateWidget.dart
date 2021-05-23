@@ -1,5 +1,6 @@
 import 'package:automata/elements/circle.dart';
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
@@ -78,6 +79,12 @@ class StateWidgetState extends State<StateWidget> {
             size: (_size - 10),
             color: color,
           ),
+          color: color,
+        );
+      case StateType.start:
+        return InitialState(
+          child: _text(),
+          size: _size,
           color: color,
         );
       default:
