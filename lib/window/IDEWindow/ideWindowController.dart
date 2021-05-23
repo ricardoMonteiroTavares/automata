@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:automata/enums/stateType.dart';
 import 'package:automata/widgets/stateWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -61,6 +62,7 @@ abstract class _IDEWindowController with Store {
     _states.addAll({
       id: StateWidget(
         id: id,
+        type: StateType.normal,
         onSelect: _selected,
         onDragEnd: _setPosition,
       )

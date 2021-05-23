@@ -1,17 +1,22 @@
+import 'package:automata/elements/circle.dart';
+import 'package:automata/enums/stateType.dart';
 import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
   late final Function(StateWidgetState) _onSelect;
   late final Function(String id, Offset pos) _onDragEnd;
   late final String _id;
+  late final StateType _type;
 
   StateWidget(
       {required String id,
       required Function(StateWidgetState) onSelect,
-      required Function(String id, Offset pos) onDragEnd}) {
+      required Function(String id, Offset pos) onDragEnd,
+      required StateType type}) {
     _id = id;
     _onSelect = onSelect;
     _onDragEnd = onDragEnd;
+    _type = type;
   }
 
   String get id => _id;
@@ -44,8 +49,8 @@ class StateWidgetState extends State<StateWidget> {
     return GestureDetector(
       onTap: select,
       child: Draggable(
-        child: _circle(_color),
-        feedback: _circle(Colors.blue),
+        child: _state(_color),
+        feedback: _state(Colors.blue),
         childWhenDragging: Container(),
         onDragStarted: select,
         onDragEnd: (details) {
@@ -57,23 +62,36 @@ class StateWidgetState extends State<StateWidget> {
     );
   }
 
-  Container _circle(Color color) {
-    return Container(
-      height: _size,
-      width: _size,
-      child: Center(
-        child: Material(
-          child: Text(
-            widget._id,
-            style: TextStyle(
-                fontFamily: 'Courier New',
-                color: Colors.grey[800],
-                fontSize: 12),
+  Widget _state(Color color) {
+    switch (widget._type) {
+      case StateType.normal:
+        return Circle(
+          child: _text(),
+          size: _size,
+          color: _color,
+        );
+      case StateType.end:
+        return Circle(
+          size: _size,
+          child: Circle(
+            child: _text(),
+            size: (_size - 10),
+            color: color,
           ),
-        ),
+          color: color,
+        );
+      default:
+        return Container();
+    }
+  }
+
+  Material _text() {
+    return Material(
+      child: Text(
+        widget._id,
+        style: TextStyle(
+            fontFamily: 'Courier New', color: Colors.grey[800], fontSize: 12),
       ),
-      decoration: BoxDecoration(
-          shape: BoxShape.circle, border: Border.all(color: color, width: 2.0)),
     );
   }
 }
