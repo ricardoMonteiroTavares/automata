@@ -1,4 +1,5 @@
 import 'package:automata/elements/circle.dart';
+import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
@@ -29,6 +30,9 @@ class StateWidget extends StatefulWidget {
 }
 
 class StateWidgetState extends State<StateWidget> {
+  late final Label _label = Label(
+    label: widget._id,
+  );
   final double _size = 60;
 
   Color _color = Colors.black;
@@ -68,26 +72,16 @@ class StateWidgetState extends State<StateWidget> {
   Widget _state(Color color) {
     switch (widget._type) {
       case StateType.normal:
-        return NormalState(size: _size, child: _text(), color: _color);
+        return NormalState(size: _size, child: _label, color: _color);
 
       case StateType.end:
-        return FinalState(size: _size, child: _text(), color: _color);
+        return FinalState(size: _size, child: _label, color: _color);
 
       case StateType.start:
-        return InitialState(size: _size, child: _text(), color: color);
+        return InitialState(size: _size, child: _label, color: color);
 
       default:
         return Container();
     }
-  }
-
-  Material _text() {
-    return Material(
-      child: Text(
-        widget._id,
-        style: TextStyle(
-            fontFamily: 'Courier New', color: Colors.grey[800], fontSize: 12),
-      ),
-    );
   }
 }
