@@ -1,4 +1,3 @@
-import 'package:automata/elements/circle.dart';
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
@@ -10,17 +9,14 @@ class StateWidget extends StatefulWidget {
   late final Function(StateWidgetState) _onSelect;
   late final Function(String id, Offset pos) _onDragEnd;
   late final String _id;
-  late final StateType _type;
 
   StateWidget(
       {required String id,
       required Function(StateWidgetState) onSelect,
-      required Function(String id, Offset pos) onDragEnd,
-      required StateType type}) {
+      required Function(String id, Offset pos) onDragEnd}) {
     _id = id;
     _onSelect = onSelect;
     _onDragEnd = onDragEnd;
-    _type = type;
   }
 
   String get id => _id;
@@ -36,6 +32,7 @@ class StateWidgetState extends State<StateWidget> {
   final double _size = 60;
 
   Color _color = Colors.black;
+  StateType _type = StateType.normal;
 
   void select() {
     setState(() {
@@ -55,6 +52,7 @@ class StateWidgetState extends State<StateWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: select,
+      onSecondaryTapDown: updateType,
       child: Draggable(
         child: _state(_color),
         feedback: _state(Colors.blue),
@@ -70,7 +68,7 @@ class StateWidgetState extends State<StateWidget> {
   }
 
   Widget _state(Color color) {
-    switch (widget._type) {
+    switch (_type) {
       case StateType.normal:
         return NormalState(size: _size, child: _label, color: _color);
 
@@ -83,5 +81,45 @@ class StateWidgetState extends State<StateWidget> {
       default:
         return Container();
     }
+  }
+
+  Future<void> updateType(TapDownDetails details) async {
+    select();
+    Offset position = details.globalPosition;
+    RelativeRect pos = RelativeRect.fromLTRB(
+        position.dx, position.dy, (position.dx + 30), (position.dy + 90));
+    StateType? newType = await popMenu(pos);
+    if (newType != null) {
+      setState(() {
+        _type = newType;
+      });
+    }
+  }
+
+  Future<StateType?> popMenu(RelativeRect pos) async {
+    return showMenu<StateType>(
+      context: context,
+      position: pos,
+      items: [
+        PopupMenuItem(
+          enabled: (_type != StateType.start),
+          value: StateType.start,
+          height: 30,
+          child: Text("Marcar como estado inicial"),
+        ),
+        PopupMenuItem(
+          enabled: (_type != StateType.end),
+          value: StateType.end,
+          height: 30,
+          child: Text("Marcar como estado final"),
+        ),
+        PopupMenuItem(
+          enabled: (_type != StateType.normal),
+          value: StateType.normal,
+          height: 30,
+          child: Text("Marcar como estado normal"),
+        ),
+      ],
+    );
   }
 }
