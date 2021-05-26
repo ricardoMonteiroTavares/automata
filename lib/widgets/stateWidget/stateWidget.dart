@@ -1,5 +1,6 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
@@ -85,10 +86,11 @@ class StateWidgetState extends State<StateWidget> {
 
   Future<void> updateType(TapDownDetails details) async {
     select();
-    Offset position = details.globalPosition;
-    RelativeRect pos = RelativeRect.fromLTRB(
-        position.dx, position.dy, (position.dx + 30), (position.dy + 90));
-    StateType? newType = await popMenu(pos);
+
+    StateType? newType = await ContextMenuWidget.show(
+        context: context,
+        position: details.globalPosition,
+        items: generateItems());
     if (newType != null) {
       setState(() {
         _type = newType;
@@ -96,30 +98,41 @@ class StateWidgetState extends State<StateWidget> {
     }
   }
 
-  Future<StateType?> popMenu(RelativeRect pos) async {
-    return showMenu<StateType>(
-      context: context,
-      position: pos,
-      items: [
+  List<PopupMenuEntry> generateItems() => [
         PopupMenuItem(
-          enabled: (_type != StateType.start),
-          value: StateType.start,
-          height: 30,
-          child: Text("Marcar como estado inicial"),
-        ),
+            enabled: (_type != StateType.start),
+            value: StateType.start,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado inicial",
+                style: TextStyle(
+                    color: (_type != StateType.start)
+                        ? Colors.black
+                        : Colors.grey),
+              ),
+            )),
         PopupMenuItem(
-          enabled: (_type != StateType.end),
-          value: StateType.end,
-          height: 30,
-          child: Text("Marcar como estado final"),
-        ),
+            enabled: (_type != StateType.end),
+            value: StateType.end,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado final",
+                style: TextStyle(
+                    color:
+                        (_type != StateType.end) ? Colors.black : Colors.grey),
+              ),
+            )),
         PopupMenuItem(
-          enabled: (_type != StateType.normal),
-          value: StateType.normal,
-          height: 30,
-          child: Text("Marcar como estado normal"),
-        ),
-      ],
-    );
-  }
+            enabled: (_type != StateType.normal),
+            value: StateType.normal,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado normal",
+                style: TextStyle(
+                    color: (_type != StateType.normal)
+                        ? Colors.black
+                        : Colors.grey),
+              ),
+            )),
+      ];
 }
