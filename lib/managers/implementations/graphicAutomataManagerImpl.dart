@@ -4,14 +4,29 @@ import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/src/widgets/basic.dart';
+import 'package:mobx/mobx.dart';
 
-class GraphicAutomataManagerImpl implements GraphicAutomataManager {
+part 'graphicAutomataManagerImpl.g.dart';
+
+class GraphicAutomataManagerImpl = _GraphicAutomataManagerImpl
+    with _$GraphicAutomataManagerImpl;
+
+abstract class _GraphicAutomataManagerImpl
+    with Store
+    implements GraphicAutomataManager {
   // Dados
-  Map<String, StateWidget> _states = Map<String, StateWidget>();
-  Map<String, Offset> _positions = Map<String, Offset>();
+  @observable
+  ObservableMap<String, StateWidget> _states =
+      ObservableMap<String, StateWidget>();
+
+  @observable
+  ObservableMap<String, Offset> _positions = ObservableMap<String, Offset>();
+
+  @observable
   StateWidgetState? _selectedState;
 
   @override
+  @action
   void addState(Offset position) {
     String id;
     if (_states.isEmpty) {
@@ -31,6 +46,7 @@ class GraphicAutomataManagerImpl implements GraphicAutomataManager {
   }
 
   @override
+  @action
   void deleteState() {
     if (_selectedState != null) {
       String id = _selectedState!.widget.id;
@@ -41,6 +57,7 @@ class GraphicAutomataManagerImpl implements GraphicAutomataManager {
   }
 
   @override
+  @action
   String getState(Offset position) {
     String id = "";
     for (String key in _positions.keys) {
@@ -57,11 +74,13 @@ class GraphicAutomataManagerImpl implements GraphicAutomataManager {
   }
 
   @override
+  @action
   void setPositionState(String id, Offset newPosition) {
     _positions[id] = newPosition;
   }
 
   @override
+  @action
   void selectState(StateWidgetState state) {
     if (_selectedState == null) {
       _selectedState = state;
@@ -72,10 +91,12 @@ class GraphicAutomataManagerImpl implements GraphicAutomataManager {
   }
 
   @override
+  @computed
   List<LayoutId> get objects =>
       _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
 
   @override
+  @action
   void unselectState() {
     if (_selectedState != null) {
       _selectedState!.unselect();
@@ -84,8 +105,10 @@ class GraphicAutomataManagerImpl implements GraphicAutomataManager {
   }
 
   @override
+  @computed
   bool get containsSelectState => _selectedState != null;
 
   @override
+  @computed
   IDELayoutDelegate get positions => IDELayoutDelegate(positions: _positions);
 }
