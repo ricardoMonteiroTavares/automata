@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:automata/layout/ideLayoutDelegate.dart';
+import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,19 @@ import 'package:mobx/mobx.dart';
 
 part 'graphicAutomataManagerImpl.g.dart';
 
-class GraphicAutomataManagerImpl = _GraphicAutomataManagerImpl
-    with _$GraphicAutomataManagerImpl;
+class GraphicAutomataManagerImpl extends _GraphicAutomataManagerImpl
+    with _$GraphicAutomataManagerImpl {
+  GraphicAutomataManagerImpl() {
+    super._dfaManager = DFAManager();
+    super._dfaManager.newDFA();
+  }
+}
 
 abstract class _GraphicAutomataManagerImpl
     with Store
     implements GraphicAutomataManager {
+  // Automato
+  late DFAManager _dfaManager;
   // Dados
   @observable
   ObservableMap<String, StateWidget> _states =
@@ -43,6 +51,7 @@ abstract class _GraphicAutomataManagerImpl
         onDragEnd: setPositionState,
       )
     });
+    _dfaManager.addState(id);
   }
 
   @override
@@ -52,6 +61,7 @@ abstract class _GraphicAutomataManagerImpl
       String id = _selectedState!.widget.id;
       _states.remove(id);
       _positions.remove(id);
+      _dfaManager.removeState(id);
       _selectedState = null;
     }
   }

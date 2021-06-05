@@ -11,6 +11,7 @@ class DFAManagerImpl implements DFAManager {
 
   @override
   void addFinalState(String state) {
+    print("Executando: DFAManager.addFinalState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if (!existState(state)) {
@@ -24,6 +25,7 @@ class DFAManagerImpl implements DFAManager {
 
   @override
   void addState(String state) {
+    print("Executando: DFAManager.addState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if (existState(state)) {
@@ -31,10 +33,12 @@ class DFAManagerImpl implements DFAManager {
     }
 
     _dfa!.states.add(state);
+    print(_dfa.toString());
   }
 
   @override
   void addTransaction(Transaction t) {
+    print("Executando: DFAManager.addTransaction");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if ((!existState(t.from)) || (!existState(t.to))) {
@@ -56,10 +60,12 @@ class DFAManagerImpl implements DFAManager {
     if (_dfa!.transactions.indexOf(t.parameter) == -1) {
       _dfa!.transactions.add(t.parameter);
     }
+    print(_dfa.toString());
   }
 
   @override
   void newDFA() {
+    print("Executando: DFAManager.newDFA");
     if (notExistDFA()) {
       _dfa = DFA();
     }
@@ -67,6 +73,7 @@ class DFAManagerImpl implements DFAManager {
 
   @override
   void removeFinalState(String state) {
+    print("Executando: DFAManager.removeFinalState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if (!existState(state)) {
@@ -76,10 +83,12 @@ class DFAManagerImpl implements DFAManager {
     }
 
     _dfa!.finalStates.remove(state);
+    print(_dfa.toString());
   }
 
   @override
   void removeState(String state) {
+    print("Executando: DFAManager.removeState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if (!existState(state)) {
@@ -98,10 +107,12 @@ class DFAManagerImpl implements DFAManager {
     if (_dfa!.initialState == state) {
       _dfa!.initialState = "";
     }
+    print(_dfa.toString());
   }
 
   @override
   void removeTransaction(Transaction t) {
+    print("Executando: DFAManager.removeTransaction");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if ((!existState(t.from)) || (!existState(t.to))) {
@@ -113,10 +124,12 @@ class DFAManagerImpl implements DFAManager {
     } catch (e) {
       throw e;
     }
+    print(_dfa.toString());
   }
 
   @override
   void setInitialState(String state) {
+    print("Executando: DFAManager.setInitialState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
     } else if (!existState(state)) {
@@ -124,13 +137,16 @@ class DFAManagerImpl implements DFAManager {
     }
 
     _dfa!.initialState = state;
+    print(_dfa.toString());
   }
 
   @override
   void setTransaction(Transaction before, Transaction after) {
+    print("Executando: DFAManager.setTransaction");
     try {
       removeTransaction(before);
       addTransaction(after);
+      print(_dfa.toString());
     } catch (e) {
       throw e;
     }
