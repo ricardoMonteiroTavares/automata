@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
-import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'graphicAutomataManagerImpl.g.dart';
