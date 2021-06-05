@@ -8,7 +8,7 @@
 ///    - uma função de transição (δ : Q × Σ → Q)
 ///    - um estado inicial (q0 ∈ Q) e
 ///    - um conjunto de estados de aceitação (F ⊆ Q)
-class DFA {
+class DFA extends Object {
   List<String> _q = [];
   List<String> _sigma = [];
   String _q0 = "";
@@ -37,4 +37,9 @@ class DFA {
 
   set tableTransactions(Map<String, Map<String, String>> table) =>
       {_delta = table};
+
+  // Getters
+  @override
+  String toString() =>
+      "Estados: ${_q.toString()}\nEstado Inicial: $_q0\nEstados Finais: ${_f.toString()}\nTransações: ${_delta.toString()}";
 }
