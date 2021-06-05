@@ -34,9 +34,8 @@ class _IDEWindowState extends State<IDEWindow> {
           onKey: keyPressed,
           child: Observer(
               builder: (_) => CustomMultiChildLayout(
-                    delegate:
-                        IDELayoutDelegate(positions: _controller.positions),
-                    children: _controller.states,
+                    delegate: _controller.positions,
+                    children: _controller.objects,
                   )),
         )));
   }

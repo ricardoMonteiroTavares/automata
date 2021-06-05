@@ -9,57 +9,33 @@ part of 'ideWindowController.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$IDEWindowController on _IDEWindowController, Store {
-  Computed<List<LayoutId>>? _$statesComputed;
+  Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
-  List<LayoutId> get states =>
-      (_$statesComputed ??= Computed<List<LayoutId>>(() => super.states,
-              name: '_IDEWindowController.states'))
+  List<LayoutId> get objects =>
+      (_$objectsComputed ??= Computed<List<LayoutId>>(() => super.objects,
+              name: '_IDEWindowController.objects'))
           .value;
-
-  final _$_statesAtom = Atom(name: '_IDEWindowController._states');
+  Computed<IDELayoutDelegate>? _$positionsComputed;
 
   @override
-  ObservableMap<String, StateWidget> get _states {
-    _$_statesAtom.reportRead();
-    return super._states;
+  IDELayoutDelegate get positions => (_$positionsComputed ??=
+          Computed<IDELayoutDelegate>(() => super.positions,
+              name: '_IDEWindowController.positions'))
+      .value;
+
+  final _$_managerAtom = Atom(name: '_IDEWindowController._manager');
+
+  @override
+  GraphicAutomataManager get _manager {
+    _$_managerAtom.reportRead();
+    return super._manager;
   }
 
   @override
-  set _states(ObservableMap<String, StateWidget> value) {
-    _$_statesAtom.reportWrite(value, super._states, () {
-      super._states = value;
-    });
-  }
-
-  final _$positionsAtom = Atom(name: '_IDEWindowController.positions');
-
-  @override
-  ObservableMap<String, Offset> get positions {
-    _$positionsAtom.reportRead();
-    return super.positions;
-  }
-
-  @override
-  set positions(ObservableMap<String, Offset> value) {
-    _$positionsAtom.reportWrite(value, super.positions, () {
-      super.positions = value;
-    });
-  }
-
-  final _$_selectedStateAtom =
-      Atom(name: '_IDEWindowController._selectedState');
-
-  @override
-  StateWidgetState? get _selectedState {
-    _$_selectedStateAtom.reportRead();
-    return super._selectedState;
-  }
-
-  @override
-  set _selectedState(StateWidgetState? value) {
-    _$_selectedStateAtom.reportWrite(value, super._selectedState, () {
-      super._selectedState = value;
+  set _manager(GraphicAutomataManager value) {
+    _$_managerAtom.reportWrite(value, super._manager, () {
+      super._manager = value;
     });
   }
 
@@ -89,54 +65,10 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   }
 
   @override
-  void _addState(TapDownDetails details) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController._addState');
-    try {
-      return super._addState(details);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  String _selectState(TapDownDetails details) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController._selectState');
-    try {
-      return super._selectState(details);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void _selected(StateWidgetState selected) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController._selected');
-    try {
-      return super._selected(selected);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void _setPosition(String id, Offset pos) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController._setPosition');
-    try {
-      return super._setPosition(id, pos);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-positions: ${positions},
-states: ${states}
+objects: ${objects},
+positions: ${positions}
     ''';
   }
 }
