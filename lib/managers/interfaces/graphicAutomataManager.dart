@@ -1,3 +1,4 @@
+import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
@@ -19,6 +20,7 @@ abstract class GraphicAutomataManager {
   /// Removo o estado selecionado
   void unselectState();
 
+  /// Verifico se existe um estado selecionado no manager
   bool get containsSelectState;
 
   /// Removo um estado selecionado
@@ -32,4 +34,10 @@ abstract class GraphicAutomataManager {
 
   /// Comando que busca as posições dos objetos
   IDELayoutDelegate get positions;
+
+  /// Busco o tipo do estado selecionado
+  StateType get selectStateType;
+
+  /// Modifico o tipo do estado selecionado
+  set selectStateType(StateType newType);
 }

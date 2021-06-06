@@ -30,6 +30,13 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
           Computed<IDELayoutDelegate>(() => super.positions,
               name: '_GraphicAutomataManagerImpl.positions'))
       .value;
+  Computed<StateType>? _$selectStateTypeComputed;
+
+  @override
+  StateType get selectStateType => (_$selectStateTypeComputed ??=
+          Computed<StateType>(() => super.selectStateType,
+              name: '_GraphicAutomataManagerImpl.selectStateType'))
+      .value;
 
   final _$_statesAtom = Atom(name: '_GraphicAutomataManagerImpl._states');
 
@@ -151,7 +158,8 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
     return '''
 objects: ${objects},
 containsSelectState: ${containsSelectState},
-positions: ${positions}
+positions: ${positions},
+selectStateType: ${selectStateType}
     ''';
   }
 }

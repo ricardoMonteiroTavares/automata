@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
@@ -121,4 +122,20 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @computed
   IDELayoutDelegate get positions => IDELayoutDelegate(positions: _positions);
+
+  @override
+  @computed
+  StateType get selectStateType =>
+      containsSelectState ? _selectedState!.type : StateType.error;
+
+  @override
+  @computed
+  set selectStateType(StateType newType) {
+    assert(containsSelectState,
+        "Não existe nenhum estado selecionado para trocar o tipo do estado");
+    assert(
+        newType != StateType.error, "O novo tipo do estado não deve ser error");
+    
+    _selectedState!.type = newType;
+  }
 }
