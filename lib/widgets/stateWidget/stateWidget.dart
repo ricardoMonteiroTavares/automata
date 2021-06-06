@@ -49,6 +49,15 @@ class StateWidgetState extends State<StateWidget> {
     });
   }
 
+  StateType get type => _type;
+
+  set type(StateType newType){
+    setState(() {
+      _type = newType;
+    });
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
