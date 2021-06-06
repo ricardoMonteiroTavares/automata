@@ -72,13 +72,13 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
       Atom(name: '_GraphicAutomataManagerImpl._selectedState');
 
   @override
-  StateWidgetState? get _selectedState {
+  StateWidget? get _selectedState {
     _$_selectedStateAtom.reportRead();
     return super._selectedState;
   }
 
   @override
-  set _selectedState(StateWidgetState? value) {
+  set _selectedState(StateWidget? value) {
     _$_selectedStateAtom.reportWrite(value, super._selectedState, () {
       super._selectedState = value;
     });
@@ -132,11 +132,11 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void selectState(StateWidgetState state) {
+  void selectState(String id) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
         .startAction(name: '_GraphicAutomataManagerImpl.selectState');
     try {
-      return super.selectState(state);
+      return super.selectState(id);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }

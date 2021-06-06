@@ -32,11 +32,12 @@ abstract class _GraphicAutomataManagerImpl
   ObservableMap<String, Offset> _positions = ObservableMap<String, Offset>();
 
   @observable
-  StateWidgetState? _selectedState;
+  StateWidget? _selectedState;
 
   @override
   @action
   void addState(Offset position) {
+    print("Executando: GraphicAutomataManager.addState");
     String id;
     if (_states.isEmpty) {
       id = "q0";
@@ -48,7 +49,6 @@ abstract class _GraphicAutomataManagerImpl
     _states.addAll({
       id: StateWidget(
         id: id,
-        onSelect: selectState,
         onDragEnd: setPositionState,
       )
     });
@@ -58,8 +58,9 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @action
   void deleteState() {
+    print("Executando: GraphicAutomataManager.deleteState");
     if (_selectedState != null) {
-      String id = _selectedState!.widget.id;
+      String id = _selectedState!.id;
       _states.remove(id);
       _positions.remove(id);
       _dfaManager.removeState(id);
@@ -70,6 +71,7 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @action
   String getState(Offset position) {
+    print("Executando: GraphicAutomataManager.getState");
     String id = "";
     for (String key in _positions.keys) {
       Offset statePosition = _positions[key]!;
@@ -87,18 +89,22 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @action
   void setPositionState(String id, Offset newPosition) {
+    print("Executando: GraphicAutomataManager.setPositionState");
     _positions[id] = newPosition;
+    selectState(id);
   }
 
   @override
   @action
-  void selectState(StateWidgetState state) {
+  void selectState(String id) {
+    print("Executando: GraphicAutomataManager.selectState");
     if (_selectedState == null) {
-      _selectedState = state;
-    } else if (_selectedState != state) {
-      _selectedState!.unselect();
-      _selectedState = state;
+      _selectedState = _states[id];
+    } else if (_selectedState != _states[id]) {
+      _selectedState!.state.unselect();
+      _selectedState = _states[id];
     }
+    _selectedState!.state.select();
   }
 
   @override
@@ -109,8 +115,9 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @action
   void unselectState() {
+    print("Executando: GraphicAutomataManager.unselectState");
     if (_selectedState != null) {
-      _selectedState!.unselect();
+      _selectedState!.state.unselect();
       _selectedState = null;
     }
   }
@@ -126,7 +133,7 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @computed
   StateType get selectStateType =>
-      containsSelectState ? _selectedState!.type : StateType.error;
+      containsSelectState ? _selectedState!.state.type : StateType.error;
 
   @override
   @computed
@@ -135,7 +142,7 @@ abstract class _GraphicAutomataManagerImpl
         "Não existe nenhum estado selecionado para trocar o tipo do estado");
     assert(
         newType != StateType.error, "O novo tipo do estado não deve ser error");
-    
-    _selectedState!.type = newType;
+
+    _selectedState!.state.type = newType;
   }
 }

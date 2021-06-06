@@ -1,6 +1,5 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
-import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,8 +13,8 @@ abstract class GraphicAutomataManager {
   /// Busco o ID em uma determinada posição [position]
   String getState(Offset position);
 
-  /// Guardo um estado selecionado [state]
-  void selectState(StateWidgetState state);
+  /// Guardo um estado selecionado [id]
+  void selectState(String id);
 
   /// Removo o estado selecionado
   void unselectState();
