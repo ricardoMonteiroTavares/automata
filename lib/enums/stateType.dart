@@ -1,1 +1,1 @@
-enum StateType { end, start, normal }
+enum StateType { end, start, normal, error }
