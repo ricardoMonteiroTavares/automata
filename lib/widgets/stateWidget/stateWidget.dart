@@ -6,23 +6,26 @@ import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
-  late final Function(StateWidgetState) _onSelect;
   late final Function(String id, Offset pos) _onDragEnd;
   late final String _id;
+  late final StateWidgetState _state;
 
   StateWidget(
       {required String id,
-      required Function(StateWidgetState) onSelect,
       required Function(String id, Offset pos) onDragEnd}) {
     _id = id;
-    _onSelect = onSelect;
     _onDragEnd = onDragEnd;
   }
 
   String get id => _id;
 
   @override
-  StateWidgetState createState() => StateWidgetState();
+  StateWidgetState createState() {
+    _state = StateWidgetState();
+    return _state;
+  }
+
+  StateWidgetState get state => _state;
 }
 
 class StateWidgetState extends State<StateWidget> {
@@ -38,8 +41,6 @@ class StateWidgetState extends State<StateWidget> {
     setState(() {
       _color = Colors.blue;
     });
-
-    widget._onSelect(this);
   }
 
   void unselect() {
@@ -58,19 +59,15 @@ class StateWidgetState extends State<StateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: select,
-      child: Draggable(
-        child: _state(_color),
-        feedback: _state(Colors.blue),
-        childWhenDragging: Container(),
-        onDragStarted: select,
-        onDragEnd: (details) {
-          Offset offset = details.offset;
-          offset = offset + Offset((_size / 2), (_size / 2));
-          widget._onDragEnd(widget._id, offset);
-        },
-      ),
+    return Draggable(
+      child: _state(_color),
+      feedback: _state(Colors.blue),
+      childWhenDragging: Container(),
+      onDragStarted: select,
+      onDragEnd: (details) {
+        Offset offset = details.offset + Offset((_size / 2), (_size / 2));
+        widget._onDragEnd(widget._id, offset);
+      },
     );
   }
 
