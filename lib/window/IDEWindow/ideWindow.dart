@@ -24,7 +24,7 @@ class _IDEWindowState extends State<IDEWindow> {
     FocusScope.of(context).requestFocus(node);
     return GestureDetector(
       onTapDown: (details) {
-        _controller.add(details);
+        _controller.onTap(details);
       },
       child: Scaffold(
         body: RawKeyboardListener(

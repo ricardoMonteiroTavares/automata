@@ -43,11 +43,44 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
       ActionController(name: '_IDEWindowController');
 
   @override
-  void add(TapDownDetails details) {
+  void onTap(TapDownDetails details) {
     final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController.add');
+        name: '_IDEWindowController.onTap');
     try {
-      return super.add(details);
+      return super.onTap(details);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _add(Offset position) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController._add');
+    try {
+      return super._add(position);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _select(String id) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController._select');
+    try {
+      return super._select(id);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _unselect() {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController._unselect');
+    try {
+      return super._unselect();
     } finally {
       _$_IDEWindowControllerActionController.endAction(_$actionInfo);
     }

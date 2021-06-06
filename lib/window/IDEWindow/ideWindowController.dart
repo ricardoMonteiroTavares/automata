@@ -23,17 +23,37 @@ abstract class _IDEWindowController with Store {
   IDELayoutDelegate get positions => _manager.positions;
 
   @action
-  void add(TapDownDetails details) {
+  void onTap(TapDownDetails details) {
     Offset position = details.localPosition;
 
     String id = _manager.getState(position);
 
     if (id.isEmpty) {
       if (_manager.containsSelectState) {
-        _manager.unselectState();
+        _unselect();
       } else {
-        _manager.addState(position);
+        _add(position);
       }
+    } else {
+      _select(id);
+    }
+  }
+
+  @action
+  void _add(Offset position) {
+    _manager.addState(position);
+  }
+
+  @action
+  void _select(String id) {
+    _unselect();
+    _manager.selectState(id);
+  }
+
+  @action
+  void _unselect() {
+    if (_manager.containsSelectState) {
+      _manager.unselectState();
     }
   }
 
