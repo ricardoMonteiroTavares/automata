@@ -62,7 +62,6 @@ class StateWidgetState extends State<StateWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: select,
-      onSecondaryTapDown: updateType,
       child: Draggable(
         child: _state(_color),
         feedback: _state(Colors.blue),
@@ -92,56 +91,4 @@ class StateWidgetState extends State<StateWidget> {
         return Container();
     }
   }
-
-  Future<void> updateType(TapDownDetails details) async {
-    select();
-
-    StateType? newType = await ContextMenuWidget.show(
-        context: context,
-        position: details.globalPosition,
-        items: generateItems());
-    if (newType != null) {
-      setState(() {
-        _type = newType;
-      });
-    }
-  }
-
-  List<PopupMenuEntry> generateItems() => [
-        PopupMenuItem(
-            enabled: (_type != StateType.start),
-            value: StateType.start,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado inicial",
-                style: TextStyle(
-                    color: (_type != StateType.start)
-                        ? Colors.black
-                        : Colors.grey),
-              ),
-            )),
-        PopupMenuItem(
-            enabled: (_type != StateType.end),
-            value: StateType.end,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado final",
-                style: TextStyle(
-                    color:
-                        (_type != StateType.end) ? Colors.black : Colors.grey),
-              ),
-            )),
-        PopupMenuItem(
-            enabled: (_type != StateType.normal),
-            value: StateType.normal,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado normal",
-                style: TextStyle(
-                    color: (_type != StateType.normal)
-                        ? Colors.black
-                        : Colors.grey),
-              ),
-            )),
-      ];
 }

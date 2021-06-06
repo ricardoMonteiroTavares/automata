@@ -23,19 +23,26 @@ class _IDEWindowState extends State<IDEWindow> {
   Widget build(BuildContext context) {
     FocusScope.of(context).requestFocus(node);
     return GestureDetector(
-        onTapDown: (details) {
-          _controller.add(details);
-        },
-        child: Scaffold(
-            body: RawKeyboardListener(
+      onTapDown: (details) {
+        _controller.add(details);
+      },
+      child: Scaffold(
+        body: RawKeyboardListener(
           autofocus: true,
           focusNode: node,
           onKey: keyPressed,
-          child: Observer(
+          child: GestureDetector(
+            onSecondaryTapDown: (details) =>
+                _controller.contextMenu(details, context),
+            child: Observer(
               builder: (_) => CustomMultiChildLayout(
-                    delegate: _controller.positions,
-                    children: _controller.objects,
-                  )),
-        )));
+                delegate: _controller.positions,
+                children: _controller.objects,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
