@@ -1,6 +1,5 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
-import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
@@ -51,11 +50,10 @@ class StateWidgetState extends State<StateWidget> {
 
   StateType get type => _type;
 
-  set type(StateType newType){
+  set type(StateType newType) {
     setState(() {
       _type = newType;
     });
-    
   }
 
   @override
