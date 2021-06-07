@@ -51,6 +51,9 @@ abstract class DFAManager {
   /// caso o DFA não tenha sido criado [NotFoundAutomataException].
   void setInitialState(String state);
 
+  /// Busco o estado inicial no DFA, caso exista. Caso contrário, retorna String vazia.
+  String get initialState;
+
   /// Adiciono um estado final no DFA.
   ///
   /// Lança uma exceção [NotFoundStateException] caso o estado [state] não exista no DFA ou

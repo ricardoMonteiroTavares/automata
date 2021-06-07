@@ -21,6 +21,7 @@ class DFAManagerImpl implements DFAManager {
     }
 
     _dfa!.finalStates.add(state);
+    print(_dfa.toString());
   }
 
   @override
@@ -216,4 +217,7 @@ class DFAManagerImpl implements DFAManager {
 
     return exTest.run();
   }
+
+  @override
+  String get initialState => _dfa!.initialState;
 }
