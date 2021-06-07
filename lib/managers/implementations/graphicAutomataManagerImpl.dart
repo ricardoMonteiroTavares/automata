@@ -143,6 +143,41 @@ abstract class _GraphicAutomataManagerImpl
     assert(
         newType != StateType.error, "O novo tipo do estado não deve ser error");
 
-    _selectedState!.state.type = newType;
+    try {
+      switch (newType) {
+        case StateType.start:
+          {
+            String before = _dfaManager.initialState;
+            if (before.isNotEmpty) {
+              _states[before]!.state.type = StateType.normal;
+            }
+            _dfaManager.setInitialState(_selectedState!.id);
+            break;
+          }
+
+        case StateType.end:
+          {
+            _dfaManager.addFinalState(_selectedState!.id);
+            break;
+          }
+
+        case StateType.normal:
+          {
+            StateType before = _selectedState!.state.type;
+            if (before == StateType.start) {
+              _dfaManager.setInitialState("");
+            } else {
+              _dfaManager.removeFinalState(_selectedState!.id);
+            }
+            break;
+          }
+
+        default:
+          throw Exception("O novo tipo do estado não deve ser error");
+      }
+      _selectedState!.state.type = newType;
+    } catch (e) {
+      throw e;
+    }
   }
 }
