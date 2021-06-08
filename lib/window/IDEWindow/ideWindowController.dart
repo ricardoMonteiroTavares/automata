@@ -4,6 +4,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
@@ -26,17 +27,18 @@ abstract class _IDEWindowController with Store {
   void onTap(TapDownDetails details) {
     Offset position = details.localPosition;
 
-    String id = _manager.getState(position);
+    Either<String, double> resp = _manager.getState(position);
 
-    if (id.isEmpty) {
-      if (_manager.containsSelectState) {
-        _unselect();
-      } else {
-        _add(position);
-      }
-    } else {
-      _select(id);
-    }
+    resp.fold<void>(
+      (l) => _select(l),
+      (r) {
+        if (_manager.containsSelectState) {
+          _unselect();
+        } else if (r > 60) {
+          _add(position);
+        }
+      },
+    );
   }
 
   @action
@@ -63,18 +65,21 @@ abstract class _IDEWindowController with Store {
   }
 
   Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
-    String id = _manager.getState(details.localPosition);
+    Either<String, double> resp = _manager.getState(details.localPosition);
 
-    if (id.isNotEmpty) {
-      _manager.selectState(id);
-      StateType? newType = await ContextMenuWidget.show(
-          context: context,
-          position: details.globalPosition,
-          items: generateItems(_manager.selectStateType));
-      if (newType != null) {
-        _manager.selectStateType = newType;
-      }
-    }
+    resp.fold(
+      (l) async {
+        _manager.selectState(l);
+        StateType? newType = await ContextMenuWidget.show(
+            context: context,
+            position: details.globalPosition,
+            items: generateItems(_manager.selectStateType));
+        if (newType != null) {
+          _manager.selectStateType = newType;
+        }
+      },
+      (r) => null,
+    );
   }
 
   List<PopupMenuEntry> generateItems(StateType type) => [

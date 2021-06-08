@@ -1,4 +1,5 @@
 import 'package:automata/enums/stateType.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'stateWidgetController.dart';
@@ -29,7 +30,8 @@ class StateWidget extends StatelessWidget {
 
   Offset get position => _controller.position;
 
-  bool pointIsInState(Offset point) => _controller.pointIsInState(point);
+  Either<bool, double> pointIsInState(Offset point) =>
+      _controller.pointIsInState(point);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 
 /// Classe responsável por manipular um autômato de forma gráfica
@@ -10,8 +11,9 @@ abstract class GraphicAutomataManager {
   /// Adiciono um novo estado em uma determinada posição [position]
   void addState(Offset position);
 
-  /// Busco o ID em uma determinada posição [position]
-  String getState(Offset position);
+  /// Busco o ID em uma determinada posição [position], caso não a encontre
+  /// retornará a distância entre o clique e o nó mais próximo.
+  Either<String, double> getState(Offset position);
 
   /// Guardo um estado selecionado [id]
   void selectState(String id);

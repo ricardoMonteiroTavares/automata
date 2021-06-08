@@ -3,6 +3,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -61,9 +62,13 @@ abstract class _StateWidgetController with Store {
     _selectState(id);
   }
 
-  bool pointIsInState(Offset point) {
+  Either<bool, double> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
-    return (distance <= _radius);
+
+    if (distance <= _radius) {
+      return Left(true);
+    }
+    return Right(distance);
   }
 
   Widget node({Color? color}) {

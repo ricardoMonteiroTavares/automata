@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:automata/enums/stateType.dart';
@@ -5,6 +6,7 @@ import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -66,15 +68,22 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  String getState(Offset position) {
+  Either<String, double> getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
+    double minDistance = double.infinity;
     for (String key in _states.keys) {
-      if (_states[key]!.pointIsInState(position)) {
-        return key;
+      Either<bool, double> resp = _states[key]!.pointIsInState(position);
+      if (resp.isLeft()) {
+        print("Identificou a key: $key");
+        return Left(key);
+      } else {
+        minDistance =
+            resp.foldRight(minDistance, (r, previous) => min(r, previous));
+        print("Nova distância: $minDistance");
       }
     }
 
-    return "";
+    return Right(minDistance);
   }
 
   @override
