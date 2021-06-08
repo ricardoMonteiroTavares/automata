@@ -63,7 +63,10 @@ abstract class _IDEWindowController with Store {
   }
 
   Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
-    if (_manager.containsSelectState) {
+    String id = _manager.getState(details.localPosition);
+
+    if (id.isNotEmpty) {
+      _manager.selectState(id);
       StateType? newType = await ContextMenuWidget.show(
           context: context,
           position: details.globalPosition,
