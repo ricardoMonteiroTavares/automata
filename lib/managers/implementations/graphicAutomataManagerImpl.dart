@@ -46,6 +46,7 @@ abstract class _GraphicAutomataManagerImpl
       id: StateWidget(
         id: id,
         position: position,
+        selectOnDrag: selectState,
       )
     });
     _dfaManager.addState(id);
@@ -68,7 +69,7 @@ abstract class _GraphicAutomataManagerImpl
   String getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
     for (String key in _states.keys) {
-      if (_states[key]!.state.pointIsInState(position)) {
+      if (_states[key]!.pointIsInState(position)) {
         return key;
       }
     }
@@ -83,10 +84,10 @@ abstract class _GraphicAutomataManagerImpl
     if (_selectedState == null) {
       _selectedState = _states[id];
     } else if (_selectedState != _states[id]) {
-      _selectedState!.state.unselect();
+      _selectedState!.unselect();
       _selectedState = _states[id];
     }
-    _selectedState!.state.select();
+    _selectedState!.select();
   }
 
   @override
@@ -99,7 +100,7 @@ abstract class _GraphicAutomataManagerImpl
   void unselectState() {
     print("Executando: GraphicAutomataManager.unselectState");
     if (_selectedState != null) {
-      _selectedState!.state.unselect();
+      _selectedState!.unselect();
       _selectedState = null;
     }
   }
@@ -115,7 +116,7 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @computed
   StateType get selectStateType =>
-      containsSelectState ? _selectedState!.state.type : StateType.error;
+      containsSelectState ? _selectedState!.type : StateType.error;
 
   @override
   @computed
@@ -131,7 +132,7 @@ abstract class _GraphicAutomataManagerImpl
           {
             String before = _dfaManager.initialState;
             if (before.isNotEmpty) {
-              _states[before]!.state.type = StateType.normal;
+              _states[before]!.type = StateType.normal;
             }
             _dfaManager.setInitialState(_selectedState!.id);
             break;
@@ -145,7 +146,7 @@ abstract class _GraphicAutomataManagerImpl
 
         case StateType.normal:
           {
-            StateType before = _selectedState!.state.type;
+            StateType before = _selectedState!.type;
             if (before == StateType.start) {
               _dfaManager.setInitialState("");
             } else {
@@ -157,7 +158,7 @@ abstract class _GraphicAutomataManagerImpl
         default:
           throw Exception("O novo tipo do estado não deve ser error");
       }
-      _selectedState!.state.type = newType;
+      _selectedState!.type = newType;
     } catch (e) {
       throw e;
     }

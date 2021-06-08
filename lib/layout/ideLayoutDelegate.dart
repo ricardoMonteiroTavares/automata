@@ -11,7 +11,7 @@ class IDELayoutDelegate extends MultiChildLayoutDelegate {
     for (String key in states.keys) {
       if (hasChild(key)) {
         Size s = layoutChild(key, BoxConstraints.loose(size));
-        Offset offset = states[key]!.state.position;
+        Offset offset = states[key]!.position;
 
         positionChild(
             key, Offset(offset.dx - (s.width / 2), offset.dy - (s.height / 2)));
