@@ -53,21 +53,6 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
     });
   }
 
-  final _$_positionsAtom = Atom(name: '_GraphicAutomataManagerImpl._positions');
-
-  @override
-  ObservableMap<String, Offset> get _positions {
-    _$_positionsAtom.reportRead();
-    return super._positions;
-  }
-
-  @override
-  set _positions(ObservableMap<String, Offset> value) {
-    _$_positionsAtom.reportWrite(value, super._positions, () {
-      super._positions = value;
-    });
-  }
-
   final _$_selectedStateAtom =
       Atom(name: '_GraphicAutomataManagerImpl._selectedState');
 
@@ -115,17 +100,6 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
         .startAction(name: '_GraphicAutomataManagerImpl.getState');
     try {
       return super.getState(position);
-    } finally {
-      _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setPositionState(String id, Offset newPosition) {
-    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.setPositionState');
-    try {
-      return super.setPositionState(id, newPosition);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }

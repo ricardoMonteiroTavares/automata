@@ -6,29 +6,23 @@ import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:flutter/material.dart';
 
 class StateWidget extends StatefulWidget {
-  late final Function(String id, Offset pos) _onDragEnd;
   late final String _id;
-  late final StateWidgetState _state;
+  late final _StateWidgetState _state;
 
-  StateWidget(
-      {required String id,
-      required Function(String id, Offset pos) onDragEnd}) {
+  StateWidget({required String id, required Offset position}) {
     _id = id;
-    _onDragEnd = onDragEnd;
+    _state = _StateWidgetState(position: position);
   }
 
   String get id => _id;
 
   @override
-  StateWidgetState createState() {
-    _state = StateWidgetState();
-    return _state;
-  }
+  _StateWidgetState createState() => _state;
 
-  StateWidgetState get state => _state;
+  _StateWidgetState get state => _state;
 }
 
-class StateWidgetState extends State<StateWidget> {
+class _StateWidgetState extends State<StateWidget> {
   late final Label _label = Label(
     label: widget._id,
   );
@@ -36,6 +30,12 @@ class StateWidgetState extends State<StateWidget> {
 
   Color _color = Colors.black;
   StateType _type = StateType.normal;
+
+  late Offset _position;
+
+  _StateWidgetState({required Offset position}) {
+    _position = position;
+  }
 
   void select() {
     setState(() {
@@ -57,6 +57,13 @@ class StateWidgetState extends State<StateWidget> {
     });
   }
 
+  Offset get position => _position;
+
+  bool pointIsInState(Offset point) {
+    double distance = (point - position).distance.abs();
+    return (distance <= (_size / 2));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Draggable(
@@ -64,10 +71,7 @@ class StateWidgetState extends State<StateWidget> {
       feedback: _state(Colors.blue),
       childWhenDragging: Container(),
       onDragStarted: select,
-      onDragEnd: (details) {
-        Offset offset = details.offset + Offset((_size / 2), (_size / 2));
-        widget._onDragEnd(widget._id, offset);
-      },
+      onDragEnd: _reposition,
     );
   }
 
@@ -85,5 +89,13 @@ class StateWidgetState extends State<StateWidget> {
       default:
         return Container();
     }
+  }
+
+  void _reposition(DraggableDetails details) {
+    Offset offset = details.offset + Offset((_size / 2), (_size / 2));
+
+    setState(() {
+      _position = offset;
+    });
   }
 }

@@ -25,9 +25,6 @@ abstract class GraphicAutomataManager {
   /// Removo um estado selecionado
   void deleteState();
 
-  /// Modifico a posição de um determinado estado [id] para uma nova posição [newPosition]
-  void setPositionState(String id, Offset newPosition);
-
   /// Comando que busca todos os objetos renderizáveis
   List<LayoutId> get objects;
 
