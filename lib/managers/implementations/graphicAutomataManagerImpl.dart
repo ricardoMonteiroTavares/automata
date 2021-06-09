@@ -49,6 +49,7 @@ abstract class _GraphicAutomataManagerImpl
         id: id,
         position: position,
         selectOnDrag: selectState,
+        getState: getState,
       )
     });
     _dfaManager.addState(id);

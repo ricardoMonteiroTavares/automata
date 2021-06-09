@@ -14,10 +14,12 @@ class StateWidgetController extends _StateWidgetController
   StateWidgetController(
       {required String id,
       required Offset position,
-      required Function(String) selectOnDrag}) {
+      required Function(String) selectOnDrag,
+      required Either<String, double> Function(Offset) getState}) {
     super._id = id;
     super._position = position;
     super._selectState = selectOnDrag;
+    super._getState = getState;
   }
 }
 
@@ -26,6 +28,7 @@ abstract class _StateWidgetController with Store {
   final double _radius = 30;
 
   late final Function(String) _selectState;
+  late final Either<String, double> Function(Offset) _getState;
 
   @observable
   Color _color = Colors.black;
@@ -58,7 +61,16 @@ abstract class _StateWidgetController with Store {
 
   @action
   void reposition(DraggableDetails details) {
-    _position = details.offset + Offset(_radius, _radius);
+    Offset prevPosition = position;
+    Offset newPosition = details.offset + Offset(_radius, _radius);
+
+    Either<String, double> resp = _getState(newPosition);
+
+    _position = resp.fold<Offset>(
+      (l) => prevPosition,
+      (r) => (r > _diameter) ? newPosition : prevPosition,
+    );
+
     _selectState(id);
   }
 

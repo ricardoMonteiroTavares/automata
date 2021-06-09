@@ -10,12 +10,13 @@ class StateWidget extends StatelessWidget {
   StateWidget(
       {required String id,
       required Offset position,
-      required Function(String) selectOnDrag}) {
+      required Function(String) selectOnDrag,
+      required Either<String, double> Function(Offset) getState}) {
     _controller = StateWidgetController(
-      id: id,
-      position: position,
-      selectOnDrag: selectOnDrag,
-    );
+        id: id,
+        position: position,
+        selectOnDrag: selectOnDrag,
+        getState: getState);
   }
 
   String get id => _controller.id;
