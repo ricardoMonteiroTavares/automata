@@ -1,6 +1,10 @@
 import 'dart:ui';
 
-import 'package:automata/widgets/stateWidget/stateWidget.dart';
+import 'package:automata/enums/stateType.dart';
+import 'package:automata/layout/ideLayoutDelegate.dart';
+import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
+import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
@@ -11,92 +15,107 @@ class IDEWindowController = _IDEWindowController with _$IDEWindowController;
 
 abstract class _IDEWindowController with Store {
   @observable
-  ObservableMap<String, StateWidget> _states =
-      ObservableMap<String, StateWidget>();
+  GraphicAutomataManager _manager = GraphicAutomataManager();
 
   @computed
-  List<LayoutId> get states =>
-      _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
+  List<LayoutId> get objects => _manager.objects;
 
-  @observable
-  ObservableMap<String, Offset> positions = ObservableMap<String, Offset>();
-
-  @observable
-  StateWidgetState? _selectedState;
+  @computed
+  IDELayoutDelegate get positions => _manager.positions;
 
   @action
-  void add(TapDownDetails details) {
-    String id = _selectState(details);
+  void onTap(TapDownDetails details) {
+    Offset position = details.localPosition;
 
-    if (id.isEmpty) {
-      if (_selectedState != null) {
-        _selectedState!.unselect();
-        _selectedState = null;
-      } else {
-        _addState(details);
-      }
+    Either<String, double> resp = _manager.getState(position);
+
+    resp.fold<void>(
+      (l) => _select(l),
+      (r) {
+        if (_manager.containsSelectState) {
+          _unselect();
+        } else if (r > 60) {
+          _add(position);
+        }
+      },
+    );
+  }
+
+  @action
+  void _add(Offset position) {
+    _manager.addState(position);
+  }
+
+  @action
+  void _select(String id) {
+    _unselect();
+    _manager.selectState(id);
+  }
+
+  @action
+  void _unselect() {
+    if (_manager.containsSelectState) {
+      _manager.unselectState();
     }
   }
 
   @action
   void delete() {
-    if (_selectedState != null) {
-      String id = _selectedState!.widget.id;
-      _states.remove(id);
-      positions.remove(id);
-      _selectedState = null;
-    }
+    _manager.deleteState();
   }
 
-  @action
-  void _addState(TapDownDetails details) {
-    String id;
-    if (_states.isEmpty) {
-      id = "q0";
-    } else {
-      var obj = _states.values.elementAt(_states.length - 1).id;
-      id = "q${int.parse(obj.toString().substring(1)) + 1}";
-    }
-    positions.addAll({id: details.localPosition});
-    _states.addAll({
-      id: StateWidget(
-        id: id,
-        onSelect: _selected,
-        onDragEnd: _setPosition,
-      )
-    });
+  Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
+    Either<String, double> resp = _manager.getState(details.localPosition);
+
+    resp.fold(
+      (l) async {
+        _manager.selectState(l);
+        StateType? newType = await ContextMenuWidget.show(
+            context: context,
+            position: details.globalPosition,
+            items: generateItems(_manager.selectStateType));
+        if (newType != null) {
+          _manager.selectStateType = newType;
+        }
+      },
+      (r) => null,
+    );
   }
 
-  @action
-  String _selectState(TapDownDetails details) {
-    Offset click = details.localPosition;
-
-    String id = "";
-    for (String key in positions.keys) {
-      Offset statePosition = positions[key]!;
-      double distance = (statePosition - click).distance.abs();
-
-      if (distance <= 30) {
-        id = key;
-        break;
-      }
-    }
-
-    return id;
-  }
-
-  @action
-  void _selected(StateWidgetState selected) {
-    if (_selectedState == null) {
-      _selectedState = selected;
-    } else if (_selectedState != selected) {
-      _selectedState!.unselect();
-      _selectedState = selected;
-    }
-  }
-
-  @action
-  void _setPosition(String id, Offset pos) {
-    positions[id] = pos;
-  }
+  List<PopupMenuEntry> generateItems(StateType type) => [
+        PopupMenuItem(
+            enabled: (type != StateType.start),
+            value: StateType.start,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado inicial",
+                style: TextStyle(
+                    color:
+                        (type != StateType.start) ? Colors.black : Colors.grey),
+              ),
+            )),
+        PopupMenuItem(
+            enabled: (type != StateType.end),
+            value: StateType.end,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado final",
+                style: TextStyle(
+                    color:
+                        (type != StateType.end) ? Colors.black : Colors.grey),
+              ),
+            )),
+        PopupMenuItem(
+            enabled: (type != StateType.normal),
+            value: StateType.normal,
+            child: ListTile(
+              title: Text(
+                "Marcar como estado normal",
+                style: TextStyle(
+                    color: (type != StateType.normal)
+                        ? Colors.black
+                        : Colors.grey),
+              ),
+            )),
+      ];
 }

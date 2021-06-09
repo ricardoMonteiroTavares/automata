@@ -1,4 +1,3 @@
-import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
@@ -24,20 +23,26 @@ class _IDEWindowState extends State<IDEWindow> {
   Widget build(BuildContext context) {
     FocusScope.of(context).requestFocus(node);
     return GestureDetector(
-        onTapDown: (details) {
-          _controller.add(details);
-        },
-        child: Scaffold(
-            body: RawKeyboardListener(
+      onTapDown: (details) {
+        _controller.onTap(details);
+      },
+      child: Scaffold(
+        body: RawKeyboardListener(
           autofocus: true,
           focusNode: node,
           onKey: keyPressed,
-          child: Observer(
+          child: GestureDetector(
+            onSecondaryTapDown: (details) =>
+                _controller.contextMenu(details, context),
+            child: Observer(
               builder: (_) => CustomMultiChildLayout(
-                    delegate:
-                        IDELayoutDelegate(positions: _controller.positions),
-                    children: _controller.states,
-                  )),
-        )));
+                delegate: _controller.positions,
+                children: _controller.objects,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

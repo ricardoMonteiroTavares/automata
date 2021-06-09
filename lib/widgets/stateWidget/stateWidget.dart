@@ -1,138 +1,49 @@
-import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
-import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
-import 'package:automata/widgets/stateWidget/states/finalState.dart';
-import 'package:automata/widgets/stateWidget/states/initialState.dart';
-import 'package:automata/widgets/stateWidget/states/normalState.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'stateWidgetController.dart';
 
-class StateWidget extends StatefulWidget {
-  late final Function(StateWidgetState) _onSelect;
-  late final Function(String id, Offset pos) _onDragEnd;
-  late final String _id;
+class StateWidget extends StatelessWidget {
+  late final StateWidgetController _controller;
 
   StateWidget(
       {required String id,
-      required Function(StateWidgetState) onSelect,
-      required Function(String id, Offset pos) onDragEnd}) {
-    _id = id;
-    _onSelect = onSelect;
-    _onDragEnd = onDragEnd;
+      required Offset position,
+      required Function(String) selectOnDrag,
+      required Either<String, double> Function(Offset) getState}) {
+    _controller = StateWidgetController(
+        id: id,
+        position: position,
+        selectOnDrag: selectOnDrag,
+        getState: getState);
   }
 
-  String get id => _id;
+  String get id => _controller.id;
 
-  @override
-  StateWidgetState createState() => StateWidgetState();
-}
+  void select() => _controller.select();
 
-class StateWidgetState extends State<StateWidget> {
-  late final Label _label = Label(
-    label: widget._id,
-  );
-  final double _size = 60;
+  void unselect() => _controller.unselect();
 
-  Color _color = Colors.black;
-  StateType _type = StateType.normal;
+  StateType get type => _controller.type;
 
-  void select() {
-    setState(() {
-      _color = Colors.blue;
-    });
+  set type(StateType newType) => _controller.newType(newType);
 
-    widget._onSelect(this);
-  }
+  Offset get position => _controller.position;
 
-  void unselect() {
-    setState(() {
-      _color = Colors.black;
-    });
-  }
+  Either<bool, double> pointIsInState(Offset point) =>
+      _controller.pointIsInState(point);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: select,
-      onSecondaryTapDown: updateType,
-      child: Draggable(
-        child: _state(_color),
-        feedback: _state(Colors.blue),
+    return Observer(
+      builder: (_) => Draggable(
+        child: _controller.node(),
+        feedback: _controller.node(color: Colors.blue),
         childWhenDragging: Container(),
         onDragStarted: select,
-        onDragEnd: (details) {
-          Offset offset = details.offset;
-          offset = offset + Offset((_size / 2), (_size / 2));
-          widget._onDragEnd(widget._id, offset);
-        },
+        onDragEnd: _controller.reposition,
       ),
     );
   }
-
-  Widget _state(Color color) {
-    switch (_type) {
-      case StateType.normal:
-        return NormalState(size: _size, child: _label, color: _color);
-
-      case StateType.end:
-        return FinalState(size: _size, child: _label, color: _color);
-
-      case StateType.start:
-        return InitialState(size: _size, child: _label, color: color);
-
-      default:
-        return Container();
-    }
-  }
-
-  Future<void> updateType(TapDownDetails details) async {
-    select();
-
-    StateType? newType = await ContextMenuWidget.show(
-        context: context,
-        position: details.globalPosition,
-        items: generateItems());
-    if (newType != null) {
-      setState(() {
-        _type = newType;
-      });
-    }
-  }
-
-  List<PopupMenuEntry> generateItems() => [
-        PopupMenuItem(
-            enabled: (_type != StateType.start),
-            value: StateType.start,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado inicial",
-                style: TextStyle(
-                    color: (_type != StateType.start)
-                        ? Colors.black
-                        : Colors.grey),
-              ),
-            )),
-        PopupMenuItem(
-            enabled: (_type != StateType.end),
-            value: StateType.end,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado final",
-                style: TextStyle(
-                    color:
-                        (_type != StateType.end) ? Colors.black : Colors.grey),
-              ),
-            )),
-        PopupMenuItem(
-            enabled: (_type != StateType.normal),
-            value: StateType.normal,
-            child: ListTile(
-              title: Text(
-                "Marcar como estado normal",
-                style: TextStyle(
-                    color: (_type != StateType.normal)
-                        ? Colors.black
-                        : Colors.grey),
-              ),
-            )),
-      ];
 }

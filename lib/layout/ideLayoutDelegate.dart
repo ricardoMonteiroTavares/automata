@@ -1,16 +1,17 @@
+import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/widgets.dart';
 
 class IDELayoutDelegate extends MultiChildLayoutDelegate {
-  IDELayoutDelegate({required this.positions});
+  IDELayoutDelegate({required this.states});
 
-  final Map<String, Offset> positions;
+  final Map<String, StateWidget> states;
 
   @override
   void performLayout(Size size) {
-    for (String key in positions.keys) {
+    for (String key in states.keys) {
       if (hasChild(key)) {
         Size s = layoutChild(key, BoxConstraints.loose(size));
-        Offset offset = positions[key]!;
+        Offset offset = states[key]!.position;
 
         positionChild(
             key, Offset(offset.dx - (s.width / 2), offset.dy - (s.height / 2)));
