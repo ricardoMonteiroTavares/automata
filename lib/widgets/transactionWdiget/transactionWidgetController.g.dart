@@ -9,35 +9,75 @@ part of 'transactionWidgetController.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
-  final _$initialPositionAtom =
-      Atom(name: '_TransactionWidgetController.initialPosition');
+  Computed<Offset>? _$initialPositionComputed;
 
   @override
-  Offset get initialPosition {
-    _$initialPositionAtom.reportRead();
-    return super.initialPosition;
+  Offset get initialPosition => (_$initialPositionComputed ??= Computed<Offset>(
+          () => super.initialPosition,
+          name: '_TransactionWidgetController.initialPosition'))
+      .value;
+  Computed<Offset>? _$distanceComputed;
+
+  @override
+  Offset get distance =>
+      (_$distanceComputed ??= Computed<Offset>(() => super.distance,
+              name: '_TransactionWidgetController.distance'))
+          .value;
+
+  final _$_initialPositionAtom =
+      Atom(name: '_TransactionWidgetController._initialPosition');
+
+  @override
+  Offset get _initialPosition {
+    _$_initialPositionAtom.reportRead();
+    return super._initialPosition;
   }
 
   @override
-  set initialPosition(Offset value) {
-    _$initialPositionAtom.reportWrite(value, super.initialPosition, () {
-      super.initialPosition = value;
+  set _initialPosition(Offset value) {
+    _$_initialPositionAtom.reportWrite(value, super._initialPosition, () {
+      super._initialPosition = value;
     });
   }
 
-  final _$distanceAtom = Atom(name: '_TransactionWidgetController.distance');
+  final _$_distanceAtom = Atom(name: '_TransactionWidgetController._distance');
 
   @override
-  Offset get distance {
-    _$distanceAtom.reportRead();
-    return super.distance;
+  Offset get _distance {
+    _$_distanceAtom.reportRead();
+    return super._distance;
   }
 
   @override
-  set distance(Offset value) {
-    _$distanceAtom.reportWrite(value, super.distance, () {
-      super.distance = value;
+  set _distance(Offset value) {
+    _$_distanceAtom.reportWrite(value, super._distance, () {
+      super._distance = value;
     });
+  }
+
+  final _$_TransactionWidgetControllerActionController =
+      ActionController(name: '_TransactionWidgetController');
+
+  @override
+  void setInitialPosition(Offset newInitialPosition) {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.setInitialPosition');
+    try {
+      return super.setInitialPosition(newInitialPosition);
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDistance(Offset newDistance) {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.setDistance');
+    try {
+      return super.setDistance(newDistance);
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

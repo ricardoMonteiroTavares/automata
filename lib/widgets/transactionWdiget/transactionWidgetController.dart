@@ -8,8 +8,24 @@ class TransactionWidgetController = _TransactionWidgetController
 
 abstract class _TransactionWidgetController with Store {
   @observable
-  late Offset initialPosition;
+  Offset _initialPosition = Offset(0, 0);
 
   @observable
-  Offset distance = Offset(0, 0);
+  Offset _distance = Offset(0, 0);
+
+  @action
+  void setInitialPosition(Offset newInitialPosition) {
+    _initialPosition = newInitialPosition;
+  }
+
+  @computed
+  Offset get initialPosition => _initialPosition;
+
+  @action
+  void setDistance(Offset newDistance) {
+    _distance = newDistance;
+  }
+
+  @computed
+  Offset get distance => _distance;
 }

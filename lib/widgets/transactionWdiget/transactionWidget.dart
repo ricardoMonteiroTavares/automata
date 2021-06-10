@@ -9,25 +9,20 @@ class TransactionWidget extends StatelessWidget {
 
   TransactionWidget({required String id, required Offset initialPosition}) {
     _id = id;
-    _controller.initialPosition = initialPosition;
+    _controller.setInitialPosition(initialPosition);
   }
 
   Offset get initialPosition => _controller.initialPosition;
-  set distance(Offset newDistance) => _controller.distance = newDistance;
+  set distance(Offset newDistance) => _controller.setDistance(newDistance);
 
   String get id => _id;
 
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => Container(
-        height: 10,
-        width: 200,
-        child: CustomPaint(
-          painter: Arrow(
-            initialPosition: _controller.initialPosition,
-            distance: _controller.distance,
-          ),
+      builder: (_) => CustomPaint(
+        painter: Arrow(
+          distance: _controller.distance,
         ),
       ),
     );

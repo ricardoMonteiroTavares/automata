@@ -3,10 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_arrow_path/flutter_arrow_path.dart';
 
 class Arrow extends CustomPainter {
-  late Offset initialPosition;
   late Offset distance;
 
-  Arrow({required this.initialPosition, required this.distance});
+  Arrow({required this.distance});
 
   final Paint _paint = Paint()
     ..color = Colors.black
@@ -19,7 +18,7 @@ class Arrow extends CustomPainter {
     Path path = Path();
 
     // Ponto inicial
-    path.moveTo(initialPosition.dx, initialPosition.dy);
+    path.moveTo(0, 0);
 
     // Curva no estilo linha reta
     path.relativeLineTo(distance.dx, distance.dy);
