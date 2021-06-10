@@ -26,19 +26,20 @@ class _IDEWindowState extends State<IDEWindow> {
       onTapDown: (details) {
         _controller.onTap(details);
       },
+      onSecondaryTapDown: (details) =>
+          _controller.contextMenu(details, context),
+      onPanStart: _controller.onStart,
+      onPanUpdate: _controller.onUpdate,
+      onPanEnd: _controller.onFinish,
       child: Scaffold(
         body: RawKeyboardListener(
           autofocus: true,
           focusNode: node,
           onKey: keyPressed,
-          child: GestureDetector(
-            onSecondaryTapDown: (details) =>
-                _controller.contextMenu(details, context),
-            child: Observer(
-              builder: (_) => CustomMultiChildLayout(
-                delegate: _controller.positions,
-                children: _controller.objects,
-              ),
+          child: Observer(
+            builder: (_) => CustomMultiChildLayout(
+              delegate: _controller.positions,
+              children: _controller.objects,
             ),
           ),
         ),

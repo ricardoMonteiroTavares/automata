@@ -39,6 +39,22 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
     });
   }
 
+  final _$_newTransactionAtom =
+      Atom(name: '_IDEWindowController._newTransaction');
+
+  @override
+  TransactionWidget? get _newTransaction {
+    _$_newTransactionAtom.reportRead();
+    return super._newTransaction;
+  }
+
+  @override
+  set _newTransaction(TransactionWidget? value) {
+    _$_newTransactionAtom.reportWrite(value, super._newTransaction, () {
+      super._newTransaction = value;
+    });
+  }
+
   final _$_IDEWindowControllerActionController =
       ActionController(name: '_IDEWindowController');
 
@@ -48,6 +64,39 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
         name: '_IDEWindowController.onTap');
     try {
       return super.onTap(details);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onStart(DragStartDetails details) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController.onStart');
+    try {
+      return super.onStart(details);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onUpdate(DragUpdateDetails details) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController.onUpdate');
+    try {
+      return super.onUpdate(details);
+    } finally {
+      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onFinish(DragEndDetails details) {
+    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
+        name: '_IDEWindowController.onFinish');
+    try {
+      return super.onFinish(details);
     } finally {
       _$_IDEWindowControllerActionController.endAction(_$actionInfo);
     }

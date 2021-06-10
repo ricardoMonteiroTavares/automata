@@ -4,6 +4,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
+import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,6 +18,9 @@ abstract class _IDEWindowController with Store {
   @observable
   GraphicAutomataManager _manager = GraphicAutomataManager();
 
+  @observable
+  TransactionWidget? _newTransaction;
+
   @computed
   List<LayoutId> get objects => _manager.objects;
 
@@ -25,6 +29,7 @@ abstract class _IDEWindowController with Store {
 
   @action
   void onTap(TapDownDetails details) {
+    print("Executando: IDEWindowController.onTap");
     Offset position = details.localPosition;
 
     Either<String, double> resp = _manager.getState(position);
@@ -39,6 +44,35 @@ abstract class _IDEWindowController with Store {
         }
       },
     );
+  }
+
+  @action
+  void onStart(DragStartDetails details) {
+    print("Executando: IDEWindowController.onStart");
+    if (_newTransaction == null) {
+      print("------------ Criado o objeto ------------");
+      String id = _manager.uniqueTransactionID;
+      _newTransaction =
+          TransactionWidget(id: id, initialPosition: details.globalPosition);
+      _manager.addTransaction(_newTransaction!);
+    }
+  }
+
+  @action
+  void onUpdate(DragUpdateDetails details) {
+    print("Executando: IDEWindowController.onUpdate");
+    if (_newTransaction != null) {
+      _newTransaction!.distance =
+          details.globalPosition - _newTransaction!.initialPosition;
+    }
+  }
+
+  @action
+  void onFinish(DragEndDetails details) {
+    print("Executando: IDEWindowController.onFinish");
+    if (_newTransaction != null) {
+      _newTransaction = null;
+    }
   }
 
   @action
