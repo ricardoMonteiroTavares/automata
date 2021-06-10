@@ -9,6 +9,13 @@ part of 'graphicAutomataManagerImpl.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
+  Computed<String>? _$uniqueTransactionIDComputed;
+
+  @override
+  String get uniqueTransactionID => (_$uniqueTransactionIDComputed ??=
+          Computed<String>(() => super.uniqueTransactionID,
+              name: '_GraphicAutomataManagerImpl.uniqueTransactionID'))
+      .value;
   Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
@@ -53,6 +60,22 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
     });
   }
 
+  final _$_transactionsAtom =
+      Atom(name: '_GraphicAutomataManagerImpl._transactions');
+
+  @override
+  ObservableMap<String, TransactionWidget> get _transactions {
+    _$_transactionsAtom.reportRead();
+    return super._transactions;
+  }
+
+  @override
+  set _transactions(ObservableMap<String, TransactionWidget> value) {
+    _$_transactionsAtom.reportWrite(value, super._transactions, () {
+      super._transactions = value;
+    });
+  }
+
   final _$_selectedStateAtom =
       Atom(name: '_GraphicAutomataManagerImpl._selectedState');
 
@@ -78,6 +101,17 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
         .startAction(name: '_GraphicAutomataManagerImpl.addState');
     try {
       return super.addState(position);
+    } finally {
+      _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addTransaction(TransactionWidget transaction) {
+    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
+        .startAction(name: '_GraphicAutomataManagerImpl.addTransaction');
+    try {
+      return super.addTransaction(transaction);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
@@ -130,6 +164,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   @override
   String toString() {
     return '''
+uniqueTransactionID: ${uniqueTransactionID},
 objects: ${objects},
 containsSelectState: ${containsSelectState},
 positions: ${positions},

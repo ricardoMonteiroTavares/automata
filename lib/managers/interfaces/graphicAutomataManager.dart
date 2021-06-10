@@ -1,6 +1,7 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
+import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 
@@ -10,6 +11,10 @@ abstract class GraphicAutomataManager {
 
   /// Adiciono um novo estado em uma determinada posição [position]
   void addState(Offset position);
+
+  void addTransaction(TransactionWidget transaction);
+
+  String get uniqueTransactionID;
 
   /// Busco o ID em uma determinada posição [position], caso não a encontre
   /// retornará a distância entre o clique e o nó mais próximo.

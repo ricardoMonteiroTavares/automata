@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:automata/elements/arrow.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
+import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +33,10 @@ abstract class _GraphicAutomataManagerImpl
       ObservableMap<String, StateWidget>();
 
   @observable
+  ObservableMap<String, TransactionWidget> _transactions =
+      ObservableMap<String, TransactionWidget>();
+
+  @observable
   StateWidget? _selectedState;
 
   @override
@@ -53,6 +59,27 @@ abstract class _GraphicAutomataManagerImpl
       )
     });
     _dfaManager.addState(id);
+  }
+
+  @override
+  @action
+  void addTransaction(TransactionWidget transaction) {
+    print("Executando: GraphicAutomataManager.addTransaction");
+    _transactions.addAll({transaction.id: transaction});
+  }
+
+  @override
+  @computed
+  String get uniqueTransactionID {
+    print("Executando: GraphicAutomataManager.get uniqueTransactionID");
+    String id;
+    if (_transactions.isEmpty) {
+      id = "t0";
+    } else {
+      var obj = _transactions.values.elementAt(_transactions.length - 1).id;
+      id = "t${int.parse(obj.toString().substring(1)) + 1}";
+    }
+    return id;
   }
 
   @override
@@ -102,8 +129,15 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @computed
-  List<LayoutId> get objects =>
-      _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
+  List<LayoutId> get objects {
+    List<LayoutId> states = _states.entries
+        .map((e) => LayoutId(id: e.key, child: e.value))
+        .toList();
+    List<LayoutId> arrows = _transactions.entries
+        .map((e) => LayoutId(id: e.key, child: e.value))
+        .toList();
+    return [...states, ...arrows];
+  }
 
   @override
   @action
@@ -121,7 +155,8 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @computed
-  IDELayoutDelegate get positions => IDELayoutDelegate(states: _states);
+  IDELayoutDelegate get positions =>
+      IDELayoutDelegate(states: _states, transactions: _transactions);
 
   @override
   @computed
