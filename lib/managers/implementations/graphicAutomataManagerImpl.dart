@@ -160,6 +160,10 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @computed
+  Offset get selectStatePosition => _selectedState!.position;
+
+  @override
+  @computed
   IDELayoutDelegate get positions =>
       IDELayoutDelegate(states: _states, transactions: _transactions);
 

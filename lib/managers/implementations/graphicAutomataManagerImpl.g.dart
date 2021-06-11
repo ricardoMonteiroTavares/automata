@@ -30,6 +30,13 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
           Computed<bool>(() => super.containsSelectState,
               name: '_GraphicAutomataManagerImpl.containsSelectState'))
       .value;
+  Computed<Offset>? _$selectStatePositionComputed;
+
+  @override
+  Offset get selectStatePosition => (_$selectStatePositionComputed ??=
+          Computed<Offset>(() => super.selectStatePosition,
+              name: '_GraphicAutomataManagerImpl.selectStatePosition'))
+      .value;
   Computed<IDELayoutDelegate>? _$positionsComputed;
 
   @override
@@ -167,6 +174,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
 uniqueTransactionID: ${uniqueTransactionID},
 objects: ${objects},
 containsSelectState: ${containsSelectState},
+selectStatePosition: ${selectStatePosition},
 positions: ${positions},
 selectStateType: ${selectStateType}
     ''';

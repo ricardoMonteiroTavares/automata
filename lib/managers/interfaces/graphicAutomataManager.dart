@@ -45,6 +45,9 @@ abstract class GraphicAutomataManager {
   /// Busco o tipo do estado selecionado
   StateType get selectStateType;
 
+  /// Busco a posição central do estado selecionado
+  Offset get selectStatePosition;
+
   /// Modifico o tipo do estado selecionado
   set selectStateType(StateType newType);
 }
