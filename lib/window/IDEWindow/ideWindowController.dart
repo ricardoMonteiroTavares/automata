@@ -50,13 +50,23 @@ abstract class _IDEWindowController with Store {
   @action
   void onStart(DragStartDetails details) {
     print("Executando: IDEWindowController.onStart");
-    if (_newTransaction == null) {
-      print("------------ Criado o objeto ------------");
-      String id = _manager.uniqueTransactionID;
-      _newTransaction =
-          TransactionWidget(id: id, initialPosition: details.globalPosition);
-      _manager.addTransaction(_newTransaction!);
-    }
+    Either<String, Pair<String, double>> resp =
+        _manager.getState(details.localPosition);
+
+    resp.fold<void>(
+      (l) => null,
+      (r) {
+        if ((r.right - 30) <= 4 && (r.right - 30) > 0) {
+          if (_newTransaction == null) {
+            print("------------ Criado o objeto ------------");
+            String id = _manager.uniqueTransactionID;
+            _newTransaction = TransactionWidget(
+                id: id, initialPosition: details.localPosition);
+            _manager.addTransaction(_newTransaction!);
+          }
+        }
+      },
+    );
   }
 
   @action

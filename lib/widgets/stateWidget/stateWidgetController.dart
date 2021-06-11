@@ -79,7 +79,7 @@ abstract class _StateWidgetController with Store {
   Either<bool, double> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
 
-    if (distance <= _radius) {
+    if (distance < _radius) {
       return Left(true);
     }
     return Right(distance);
