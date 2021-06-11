@@ -1,4 +1,5 @@
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/models/pair.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,7 +12,7 @@ class StateWidget extends StatelessWidget {
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, double> Function(Offset) getState}) {
+      required Either<String, Pair<String, double>> Function(Offset) getState}) {
     _controller = StateWidgetController(
         id: id,
         position: position,

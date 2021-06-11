@@ -1,5 +1,6 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
@@ -15,7 +16,8 @@ class StateWidgetController extends _StateWidgetController
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, double> Function(Offset) getState}) {
+      required Either<String, Pair<String, double>> Function(Offset)
+          getState}) {
     super._id = id;
     super._position = position;
     super._selectState = selectOnDrag;
@@ -28,7 +30,7 @@ abstract class _StateWidgetController with Store {
   final double _radius = 30;
 
   late final Function(String) _selectState;
-  late final Either<String, double> Function(Offset) _getState;
+  late final Either<String, Pair<String, double>> Function(Offset) _getState;
 
   @observable
   Color _color = Colors.black;
@@ -64,11 +66,11 @@ abstract class _StateWidgetController with Store {
     Offset prevPosition = position;
     Offset newPosition = details.offset + Offset(_radius, _radius);
 
-    Either<String, double> resp = _getState(newPosition);
+    Either<String, Pair<String, double>> resp = _getState(newPosition);
 
     _position = resp.fold<Offset>(
       (l) => prevPosition,
-      (r) => (r > _diameter) ? newPosition : prevPosition,
+      (r) => (r.right > _diameter) ? newPosition : prevPosition,
     );
 
     _selectState(id);

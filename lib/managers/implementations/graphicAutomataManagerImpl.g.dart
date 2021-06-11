@@ -129,7 +129,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  Either<String, double> getState(Offset position) {
+  Either<String, Pair<String, double>> getState(Offset position) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
         .startAction(name: '_GraphicAutomataManagerImpl.getState');
     try {

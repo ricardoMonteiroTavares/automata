@@ -6,6 +6,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
+import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:dartz/dartz.dart';
@@ -96,17 +97,21 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  Either<String, double> getState(Offset position) {
+  Either<String, Pair<String, double>> getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
-    double minDistance = double.infinity;
+    Pair<String, double> minDistance = Pair("", double.infinity);
     for (String key in _states.keys) {
       Either<bool, double> resp = _states[key]!.pointIsInState(position);
       if (resp.isLeft()) {
         print("Identificou a key: $key");
         return Left(key);
       } else {
-        minDistance =
-            resp.foldRight(minDistance, (r, previous) => min(r, previous));
+        double minimal = resp.foldRight(
+            minDistance.right, (r, previous) => min(r, previous));
+        if (minimal != minDistance.right) {
+          minDistance.right = minimal;
+          minDistance.left = key;
+        }
         print("Nova distância: $minDistance");
       }
     }
