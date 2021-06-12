@@ -5,6 +5,7 @@ import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -33,6 +34,9 @@ abstract class _StateWidgetController with Store {
   late final Either<String, Pair<String, double>> Function(Offset) _getState;
 
   @observable
+  bool _hover = false;
+
+  @observable
   Color _color = Colors.black;
 
   @observable
@@ -59,6 +63,18 @@ abstract class _StateWidgetController with Store {
   @action
   void newType(StateType newType) {
     _type = newType;
+  }
+
+  @action
+  void onEnter(PointerEnterEvent details) {
+    _hover = true;
+    print("State: $id, Hover: ${hover.toString()}");
+  }
+
+  @action
+  void onExit(PointerExitEvent details) {
+    _hover = false;
+    print("State: $id, Hover: ${hover.toString()}");
   }
 
   @action
@@ -106,4 +122,5 @@ abstract class _StateWidgetController with Store {
   StateType get type => _type;
   Offset get position => _position;
   Color get color => _color;
+  bool get hover => _hover;
 }

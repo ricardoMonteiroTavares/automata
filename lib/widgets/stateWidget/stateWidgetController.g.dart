@@ -9,6 +9,21 @@ part of 'stateWidgetController.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StateWidgetController on _StateWidgetController, Store {
+  final _$_hoverAtom = Atom(name: '_StateWidgetController._hover');
+
+  @override
+  bool get _hover {
+    _$_hoverAtom.reportRead();
+    return super._hover;
+  }
+
+  @override
+  set _hover(bool value) {
+    _$_hoverAtom.reportWrite(value, super._hover, () {
+      super._hover = value;
+    });
+  }
+
   final _$_colorAtom = Atom(name: '_StateWidgetController._color');
 
   @override
@@ -85,6 +100,28 @@ mixin _$StateWidgetController on _StateWidgetController, Store {
         name: '_StateWidgetController.newType');
     try {
       return super.newType(newType);
+    } finally {
+      _$_StateWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onEnter(PointerEnterEvent details) {
+    final _$actionInfo = _$_StateWidgetControllerActionController.startAction(
+        name: '_StateWidgetController.onEnter');
+    try {
+      return super.onEnter(details);
+    } finally {
+      _$_StateWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onExit(PointerExitEvent details) {
+    final _$actionInfo = _$_StateWidgetControllerActionController.startAction(
+        name: '_StateWidgetController.onExit');
+    try {
+      return super.onExit(details);
     } finally {
       _$_StateWidgetControllerActionController.endAction(_$actionInfo);
     }
