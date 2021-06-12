@@ -133,7 +133,7 @@ class DFAManagerImpl implements DFAManager {
     print("Executando: DFAManager.setInitialState");
     if (notExistDFA()) {
       throw NotFoundAutomataException();
-    } else if (!existState(state)) {
+    } else if (!existState(state) && state.isNotEmpty) {
       throw NotFoundStateException();
     }
 
