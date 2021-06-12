@@ -1,9 +1,9 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/pair.dart';
+import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'stateWidgetController.dart';
 
 class StateWidget extends StatelessWidget {
@@ -52,53 +52,7 @@ class StateWidget extends StatelessWidget {
                 onDragStarted: select,
                 onDragEnd: _controller.reposition,
               ),
-              Visibility(
-                visible: _controller.hover,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 10,
-                      height: 10,
-                      transform: Matrix4.translationValues(25, -4, 0),
-                      child: SvgPicture.asset(
-                        "assets/pin.svg",
-                        width: 10,
-                        height: 10,
-                      ),
-                    ),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      transform: Matrix4.translationValues(25, 54, 0),
-                      child: SvgPicture.asset(
-                        "assets/pin.svg",
-                        width: 10,
-                        height: 10,
-                      ),
-                    ),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      transform: Matrix4.translationValues(54, 25, 0),
-                      child: SvgPicture.asset(
-                        "assets/pin.svg",
-                        width: 10,
-                        height: 10,
-                      ),
-                    ),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      transform: Matrix4.translationValues(-4, 25, 0),
-                      child: SvgPicture.asset(
-                        "assets/pin.svg",
-                        width: 10,
-                        height: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              HoverStateWidget(hover: _controller.hover)
             ],
           )),
     );
