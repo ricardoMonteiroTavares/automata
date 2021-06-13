@@ -13,9 +13,9 @@ abstract class Options3<L, M, R> {
 }
 
 /// Objeto que representa o retorno da opção da esquerda de uma função
-class Left<L, M, R> extends Options3<L, M, R> {
+class LeftOption<L, M, R> extends Options3<L, M, R> {
   final L _l;
-  const Left(this._l);
+  const LeftOption(this._l);
   L get value => _l;
 
   @override
@@ -24,13 +24,13 @@ class Left<L, M, R> extends Options3<L, M, R> {
   int get hashCode => _l.hashCode;
 
   @override
-  bool operator ==(other) => other is Left && other.value == value;
+  bool operator ==(other) => other is LeftOption && other.value == value;
 }
 
 /// Objeto que representa o retorno da opção da direita de uma função
-class Right<L, M, R> extends Options3<L, M, R> {
+class RightOption<L, M, R> extends Options3<L, M, R> {
   final R _r;
-  const Right(this._r);
+  const RightOption(this._r);
   R get value => _r;
   @override
   B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifRight(value);
@@ -38,14 +38,14 @@ class Right<L, M, R> extends Options3<L, M, R> {
   int get hashCode => _r.hashCode;
 
   @override
-  bool operator ==(other) => other is Right && other.value == value;
+  bool operator ==(other) => other is RightOption && other.value == value;
 }
 
 /// Objeto que representa o retorno da opção do meio de uma função
-class Middle<L, M, R> extends Options3<L, M, R> {
+class MiddleOption<L, M, R> extends Options3<L, M, R> {
   final M _m;
 
-  const Middle(this._m);
+  const MiddleOption(this._m);
   M get value => _m;
   @override
   B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifMiddle(value);
@@ -53,5 +53,5 @@ class Middle<L, M, R> extends Options3<L, M, R> {
   int get hashCode => _m.hashCode;
 
   @override
-  bool operator ==(other) => other is Middle && other.value == value;
+  bool operator ==(other) => other is MiddleOption && other.value == value;
 }
