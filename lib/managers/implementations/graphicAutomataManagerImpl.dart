@@ -66,6 +66,13 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
+  void newTransaction(Offset startPosition) {
+    print("Executando: GraphicAutomataManager.newTransaction");
+    _transactionsManager.createNewTransaction(startPosition);
+  }
+
+  @override
+  @action
   void updateFinalPositionNewTransaction(Offset finalPosition) {
     print(
         "Executando: GraphicAutomataManager.updateFinalPositionNewTransaction");

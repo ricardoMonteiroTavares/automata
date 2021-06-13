@@ -108,6 +108,17 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
+  void newTransaction(Offset startPosition) {
+    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
+        .startAction(name: '_GraphicAutomataManagerImpl.newTransaction');
+    try {
+      return super.newTransaction(startPosition);
+    } finally {
+      _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void updateFinalPositionNewTransaction(Offset finalPosition) {
     final _$actionInfo =
         _$_GraphicAutomataManagerImplActionController.startAction(

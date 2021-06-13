@@ -14,6 +14,9 @@ abstract class GraphicAutomataManager {
   /// Adiciono um novo estado em uma determinada posição [position]
   void addState(Offset position);
 
+  /// Crio uma nova transação a partir de uma determinada posição [startPosition]
+  void newTransaction(Offset startPosition);
+
   /// Modifica a posição final de uma nova transação
   void updateFinalPositionNewTransaction(Offset finalPosition);
 
