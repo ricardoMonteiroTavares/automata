@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
@@ -30,17 +31,18 @@ abstract class _IDEWindowController with Store {
     print("Executando: IDEWindowController.onTap");
     Offset position = details.localPosition;
 
-    Either<String, Pair<String, double>> resp = _manager.getState(position);
+    Options3<String, double, Offset> resp = _manager.getState(position);
 
     resp.fold<void>(
       (l) => _select(l),
-      (r) {
+      (m) {
         if (_manager.containsSelectState) {
           _unselect();
-        } else if (r.right > 60) {
+        } else if (m > 60) {
           _add(position);
         }
       },
+      (r) => null,
     );
   }
 
@@ -97,7 +99,7 @@ abstract class _IDEWindowController with Store {
   }
 
   Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
-    Either<String, Pair<String, double>> resp =
+    Options3<String, double, Offset> resp =
         _manager.getState(details.localPosition);
 
     resp.fold(
@@ -111,6 +113,7 @@ abstract class _IDEWindowController with Store {
           _manager.selectStateType = newType;
         }
       },
+      (m) => null,
       (r) => null,
     );
   }
