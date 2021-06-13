@@ -39,22 +39,6 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
     });
   }
 
-  final _$_newTransactionAtom =
-      Atom(name: '_IDEWindowController._newTransaction');
-
-  @override
-  TransactionWidget? get _newTransaction {
-    _$_newTransactionAtom.reportRead();
-    return super._newTransaction;
-  }
-
-  @override
-  set _newTransaction(TransactionWidget? value) {
-    _$_newTransactionAtom.reportWrite(value, super._newTransaction, () {
-      super._newTransaction = value;
-    });
-  }
-
   final _$_IDEWindowControllerActionController =
       ActionController(name: '_IDEWindowController');
 

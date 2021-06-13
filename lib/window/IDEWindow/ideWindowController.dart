@@ -19,9 +19,6 @@ abstract class _IDEWindowController with Store {
   @observable
   GraphicAutomataManager _manager = GraphicAutomataManager();
 
-  @observable
-  TransactionWidget? _newTransaction;
-
   @computed
   List<LayoutId> get objects => _manager.objects;
 
@@ -50,40 +47,30 @@ abstract class _IDEWindowController with Store {
   @action
   void onStart(DragStartDetails details) {
     print("Executando: IDEWindowController.onStart");
-    Either<String, Pair<String, double>> resp =
+    /* Either<String, Pair<String, double>> resp =
         _manager.getState(details.localPosition);
 
     resp.fold<void>(
       (l) => null,
       (r) {
         if ((r.right - 30) <= 4 && (r.right - 30) > 0) {
-          if (_newTransaction == null) {
-            print("------------ Criado o objeto ------------");
-            String id = _manager.uniqueTransactionID;
-            _newTransaction = TransactionWidget(
-                id: id, initialPosition: details.localPosition);
-            _manager.addTransaction(_newTransaction!);
-          }
+         
         }
       },
-    );
+    ); */
+    // Depois
   }
 
   @action
   void onUpdate(DragUpdateDetails details) {
     print("Executando: IDEWindowController.onUpdate");
-    if (_newTransaction != null) {
-      _newTransaction!.distance =
-          details.globalPosition - _newTransaction!.initialPosition;
-    }
+    _manager.updateFinalPositionNewTransaction(details.localPosition);
   }
 
   @action
   void onFinish(DragEndDetails details) {
     print("Executando: IDEWindowController.onFinish");
-    if (_newTransaction != null) {
-      _newTransaction = null;
-    }
+    _manager.finishFinalPosition();
   }
 
   @action

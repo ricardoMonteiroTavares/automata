@@ -28,7 +28,7 @@ class _IDEWindowState extends State<IDEWindow> {
       },
       onSecondaryTapDown: (details) =>
           _controller.contextMenu(details, context),
-      onPanStart: _controller.onStart,
+      // onPanStart: _controller.onStart,
       onPanUpdate: _controller.onUpdate,
       onPanEnd: _controller.onFinish,
       child: Scaffold(
