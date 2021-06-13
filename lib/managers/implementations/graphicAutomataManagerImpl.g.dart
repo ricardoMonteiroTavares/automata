@@ -9,13 +9,6 @@ part of 'graphicAutomataManagerImpl.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
-  Computed<String>? _$uniqueTransactionIDComputed;
-
-  @override
-  String get uniqueTransactionID => (_$uniqueTransactionIDComputed ??=
-          Computed<String>(() => super.uniqueTransactionID,
-              name: '_GraphicAutomataManagerImpl.uniqueTransactionID'))
-      .value;
   Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
@@ -67,19 +60,20 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
     });
   }
 
-  final _$_transactionsAtom =
-      Atom(name: '_GraphicAutomataManagerImpl._transactions');
+  final _$_transactionsManagerAtom =
+      Atom(name: '_GraphicAutomataManagerImpl._transactionsManager');
 
   @override
-  ObservableMap<String, TransactionWidget> get _transactions {
-    _$_transactionsAtom.reportRead();
-    return super._transactions;
+  TransactionsManager get _transactionsManager {
+    _$_transactionsManagerAtom.reportRead();
+    return super._transactionsManager;
   }
 
   @override
-  set _transactions(ObservableMap<String, TransactionWidget> value) {
-    _$_transactionsAtom.reportWrite(value, super._transactions, () {
-      super._transactions = value;
+  set _transactionsManager(TransactionsManager value) {
+    _$_transactionsManagerAtom.reportWrite(value, super._transactionsManager,
+        () {
+      super._transactionsManager = value;
     });
   }
 
@@ -114,11 +108,24 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void addTransaction(TransactionWidget transaction) {
-    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.addTransaction');
+  void updateFinalPositionNewTransaction(Offset finalPosition) {
+    final _$actionInfo =
+        _$_GraphicAutomataManagerImplActionController.startAction(
+            name:
+                '_GraphicAutomataManagerImpl.updateFinalPositionNewTransaction');
     try {
-      return super.addTransaction(transaction);
+      return super.updateFinalPositionNewTransaction(finalPosition);
+    } finally {
+      _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void finishFinalPosition() {
+    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
+        .startAction(name: '_GraphicAutomataManagerImpl.finishFinalPosition');
+    try {
+      return super.finishFinalPosition();
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
@@ -171,7 +178,6 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   @override
   String toString() {
     return '''
-uniqueTransactionID: ${uniqueTransactionID},
 objects: ${objects},
 containsSelectState: ${containsSelectState},
 selectStatePosition: ${selectStatePosition},

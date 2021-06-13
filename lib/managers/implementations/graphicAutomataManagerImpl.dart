@@ -6,6 +6,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
+import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
@@ -34,8 +35,7 @@ abstract class _GraphicAutomataManagerImpl
       ObservableMap<String, StateWidget>();
 
   @observable
-  ObservableMap<String, TransactionWidget> _transactions =
-      ObservableMap<String, TransactionWidget>();
+  TransactionsManager _transactionsManager = TransactionsManager();
 
   @observable
   StateWidget? _selectedState;
@@ -57,6 +57,7 @@ abstract class _GraphicAutomataManagerImpl
         position: position,
         selectOnDrag: selectState,
         getState: getState,
+        onStart: _transactionsManager.createNewTransaction,
       )
     });
     _dfaManager.addState(id);
@@ -64,23 +65,17 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  void addTransaction(TransactionWidget transaction) {
-    print("Executando: GraphicAutomataManager.addTransaction");
-    _transactions.addAll({transaction.id: transaction});
+  void updateFinalPositionNewTransaction(Offset finalPosition) {
+    print(
+        "Executando: GraphicAutomataManager.updateFinalPositionNewTransaction");
+    _transactionsManager.updateFinalPositionNewTransaction(finalPosition);
   }
 
   @override
-  @computed
-  String get uniqueTransactionID {
-    print("Executando: GraphicAutomataManager.get uniqueTransactionID");
-    String id;
-    if (_transactions.isEmpty) {
-      id = "t0";
-    } else {
-      var obj = _transactions.values.elementAt(_transactions.length - 1).id;
-      id = "t${int.parse(obj.toString().substring(1)) + 1}";
-    }
-    return id;
+  @action
+  void finishFinalPosition() {
+    print("Executando: GraphicAutomataManager.finishFinalPosition");
+    _transactionsManager.finishFinalPosition();
   }
 
   @override
@@ -138,9 +133,7 @@ abstract class _GraphicAutomataManagerImpl
     List<LayoutId> states = _states.entries
         .map((e) => LayoutId(id: e.key, child: e.value))
         .toList();
-    List<LayoutId> arrows = _transactions.entries
-        .map((e) => LayoutId(id: e.key, child: e.value))
-        .toList();
+    List<LayoutId> arrows = _transactionsManager.objects;
     return [...states, ...arrows];
   }
 
@@ -164,8 +157,8 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @computed
-  IDELayoutDelegate get positions =>
-      IDELayoutDelegate(states: _states, transactions: _transactions);
+  IDELayoutDelegate get positions => IDELayoutDelegate(
+      states: _states, transactions: _transactionsManager.transactions);
 
   @override
   @computed
