@@ -1,7 +1,9 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
+import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:dartz/dartz.dart';
@@ -46,6 +48,11 @@ abstract class _StateWidgetController with Store {
 
   @observable
   Offset _position = Offset(-1, -1);
+
+  @observable
+  late HoverStateWidget _hoverState = HoverStateWidget(
+    hover: (hover && (color != Colors.blue)),
+  );
 
   late final String _id;
   late final Label _label = Label(
@@ -94,13 +101,14 @@ abstract class _StateWidgetController with Store {
     _selectState(id);
   }
 
-  Either<bool, double> pointIsInState(Offset point) {
+  Options3<bool, double, Offset> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
 
-    if (distance < _radius) {
-      return Left(true);
-    }
-    return Right(distance);
+    Either<bool, Offset> resp = _hoverState.clickInPin(_position, point);
+
+    return resp.fold(
+        (l) => (distance < _radius) ? LeftOption(true) : MiddleOption(distance),
+        (r) => RightOption(r));
   }
 
   Widget node({Color? color}) {

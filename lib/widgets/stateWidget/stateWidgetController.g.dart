@@ -69,6 +69,21 @@ mixin _$StateWidgetController on _StateWidgetController, Store {
     });
   }
 
+  final _$_hoverStateAtom = Atom(name: '_StateWidgetController._hoverState');
+
+  @override
+  HoverStateWidget get _hoverState {
+    _$_hoverStateAtom.reportRead();
+    return super._hoverState;
+  }
+
+  @override
+  set _hoverState(HoverStateWidget value) {
+    _$_hoverStateAtom.reportWrite(value, super._hoverState, () {
+      super._hoverState = value;
+    });
+  }
+
   final _$_StateWidgetControllerActionController =
       ActionController(name: '_StateWidgetController');
 

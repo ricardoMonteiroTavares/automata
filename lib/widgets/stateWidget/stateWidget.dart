@@ -1,4 +1,5 @@
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
 import 'package:dartz/dartz.dart';
@@ -35,7 +36,7 @@ class StateWidget extends StatelessWidget {
 
   Offset get position => _controller.position;
 
-  Either<bool, double> pointIsInState(Offset point) =>
+  Options3<bool, double, Offset> pointIsInState(Offset point) =>
       _controller.pointIsInState(point);
 
   @override
@@ -55,11 +56,6 @@ class StateWidget extends StatelessWidget {
                       onDragEnd: _controller.reposition,
                     )
                   : _controller.node(),
-              HoverStateWidget(
-                hover:
-                    (_controller.hover && (_controller.color != Colors.blue)),
-                onPanStart: _controller.onStart,
-              )
             ],
           )),
     );
