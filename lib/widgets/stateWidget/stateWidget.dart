@@ -13,13 +13,14 @@ class StateWidget extends StatelessWidget {
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, Pair<String, double>> Function(Offset)
-          getState}) {
+      required Either<String, Pair<String, double>> Function(Offset) getState,
+      required Function(Offset) onStart}) {
     _controller = StateWidgetController(
         id: id,
         position: position,
         selectOnDrag: selectOnDrag,
-        getState: getState);
+        getState: getState,
+        onStart: onStart);
   }
 
   String get id => _controller.id;
@@ -45,14 +46,20 @@ class StateWidget extends StatelessWidget {
           onExit: _controller.onExit,
           child: Stack(
             children: [
-              Draggable(
-                child: _controller.node(),
-                feedback: _controller.node(color: Colors.blue),
-                childWhenDragging: Container(),
-                onDragStarted: select,
-                onDragEnd: _controller.reposition,
-              ),
-              HoverStateWidget(hover: _controller.hover)
+              (_controller.color == Colors.blue)
+                  ? Draggable(
+                      child: _controller.node(),
+                      feedback: _controller.node(color: Colors.blue),
+                      childWhenDragging: Container(),
+                      onDragStarted: select,
+                      onDragEnd: _controller.reposition,
+                    )
+                  : _controller.node(),
+              HoverStateWidget(
+                hover:
+                    (_controller.hover && (_controller.color != Colors.blue)),
+                onPanStart: _controller.onStart,
+              )
             ],
           )),
     );

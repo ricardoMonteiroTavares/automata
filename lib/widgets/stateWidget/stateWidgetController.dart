@@ -17,12 +17,13 @@ class StateWidgetController extends _StateWidgetController
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, Pair<String, double>> Function(Offset)
-          getState}) {
+      required Either<String, Pair<String, double>> Function(Offset) getState,
+      required Function(Offset) onStart}) {
     super._id = id;
     super._position = position;
     super._selectState = selectOnDrag;
     super._getState = getState;
+    super._onStart = onStart;
   }
 }
 
@@ -32,6 +33,7 @@ abstract class _StateWidgetController with Store {
 
   late final Function(String) _selectState;
   late final Either<String, Pair<String, double>> Function(Offset) _getState;
+  late final Function(Offset) _onStart;
 
   @observable
   bool _hover = false;
@@ -123,4 +125,5 @@ abstract class _StateWidgetController with Store {
   Offset get position => _position;
   Color get color => _color;
   bool get hover => _hover;
+  Function(Offset) get onStart => _onStart;
 }
