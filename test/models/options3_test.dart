@@ -1,9 +1,9 @@
 import 'package:automata/models/options3.dart';
 import 'package:test/test.dart';
 
-Options3<bool, int, String> generateString() => Right("Teste");
-Options3<bool, int, String> generateInt() => Middle(-1);
-Options3<bool, int, String> generateBool() => Left(false);
+Options3<bool, int, String> generateString() => RightOption("Teste");
+Options3<bool, int, String> generateInt() => MiddleOption(-1);
+Options3<bool, int, String> generateBool() => LeftOption(false);
 void main() {
   test("Verificar se o valor de resposta é da esquerda (bool)", () {
     Options3<bool, int, String> resp = generateBool();
