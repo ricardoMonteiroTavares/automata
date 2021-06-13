@@ -2,14 +2,14 @@
 abstract class Options3<L, M, R> {
   const Options3();
 
-  B _fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r));
-  bool isLeft() => _fold((_) => true, (_) => false, (_) => false);
-  bool isMiddle() => _fold((_) => false, (_) => true, (_) => false);
-  bool isRight() => _fold((_) => false, (_) => false, (_) => true);
+  B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r));
+  bool isLeft() => fold((_) => true, (_) => false, (_) => false);
+  bool isMiddle() => fold((_) => false, (_) => true, (_) => false);
+  bool isRight() => fold((_) => false, (_) => false, (_) => true);
 
-  L? get left => _fold((_) => _, (_) => null, (_) => null);
-  M? get middle => _fold((_) => null, (_) => _, (_) => null);
-  R? get right => _fold((_) => null, (_) => null, (_) => _);
+  L? get left => fold((_) => _, (_) => null, (_) => null);
+  M? get middle => fold((_) => null, (_) => _, (_) => null);
+  R? get right => fold((_) => null, (_) => null, (_) => _);
 }
 
 /// Objeto que representa o retorno da opção da esquerda de uma função
@@ -19,7 +19,7 @@ class Left<L, M, R> extends Options3<L, M, R> {
   L get value => _l;
 
   @override
-  B _fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifLeft(value);
+  B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifLeft(value);
   @override
   int get hashCode => _l.hashCode;
 
@@ -33,7 +33,7 @@ class Right<L, M, R> extends Options3<L, M, R> {
   const Right(this._r);
   R get value => _r;
   @override
-  B _fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifRight(value);
+  B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifRight(value);
   @override
   int get hashCode => _r.hashCode;
 
@@ -48,7 +48,7 @@ class Middle<L, M, R> extends Options3<L, M, R> {
   const Middle(this._m);
   M get value => _m;
   @override
-  B _fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifMiddle(value);
+  B fold<B>(B ifLeft(L l), B ifMiddle(M c), B ifRight(R r)) => ifMiddle(value);
   @override
   int get hashCode => _m.hashCode;
 
