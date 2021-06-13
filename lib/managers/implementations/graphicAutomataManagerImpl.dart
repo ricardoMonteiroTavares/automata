@@ -7,6 +7,7 @@ import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
@@ -92,26 +93,25 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  Either<String, Pair<String, double>> getState(Offset position) {
+  Options3<String, double, Offset> getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
-    Pair<String, double> minDistance = Pair("", double.infinity);
+    double minDistance = double.infinity;
     for (String key in _states.keys) {
-      Either<bool, double> resp = _states[key]!.pointIsInState(position);
+      Options3<bool, double, Offset> resp =
+          _states[key]!.pointIsInState(position);
+
       if (resp.isLeft()) {
         print("Identificou a key: $key");
-        return Left(key);
-      } else {
-        double minimal = resp.foldRight(
-            minDistance.right, (r, previous) => min(r, previous));
-        if (minimal != minDistance.right) {
-          minDistance.right = minimal;
-          minDistance.left = key;
-        }
+        return LeftOption(key);
+      } else if (resp.isMiddle()) {
+        minDistance = min(minDistance, resp.middle!);
         print("Nova distância: $minDistance");
+      } else {
+        return RightOption(resp.right!);
       }
     }
 
-    return Right(minDistance);
+    return MiddleOption(minDistance);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:dartz/dartz.dart';
@@ -20,9 +21,10 @@ abstract class GraphicAutomataManager {
   void finishFinalPosition();
 
   /// Busco o ID em uma determinada posição [position], caso não a encontre
-  /// retornará um par com a distância entre o clique e o nó mais próximo
-  /// e o id do nó mais próximo.
-  Either<String, Pair<String, double>> getState(Offset position);
+  /// retornará a distância entre o clique e o nó mais próximo
+  /// e caso tenha clicado em algum objeto do tipo [Pin], retornará a posição
+  /// do centro do pin a fim de se criar uma nova transação.
+  Options3<String, double, Offset> getState(Offset position);
 
   /// Guardo um estado selecionado [id]
   void selectState(String id);

@@ -14,7 +14,7 @@ class StateWidget extends StatelessWidget {
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, Pair<String, double>> Function(Offset) getState,
+      required Options3<String, double, Offset> Function(Offset) getState,
       required Function(Offset) onStart}) {
     _controller = StateWidgetController(
         id: id,

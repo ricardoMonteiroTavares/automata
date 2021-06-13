@@ -19,7 +19,7 @@ class StateWidgetController extends _StateWidgetController
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Either<String, Pair<String, double>> Function(Offset) getState,
+      required Options3<String, double, Offset> Function(Offset) getState,
       required Function(Offset) onStart}) {
     super._id = id;
     super._position = position;
@@ -34,7 +34,7 @@ abstract class _StateWidgetController with Store {
   final double _radius = 30;
 
   late final Function(String) _selectState;
-  late final Either<String, Pair<String, double>> Function(Offset) _getState;
+  late final Options3<String, double, Offset> Function(Offset) _getState;
   late final Function(Offset) _onStart;
 
   @observable
@@ -91,11 +91,12 @@ abstract class _StateWidgetController with Store {
     Offset prevPosition = position;
     Offset newPosition = details.offset + Offset(_radius, _radius);
 
-    Either<String, Pair<String, double>> resp = _getState(newPosition);
+    Options3<String, double, Offset> resp = _getState(newPosition);
 
     _position = resp.fold<Offset>(
       (l) => prevPosition,
-      (r) => (r.right > _diameter) ? newPosition : prevPosition,
+      (m) => (m > _diameter) ? newPosition : prevPosition,
+      (r) => prevPosition,
     );
 
     _selectState(id);
