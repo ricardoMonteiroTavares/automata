@@ -45,19 +45,28 @@ class StateWidget extends StatelessWidget {
       builder: (_) => MouseRegion(
           onEnter: _controller.onEnter,
           onExit: _controller.onExit,
-          child: Stack(
-            children: [
-              (_controller.color == Colors.blue)
-                  ? Draggable(
-                      child: _controller.node(),
-                      feedback: _controller.node(color: Colors.blue),
-                      childWhenDragging: Container(),
-                      onDragStarted: select,
-                      onDragEnd: _controller.reposition,
-                    )
-                  : _controller.node(),
-            ],
-          )),
+          child: Container(
+              width: 80,
+              height: 80,
+              child: Center(
+                  child: Stack(
+                children: [
+                  (_controller.color == Colors.blue)
+                      ? Draggable(
+                          child: _controller.node(),
+                          feedback: _controller.node(color: Colors.blue),
+                          childWhenDragging: Container(),
+                          onDragStarted: select,
+                          onDragEnd: _controller.reposition,
+                        )
+                      : _controller.node(),
+                  HoverStateWidget(
+                    hover: (_controller.hover &&
+                        (_controller.color != Colors.blue)),
+                    pinPositions: _controller.pinPositions,
+                  ),
+                ],
+              )))),
     );
   }
 }

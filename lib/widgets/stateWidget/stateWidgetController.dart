@@ -37,6 +37,13 @@ abstract class _StateWidgetController with Store {
   late final Options3<String, double, Offset> Function(Offset) _getState;
   late final Function(Offset) _onStart;
 
+  final Map<String, Offset> _pinPositions = {
+    "c1": Offset(25, -10),
+    "c2": Offset(25, 60),
+    "c3": Offset(60, 25),
+    "c4": Offset(-10, 25)
+  };
+
   @observable
   bool _hover = false;
 
@@ -48,11 +55,6 @@ abstract class _StateWidgetController with Store {
 
   @observable
   Offset _position = Offset(-1, -1);
-
-  @observable
-  late HoverStateWidget _hoverState = HoverStateWidget(
-    hover: (hover && (color != Colors.blue)),
-  );
 
   late final String _id;
   late final Label _label = Label(
@@ -105,7 +107,7 @@ abstract class _StateWidgetController with Store {
   Options3<bool, double, Offset> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
 
-    Either<bool, Offset> resp = _hoverState.clickInPin(_position, point);
+    Either<bool, Offset> resp = clickInPin(_position, point);
 
     return resp.fold(
         (l) => (distance < _radius) ? LeftOption(true) : MiddleOption(distance),
@@ -129,10 +131,37 @@ abstract class _StateWidgetController with Store {
     }
   }
 
+  /// Função que verifica se o click foi realizado em cima de algum dos pins
+  @action
+  Either<bool, Offset> clickInPin(Offset centerNode, Offset clickPosition) {
+    print("Executando: HoverStateWidget.clickInPin");
+    Offset topLeftNode = centerNode - Offset(30, 30);
+    Offset localPosition = clickPosition - topLeftNode;
+
+    print("--------- Click: ${clickPosition.toString()}");
+    for (String key in _pinPositions.keys) {
+      Offset topLeft = _pinPositions[key]!;
+      Offset bottomRight = topLeft + Offset(10, 10);
+
+      print(
+          "$key: TopLeft: ${topLeft.toString()} BottomRight: ${bottomRight.toString()}");
+      if (topLeft.dx <= localPosition.dx &&
+          localPosition.dx <= bottomRight.dx &&
+          topLeft.dy <= localPosition.dy &&
+          localPosition.dy <= bottomRight.dy) {
+        print("Clicou");
+        return Right(topLeftNode + topLeft + Offset(5, 5));
+      }
+    }
+
+    return Left(false);
+  }
+
   String get id => _id;
   StateType get type => _type;
   Offset get position => _position;
   Color get color => _color;
   bool get hover => _hover;
   Function(Offset) get onStart => _onStart;
+  Map<String, Offset> get pinPositions => _pinPositions;
 }

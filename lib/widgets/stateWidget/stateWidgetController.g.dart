@@ -69,21 +69,6 @@ mixin _$StateWidgetController on _StateWidgetController, Store {
     });
   }
 
-  final _$_hoverStateAtom = Atom(name: '_StateWidgetController._hoverState');
-
-  @override
-  HoverStateWidget get _hoverState {
-    _$_hoverStateAtom.reportRead();
-    return super._hoverState;
-  }
-
-  @override
-  set _hoverState(HoverStateWidget value) {
-    _$_hoverStateAtom.reportWrite(value, super._hoverState, () {
-      super._hoverState = value;
-    });
-  }
-
   final _$_StateWidgetControllerActionController =
       ActionController(name: '_StateWidgetController');
 
@@ -148,6 +133,17 @@ mixin _$StateWidgetController on _StateWidgetController, Store {
         name: '_StateWidgetController.reposition');
     try {
       return super.reposition(details);
+    } finally {
+      _$_StateWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Either<bool, Offset> clickInPin(Offset centerNode, Offset clickPosition) {
+    final _$actionInfo = _$_StateWidgetControllerActionController.startAction(
+        name: '_StateWidgetController.clickInPin');
+    try {
+      return super.clickInPin(centerNode, clickPosition);
     } finally {
       _$_StateWidgetControllerActionController.endAction(_$actionInfo);
     }
