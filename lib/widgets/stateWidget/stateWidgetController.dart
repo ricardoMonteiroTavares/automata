@@ -105,7 +105,7 @@ abstract class _StateWidgetController with Store {
   Options3<bool, double, Offset> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
 
-    Either<bool, Offset> resp = clickInPin(_position, point);
+    Either<bool, Offset> resp = clickInPin(position, point);
 
     return resp.fold(
         (l) => (distance < _radius) ? LeftOption(true) : MiddleOption(distance),
@@ -132,11 +132,12 @@ abstract class _StateWidgetController with Store {
   /// Função que verifica se o click foi realizado em cima de algum dos pins
   @action
   Either<bool, Offset> clickInPin(Offset centerNode, Offset clickPosition) {
-    print("Executando: HoverStateWidget.clickInPin");
+    print("Executando: HoverStateWidget.clickInPin, Estado: $id");
     Offset topLeftNode = centerNode - Offset(30, 30);
+    print("--------- topLeftNode: ${topLeftNode.toString()}");
     Offset localPosition = clickPosition - topLeftNode;
-
     print("--------- Click: ${clickPosition.toString()}");
+    print("--------- LocalPosition: ${localPosition.toString()}");
     for (String key in _pinPositions.keys) {
       Offset topLeft = _pinPositions[key]!;
       Offset bottomRight = topLeft + Offset(10, 10);
