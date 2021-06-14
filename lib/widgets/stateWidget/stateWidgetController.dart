@@ -1,9 +1,7 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/options3.dart';
-import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
-import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
 import 'package:dartz/dartz.dart';

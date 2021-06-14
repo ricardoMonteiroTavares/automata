@@ -2,9 +2,6 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
 import 'package:automata/models/options3.dart';
-import 'package:automata/models/pair.dart';
-import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 
 /// Classe responsável por manipular um autômato de forma gráfica

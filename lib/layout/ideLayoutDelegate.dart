@@ -27,7 +27,6 @@ class IDELayoutDelegate extends MultiChildLayoutDelegate {
     if (transactions.isNotEmpty) {
       for (String key in transactions.keys) {
         if (hasChild(key)) {
-          Size s = layoutChild(key, BoxConstraints.loose(size));
           Offset offset = transactions[key]!.initialPosition;
 
           positionChild(key, Offset(offset.dx, offset.dy));

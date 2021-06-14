@@ -1,5 +1,4 @@
 import 'package:automata/elements/pin.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 /// Objeto que só aparece quando o mouse está por cima do objeto

@@ -1,17 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:automata/elements/arrow.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/options3.dart';
-import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
-import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 

@@ -1,8 +1,6 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/options3.dart';
-import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'stateWidgetController.dart';
