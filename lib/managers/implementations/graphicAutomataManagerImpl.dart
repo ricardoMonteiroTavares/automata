@@ -79,7 +79,15 @@ abstract class _GraphicAutomataManagerImpl
   @action
   void finishFinalPosition() {
     print("Executando: GraphicAutomataManager.finishFinalPosition");
-    _transactionsManager.finishFinalPosition();
+    Options3<String, double, Offset> resp =
+        getState(_transactionsManager.finalPositionNewTransaction);
+
+    if (resp.isRight()) {
+      _transactionsManager.updateFinalPositionNewTransaction(resp.right!);
+      _transactionsManager.finishFinalPosition();
+    } else {
+      _transactionsManager.deleteTransaction(null);
+    }
   }
 
   @override
