@@ -24,7 +24,7 @@ abstract class _TransactionsManagerImpl
     if (_newTransaction == null) {
       print("------------ Criado o objeto ------------");
       String id = uniqueTransactionID;
-      _newTransaction = TransactionWidget(id: id, initialPosition: pos);
+      _newTransaction = TransactionWidget(id: id, initPosition: pos);
       _transactions.addAll({id: _newTransaction!});
     }
   }
