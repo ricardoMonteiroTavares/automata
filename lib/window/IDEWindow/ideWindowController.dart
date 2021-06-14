@@ -42,7 +42,7 @@ abstract class _IDEWindowController with Store {
           _add(position);
         }
       },
-      (r) => null,
+      (r) => _manager.newTransaction(r),
     );
   }
 
