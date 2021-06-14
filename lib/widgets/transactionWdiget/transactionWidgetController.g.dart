@@ -16,12 +16,12 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
           () => super.initialPosition,
           name: '_TransactionWidgetController.initialPosition'))
       .value;
-  Computed<Offset>? _$distanceComputed;
+  Computed<Offset>? _$finalPositionComputed;
 
   @override
-  Offset get distance =>
-      (_$distanceComputed ??= Computed<Offset>(() => super.distance,
-              name: '_TransactionWidgetController.distance'))
+  Offset get finalPosition =>
+      (_$finalPositionComputed ??= Computed<Offset>(() => super.finalPosition,
+              name: '_TransactionWidgetController.finalPosition'))
           .value;
 
   final _$_initialPositionAtom =
@@ -40,18 +40,19 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
     });
   }
 
-  final _$_distanceAtom = Atom(name: '_TransactionWidgetController._distance');
+  final _$_finalPositionAtom =
+      Atom(name: '_TransactionWidgetController._finalPosition');
 
   @override
-  Offset get _distance {
-    _$_distanceAtom.reportRead();
-    return super._distance;
+  Offset get _finalPosition {
+    _$_finalPositionAtom.reportRead();
+    return super._finalPosition;
   }
 
   @override
-  set _distance(Offset value) {
-    _$_distanceAtom.reportWrite(value, super._distance, () {
-      super._distance = value;
+  set _finalPosition(Offset value) {
+    _$_finalPositionAtom.reportWrite(value, super._finalPosition, () {
+      super._finalPosition = value;
     });
   }
 
@@ -70,11 +71,11 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
-  void setDistance(Offset newDistance) {
+  void setFinalPosition(Offset newDistance) {
     final _$actionInfo = _$_TransactionWidgetControllerActionController
-        .startAction(name: '_TransactionWidgetController.setDistance');
+        .startAction(name: '_TransactionWidgetController.setFinalPosition');
     try {
-      return super.setDistance(newDistance);
+      return super.setFinalPosition(newDistance);
     } finally {
       _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
     }
@@ -84,7 +85,7 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   String toString() {
     return '''
 initialPosition: ${initialPosition},
-distance: ${distance}
+finalPosition: ${finalPosition}
     ''';
   }
 }

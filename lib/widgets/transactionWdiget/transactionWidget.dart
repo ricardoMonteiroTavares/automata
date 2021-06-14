@@ -13,7 +13,9 @@ class TransactionWidget extends StatelessWidget {
   }
 
   Offset get initialPosition => _controller.initialPosition;
-  set distance(Offset newDistance) => _controller.setDistance(newDistance);
+  set finalPosition(Offset newFinalPosition) =>
+      _controller.setFinalPosition(newFinalPosition);
+  Offset get finalPosition => _controller.finalPosition;
 
   String get id => _id;
 
@@ -22,7 +24,8 @@ class TransactionWidget extends StatelessWidget {
     return Observer(
       builder: (_) => CustomPaint(
         painter: Arrow(
-          distance: _controller.distance,
+          initialPosition: initialPosition,
+          finalPosition: finalPosition,
         ),
       ),
     );
