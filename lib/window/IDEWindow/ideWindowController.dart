@@ -47,23 +47,6 @@ abstract class _IDEWindowController with Store {
   }
 
   @action
-  void onStart(DragStartDetails details) {
-    print("Executando: IDEWindowController.onStart");
-    /* Either<String, Pair<String, double>> resp =
-        _manager.getState(details.localPosition);
-
-    resp.fold<void>(
-      (l) => null,
-      (r) {
-        if ((r.right - 30) <= 4 && (r.right - 30) > 0) {
-         
-        }
-      },
-    ); */
-    // Depois
-  }
-
-  @action
   void onUpdate(DragUpdateDetails details) {
     print("Executando: IDEWindowController.onUpdate");
     _manager.updateFinalPositionNewTransaction(details.localPosition);

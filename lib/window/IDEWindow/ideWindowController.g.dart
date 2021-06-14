@@ -54,17 +54,6 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   }
 
   @override
-  void onStart(DragStartDetails details) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController.onStart');
-    try {
-      return super.onStart(details);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void onUpdate(DragUpdateDetails details) {
     final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
         name: '_IDEWindowController.onUpdate');
