@@ -30,6 +30,14 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
           Computed<Map<String, TransactionWidget>>(() => super.transactions,
               name: '_TransactionsManagerImpl.transactions'))
       .value;
+  Computed<Offset>? _$finalPositionNewTransactionComputed;
+
+  @override
+  Offset get finalPositionNewTransaction =>
+      (_$finalPositionNewTransactionComputed ??= Computed<Offset>(
+              () => super.finalPositionNewTransaction,
+              name: '_TransactionsManagerImpl.finalPositionNewTransaction'))
+          .value;
 
   final _$_transactionsAtom =
       Atom(name: '_TransactionsManagerImpl._transactions');
@@ -100,7 +108,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   }
 
   @override
-  void deleteTransaction(String id) {
+  void deleteTransaction(String? id) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
         name: '_TransactionsManagerImpl.deleteTransaction');
     try {
@@ -115,7 +123,8 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
     return '''
 uniqueTransactionID: ${uniqueTransactionID},
 objects: ${objects},
-transactions: ${transactions}
+transactions: ${transactions},
+finalPositionNewTransaction: ${finalPositionNewTransaction}
     ''';
   }
 }

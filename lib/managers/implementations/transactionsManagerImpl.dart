@@ -50,8 +50,17 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  void deleteTransaction(String id) {
+  void deleteTransaction(String? id) {
     print("Executando: TransactionsManager.deleteTransaction");
+    if (id != null) {
+      print("Removendo transação de id = $id");
+      _transactions.remove(id);
+    } else if (_newTransaction != null) {
+      print(
+          "Cancelando a inserção da transação de id = ${_newTransaction!.id}");
+      _transactions.remove(_newTransaction!.id);
+      _newTransaction = null;
+    }
   }
 
   @override
@@ -77,4 +86,9 @@ abstract class _TransactionsManagerImpl
   @override
   @computed
   Map<String, TransactionWidget> get transactions => _transactions;
+
+  @override
+  @computed
+  Offset get finalPositionNewTransaction =>
+      (_newTransaction!.initialPosition + _newTransaction!.initialPosition);
 }

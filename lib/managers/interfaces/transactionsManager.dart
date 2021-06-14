@@ -9,9 +9,11 @@ abstract class TransactionsManager {
 
   void updateFinalPositionNewTransaction(Offset finalPosition);
 
+  Offset get finalPositionNewTransaction;
+
   void finishFinalPosition();
 
-  void deleteTransaction(String id);
+  void deleteTransaction(String? id);
 
   /// Gero um id único para a nova transação
   String get uniqueTransactionID;
