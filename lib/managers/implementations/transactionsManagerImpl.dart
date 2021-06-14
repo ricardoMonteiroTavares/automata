@@ -34,8 +34,7 @@ abstract class _TransactionsManagerImpl
   void updateFinalPositionNewTransaction(Offset finalPosition) {
     print("Executando: TransactionsManager.updateFinalPositionNewTransaction");
     if (_newTransaction != null) {
-      _newTransaction!.distance =
-          finalPosition - _newTransaction!.initialPosition;
+      _newTransaction!.finalPosition = finalPosition;
     }
   }
 
@@ -89,6 +88,5 @@ abstract class _TransactionsManagerImpl
 
   @override
   @computed
-  Offset get finalPositionNewTransaction =>
-      (_newTransaction!.initialPosition + _newTransaction!.initialPosition);
+  Offset get finalPositionNewTransaction => _newTransaction!.finalPosition;
 }
