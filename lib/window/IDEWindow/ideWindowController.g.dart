@@ -39,6 +39,13 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
     });
   }
 
+  final _$onFinishAsyncAction = AsyncAction('_IDEWindowController.onFinish');
+
+  @override
+  Future onFinish(DragEndDetails details, BuildContext context) {
+    return _$onFinishAsyncAction.run(() => super.onFinish(details, context));
+  }
+
   final _$_IDEWindowControllerActionController =
       ActionController(name: '_IDEWindowController');
 
@@ -59,17 +66,6 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
         name: '_IDEWindowController.onUpdate');
     try {
       return super.onUpdate(details);
-    } finally {
-      _$_IDEWindowControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onFinish(DragEndDetails details) {
-    final _$actionInfo = _$_IDEWindowControllerActionController.startAction(
-        name: '_IDEWindowController.onFinish');
-    try {
-      return super.onFinish(details);
     } finally {
       _$_IDEWindowControllerActionController.endAction(_$actionInfo);
     }

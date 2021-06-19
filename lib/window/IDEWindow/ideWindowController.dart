@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:automata/dialog/transactionDialog/transactionDialog.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
@@ -50,9 +51,14 @@ abstract class _IDEWindowController with Store {
   }
 
   @action
-  void onFinish(DragEndDetails details) {
+  Future<void> onFinish(DragEndDetails details, BuildContext context) async {
     print("Executando: IDEWindowController.onFinish");
     _manager.finishFinalPosition();
+    String key = await showDialog(
+        context: context,
+        builder: (BuildContext context) => TransactionDialog());
+
+    print("Chave selecionada: $key");
   }
 
   @action

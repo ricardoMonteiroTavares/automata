@@ -29,7 +29,7 @@ class _IDEWindowState extends State<IDEWindow> {
       onSecondaryTapDown: (details) =>
           _controller.contextMenu(details, context),
       onPanUpdate: _controller.onUpdate,
-      onPanEnd: _controller.onFinish,
+      onPanEnd: (details) => _controller.onFinish(details, context),
       child: Scaffold(
         body: RawKeyboardListener(
           autofocus: true,
