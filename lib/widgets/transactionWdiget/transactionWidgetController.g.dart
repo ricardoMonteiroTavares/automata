@@ -71,11 +71,11 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
-  void setFinalPosition(Offset newDistance) {
+  void setFinalPosition(Offset newFinalPosition) {
     final _$actionInfo = _$_TransactionWidgetControllerActionController
         .startAction(name: '_TransactionWidgetController.setFinalPosition');
     try {
-      return super.setFinalPosition(newDistance);
+      return super.setFinalPosition(newFinalPosition);
     } finally {
       _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
     }
