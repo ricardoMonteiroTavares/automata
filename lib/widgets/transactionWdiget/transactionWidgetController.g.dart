@@ -23,6 +23,13 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
       (_$finalPositionComputed ??= Computed<Offset>(() => super.finalPosition,
               name: '_TransactionWidgetController.finalPosition'))
           .value;
+  Computed<String>? _$keyCodeComputed;
+
+  @override
+  String get keyCode =>
+      (_$keyCodeComputed ??= Computed<String>(() => super.keyCode,
+              name: '_TransactionWidgetController.keyCode'))
+          .value;
 
   final _$_initialPositionAtom =
       Atom(name: '_TransactionWidgetController._initialPosition');
@@ -56,6 +63,21 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
     });
   }
 
+  final _$_keyCodeAtom = Atom(name: '_TransactionWidgetController._keyCode');
+
+  @override
+  String get _keyCode {
+    _$_keyCodeAtom.reportRead();
+    return super._keyCode;
+  }
+
+  @override
+  set _keyCode(String value) {
+    _$_keyCodeAtom.reportWrite(value, super._keyCode, () {
+      super._keyCode = value;
+    });
+  }
+
   final _$_TransactionWidgetControllerActionController =
       ActionController(name: '_TransactionWidgetController');
 
@@ -82,10 +104,22 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
+  void setKeyCode(String newCode) {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.setKeyCode');
+    try {
+      return super.setKeyCode(newCode);
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 initialPosition: ${initialPosition},
-finalPosition: ${finalPosition}
+finalPosition: ${finalPosition},
+keyCode: ${keyCode}
     ''';
   }
 }

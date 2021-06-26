@@ -13,6 +13,9 @@ abstract class _TransactionWidgetController with Store {
   @observable
   Offset _finalPosition = Offset(0, 0);
 
+  @observable
+  String _keyCode = "";
+
   @action
   void setInitialPosition(Offset newInitialPosition) {
     _initialPosition = newInitialPosition;
@@ -28,4 +31,12 @@ abstract class _TransactionWidgetController with Store {
 
   @computed
   Offset get finalPosition => _finalPosition;
+
+  @action
+  void setKeyCode(String newCode) {
+    _keyCode = newCode;
+  }
+
+  @computed
+  String get keyCode => _keyCode;
 }

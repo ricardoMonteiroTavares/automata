@@ -21,6 +21,12 @@ class TransactionWidget extends StatelessWidget {
       _controller.setFinalPosition(newFinalPosition);
   Offset get finalPosition => _controller.finalPosition;
 
+  set keyCode(String newCode) {
+    _controller.setKeyCode(newCode);
+  }
+
+  String get keyCode => _controller.keyCode;
+
   String get id => _id;
 
   @override
@@ -30,6 +36,7 @@ class TransactionWidget extends StatelessWidget {
         painter: Arrow(
           initialPosition: initialPosition,
           finalPosition: finalPosition,
+          keyCode: keyCode,
         ),
       ),
     );
