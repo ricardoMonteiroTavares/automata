@@ -17,6 +17,15 @@ class Arrow extends CustomPainter {
     ..strokeCap = StrokeCap.round
     ..strokeJoin = StrokeJoin.round
     ..strokeWidth = 3.0;
+
+  late final TextPainter _textPainter = TextPainter(
+    text: TextSpan(
+      text: keyCode,
+      style: TextStyle(color: Colors.blue),
+    ),
+    textDirection: TextDirection.ltr,
+  );
+
   @override
   void paint(Canvas canvas, Size size) {
     Path path = Path();
@@ -30,17 +39,13 @@ class Arrow extends CustomPainter {
     path = ArrowPath.make(path: path);
     canvas.drawPath(path, _paint..color = Colors.blue);
 
-    TextSpan textSpan = TextSpan(
-      text: keyCode,
-      style: TextStyle(color: Colors.blue),
-    );
-    TextPainter textPainter = TextPainter(
-      text: textSpan,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    );
-    textPainter.layout(minWidth: size.width);
-    textPainter.paint(canvas, Offset((distance.dx / 2), size.height * 0.06));
+    _textPainter.layout(minWidth: size.width);
+
+    double centerY = (distance.dy / 2) - 20;
+    double centerX = (distance.dx / 2);
+
+    Offset textPos = Offset(centerX, centerY);
+    _textPainter.paint(canvas, textPos);
   }
 
   @override
