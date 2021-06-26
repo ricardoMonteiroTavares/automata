@@ -1,3 +1,5 @@
+import 'package:automata/models/pair.dart';
+import 'package:automata/models/transaction.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
@@ -8,29 +10,29 @@ class TransactionWidgetController = _TransactionWidgetController
 
 abstract class _TransactionWidgetController with Store {
   @observable
-  Offset _initialPosition = Offset(0, 0);
+  Pair<String, Offset> _initialPosition = Pair("", Offset(0, 0));
 
   @observable
-  Offset _finalPosition = Offset(0, 0);
+  Pair<String, Offset> _finalPosition = Pair("", Offset(0, 0));
 
   @observable
   String _keyCode = "";
 
   @action
-  void setInitialPosition(Offset newInitialPosition) {
+  void setInitialPosition(Pair<String, Offset> newInitialPosition) {
     _initialPosition = newInitialPosition;
   }
 
   @computed
-  Offset get initialPosition => _initialPosition;
+  Offset get initialPosition => _initialPosition.right;
 
   @action
-  void setFinalPosition(Offset newFinalPosition) {
+  void setFinalPosition(Pair<String, Offset> newFinalPosition) {
     _finalPosition = newFinalPosition;
   }
 
   @computed
-  Offset get finalPosition => _finalPosition;
+  Offset get finalPosition => _finalPosition.right;
 
   @action
   void setKeyCode(String newCode) {
@@ -39,4 +41,8 @@ abstract class _TransactionWidgetController with Store {
 
   @computed
   String get keyCode => _keyCode;
+
+  @computed
+  Transaction get generateModel => Transaction(
+      from: _initialPosition.left, to: _finalPosition.left, parameter: keyCode);
 }

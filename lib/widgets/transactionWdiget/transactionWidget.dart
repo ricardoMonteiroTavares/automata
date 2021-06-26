@@ -1,4 +1,6 @@
 import 'package:automata/elements/arrow.dart';
+import 'package:automata/models/pair.dart';
+import 'package:automata/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidgetController.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,17 +9,18 @@ class TransactionWidget extends StatelessWidget {
   final TransactionWidgetController _controller = TransactionWidgetController();
   late final String _id;
 
-  TransactionWidget({required String id, required Offset initPosition}) {
+  TransactionWidget(
+      {required String id, required Pair<String, Offset> initPosition}) {
     _id = id;
-    initialPosition = initPosition;
-    finalPosition = initPosition;
+    setInitialPosition(initPosition);
+    setFinalPosition(initPosition);
   }
 
   Offset get initialPosition => _controller.initialPosition;
-  set initialPosition(Offset newInitialPosition) =>
+  void setInitialPosition(Pair<String, Offset> newInitialPosition) =>
       _controller.setInitialPosition(newInitialPosition);
 
-  set finalPosition(Offset newFinalPosition) =>
+  void setFinalPosition(Pair<String, Offset> newFinalPosition) =>
       _controller.setFinalPosition(newFinalPosition);
   Offset get finalPosition => _controller.finalPosition;
 
@@ -28,6 +31,8 @@ class TransactionWidget extends StatelessWidget {
   String get keyCode => _controller.keyCode;
 
   String get id => _id;
+
+  Transaction get generateModel => _controller.generateModel;
 
   @override
   Widget build(BuildContext context) {

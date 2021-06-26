@@ -30,18 +30,25 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
       (_$keyCodeComputed ??= Computed<String>(() => super.keyCode,
               name: '_TransactionWidgetController.keyCode'))
           .value;
+  Computed<Transaction>? _$generateModelComputed;
+
+  @override
+  Transaction get generateModel => (_$generateModelComputed ??=
+          Computed<Transaction>(() => super.generateModel,
+              name: '_TransactionWidgetController.generateModel'))
+      .value;
 
   final _$_initialPositionAtom =
       Atom(name: '_TransactionWidgetController._initialPosition');
 
   @override
-  Offset get _initialPosition {
+  Pair<String, Offset> get _initialPosition {
     _$_initialPositionAtom.reportRead();
     return super._initialPosition;
   }
 
   @override
-  set _initialPosition(Offset value) {
+  set _initialPosition(Pair<String, Offset> value) {
     _$_initialPositionAtom.reportWrite(value, super._initialPosition, () {
       super._initialPosition = value;
     });
@@ -51,13 +58,13 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
       Atom(name: '_TransactionWidgetController._finalPosition');
 
   @override
-  Offset get _finalPosition {
+  Pair<String, Offset> get _finalPosition {
     _$_finalPositionAtom.reportRead();
     return super._finalPosition;
   }
 
   @override
-  set _finalPosition(Offset value) {
+  set _finalPosition(Pair<String, Offset> value) {
     _$_finalPositionAtom.reportWrite(value, super._finalPosition, () {
       super._finalPosition = value;
     });
@@ -82,7 +89,7 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
       ActionController(name: '_TransactionWidgetController');
 
   @override
-  void setInitialPosition(Offset newInitialPosition) {
+  void setInitialPosition(Pair<String, Offset> newInitialPosition) {
     final _$actionInfo = _$_TransactionWidgetControllerActionController
         .startAction(name: '_TransactionWidgetController.setInitialPosition');
     try {
@@ -93,7 +100,7 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
-  void setFinalPosition(Offset newFinalPosition) {
+  void setFinalPosition(Pair<String, Offset> newFinalPosition) {
     final _$actionInfo = _$_TransactionWidgetControllerActionController
         .startAction(name: '_TransactionWidgetController.setFinalPosition');
     try {
@@ -119,7 +126,8 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
     return '''
 initialPosition: ${initialPosition},
 finalPosition: ${finalPosition},
-keyCode: ${keyCode}
+keyCode: ${keyCode},
+generateModel: ${generateModel}
     ''';
   }
 }
