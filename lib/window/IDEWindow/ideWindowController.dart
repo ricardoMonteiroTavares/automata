@@ -53,11 +53,12 @@ abstract class _IDEWindowController with Store {
   @action
   Future<void> onFinish(DragEndDetails details, BuildContext context) async {
     print("Executando: IDEWindowController.onFinish");
-    _manager.finishFinalPosition();
+
     String key = await showDialog(
         context: context,
         builder: (BuildContext context) => TransactionDialog());
-
+    _manager.newTransactionCode = key;
+    _manager.finishFinalPosition();
     print("Chave selecionada: $key");
   }
 

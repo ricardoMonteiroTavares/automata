@@ -42,7 +42,7 @@ mixin _$IDEWindowController on _IDEWindowController, Store {
   final _$onFinishAsyncAction = AsyncAction('_IDEWindowController.onFinish');
 
   @override
-  Future onFinish(DragEndDetails details, BuildContext context) {
+  Future<void> onFinish(DragEndDetails details, BuildContext context) {
     return _$onFinishAsyncAction.run(() => super.onFinish(details, context));
   }
 
