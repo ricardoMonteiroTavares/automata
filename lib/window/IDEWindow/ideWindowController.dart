@@ -5,6 +5,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/models/options3.dart';
+import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/contextMenuWidget/contextMenuWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -29,7 +30,8 @@ abstract class _IDEWindowController with Store {
     print("Executando: IDEWindowController.onTap");
     Offset position = details.localPosition;
 
-    Options3<String, double, Offset> resp = _manager.getState(position);
+    Options3<String, double, Pair<String, Offset>> resp =
+        _manager.getState(position);
 
     resp.fold<void>(
       (l) => _select(l),
@@ -47,7 +49,7 @@ abstract class _IDEWindowController with Store {
   @action
   void onUpdate(DragUpdateDetails details) {
     print("Executando: IDEWindowController.onUpdate");
-    _manager.updateFinalPositionNewTransaction(details.localPosition);
+    _manager.updateFinalPositionNewTransaction(Pair("", details.localPosition));
   }
 
   @action
@@ -87,7 +89,7 @@ abstract class _IDEWindowController with Store {
   }
 
   Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
-    Options3<String, double, Offset> resp =
+    Options3<String, double, Pair<String, Offset>> resp =
         _manager.getState(details.localPosition);
 
     resp.fold(

@@ -2,6 +2,7 @@ import 'package:automata/enums/stateType.dart';
 import 'package:automata/layout/ideLayoutDelegate.dart';
 import 'package:automata/managers/implementations/graphicAutomataManagerImpl.dart';
 import 'package:automata/models/options3.dart';
+import 'package:automata/models/pair.dart';
 import 'package:flutter/widgets.dart';
 
 /// Classe responsável por manipular um autômato de forma gráfica
@@ -12,10 +13,10 @@ abstract class GraphicAutomataManager {
   void addState(Offset position);
 
   /// Crio uma nova transação a partir de uma determinada posição [startPosition]
-  void newTransaction(Offset startPosition);
+  void newTransaction(Pair<String, Offset> startPosition);
 
   /// Modifica a posição final de uma nova transação
-  void updateFinalPositionNewTransaction(Offset finalPosition);
+  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition);
 
   /// Fim de posicionamento de uma nova Transação
   void finishFinalPosition();
@@ -26,7 +27,7 @@ abstract class GraphicAutomataManager {
   /// retornará a distância entre o clique e o nó mais próximo
   /// e caso tenha clicado em algum objeto do tipo [Pin], retornará a posição
   /// do centro do pin a fim de se criar uma nova transação.
-  Options3<String, double, Offset> getState(Offset position);
+  Options3<String, double, Pair<String, Offset>> getState(Offset position);
 
   /// Guardo um estado selecionado [id]
   void selectState(String id);

@@ -108,7 +108,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void newTransaction(Offset startPosition) {
+  void newTransaction(Pair<String, Offset> startPosition) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
         .startAction(name: '_GraphicAutomataManagerImpl.newTransaction');
     try {
@@ -119,7 +119,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void updateFinalPositionNewTransaction(Offset finalPosition) {
+  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
     final _$actionInfo =
         _$_GraphicAutomataManagerImplActionController.startAction(
             name:
@@ -154,7 +154,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  Options3<String, double, Offset> getState(Offset position) {
+  Options3<String, double, Pair<String, Offset>> getState(Offset position) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
         .startAction(name: '_GraphicAutomataManagerImpl.getState');
     try {

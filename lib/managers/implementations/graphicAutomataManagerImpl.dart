@@ -7,6 +7,8 @@ import 'package:automata/managers/interfaces/dfaManager.dart';
 import 'package:automata/managers/interfaces/graphicAutomataManager.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/options3.dart';
+import 'package:automata/models/pair.dart';
+import 'package:automata/models/transaction.dart';
 import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -54,7 +56,6 @@ abstract class _GraphicAutomataManagerImpl
         position: position,
         selectOnDrag: selectState,
         getState: getState,
-        onStart: _transactionsManager.createNewTransaction,
       )
     });
     _dfaManager.addState(id);
@@ -62,14 +63,14 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  void newTransaction(Offset startPosition) {
+  void newTransaction(Pair<String, Offset> startPosition) {
     print("Executando: GraphicAutomataManager.newTransaction");
     _transactionsManager.createNewTransaction(startPosition);
   }
 
   @override
   @action
-  void updateFinalPositionNewTransaction(Offset finalPosition) {
+  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
     print(
         "Executando: GraphicAutomataManager.updateFinalPositionNewTransaction");
     _transactionsManager.updateFinalPositionNewTransaction(finalPosition);
@@ -79,11 +80,13 @@ abstract class _GraphicAutomataManagerImpl
   @action
   void finishFinalPosition() {
     print("Executando: GraphicAutomataManager.finishFinalPosition");
-    Options3<String, double, Offset> resp =
+    Options3<String, double, Pair<String, Offset>> resp =
         getState(_transactionsManager.finalPositionNewTransaction);
 
     if (resp.isRight()) {
       _transactionsManager.updateFinalPositionNewTransaction(resp.right!);
+      Transaction t = _transactionsManager.generateNewTransactionModel;
+      _dfaManager.addTransaction(t);
       _transactionsManager.finishFinalPosition();
     } else {
       _transactionsManager.deleteTransaction(null);
@@ -110,11 +113,11 @@ abstract class _GraphicAutomataManagerImpl
 
   @override
   @action
-  Options3<String, double, Offset> getState(Offset position) {
+  Options3<String, double, Pair<String, Offset>> getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
     double minDistance = double.infinity;
     for (String key in _states.keys) {
-      Options3<bool, double, Offset> resp =
+      Options3<bool, double, Pair<String, Offset>> resp =
           _states[key]!.pointIsInState(position);
 
       if (resp.isLeft()) {
