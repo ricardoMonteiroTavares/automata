@@ -9,6 +9,14 @@ part of 'transactionsManagerImpl.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
+  Computed<Transaction>? _$generateNewTransactionModelComputed;
+
+  @override
+  Transaction get generateNewTransactionModel =>
+      (_$generateNewTransactionModelComputed ??= Computed<Transaction>(
+              () => super.generateNewTransactionModel,
+              name: '_TransactionsManagerImpl.generateNewTransactionModel'))
+          .value;
   Computed<String>? _$uniqueTransactionIDComputed;
 
   @override
@@ -75,7 +83,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
       ActionController(name: '_TransactionsManagerImpl');
 
   @override
-  void createNewTransaction(Offset pos) {
+  void createNewTransaction(Pair<String, Offset> pos) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
         name: '_TransactionsManagerImpl.createNewTransaction');
     try {
@@ -86,7 +94,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   }
 
   @override
-  void updateFinalPositionNewTransaction(Offset finalPosition) {
+  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
         name: '_TransactionsManagerImpl.updateFinalPositionNewTransaction');
     try {
@@ -121,6 +129,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   @override
   String toString() {
     return '''
+generateNewTransactionModel: ${generateNewTransactionModel},
 uniqueTransactionID: ${uniqueTransactionID},
 objects: ${objects},
 transactions: ${transactions},

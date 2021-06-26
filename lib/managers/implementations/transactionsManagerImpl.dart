@@ -1,4 +1,6 @@
 import 'package:automata/managers/interfaces/transactionsManager.dart';
+import 'package:automata/models/pair.dart';
+import 'package:automata/models/transaction.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
@@ -20,7 +22,7 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  void createNewTransaction(Offset pos) {
+  void createNewTransaction(Pair<String, Offset> pos) {
     print("Executando: TransactionsManager.createNewTransaction");
     if (_newTransaction == null) {
       print("------------ Criado o objeto ------------");
@@ -32,12 +34,16 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  void updateFinalPositionNewTransaction(Offset finalPosition) {
+  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
     print("Executando: TransactionsManager.updateFinalPositionNewTransaction");
     if (_newTransaction != null) {
-      _newTransaction!.finalPosition = finalPosition;
+      _newTransaction!.setFinalPosition(finalPosition);
     }
   }
+
+  @override
+  @computed
+  Transaction get generateNewTransactionModel => _newTransaction!.generateModel;
 
   @override
   @action
