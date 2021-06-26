@@ -18,13 +18,12 @@ class StateWidgetController extends _StateWidgetController
       {required String id,
       required Offset position,
       required Function(String) selectOnDrag,
-      required Options3<String, double, Offset> Function(Offset) getState,
-      required Function(Offset) onStart}) {
+      required Options3<String, double, Pair<String, Offset>> Function(Offset)
+          getState}) {
     super._id = id;
     super._position = position;
     super._selectState = selectOnDrag;
     super._getState = getState;
-    super._onStart = onStart;
   }
 }
 
@@ -33,8 +32,8 @@ abstract class _StateWidgetController with Store {
   final double _radius = 30;
 
   late final Function(String) _selectState;
-  late final Options3<String, double, Offset> Function(Offset) _getState;
-  late final Function(Offset) _onStart;
+  late final Options3<String, double, Pair<String, Offset>> Function(Offset)
+      _getState;
 
   final Map<String, Offset> _pinPositions = {
     "c1": Offset(25, -10),
@@ -92,7 +91,8 @@ abstract class _StateWidgetController with Store {
     Offset prevPosition = position;
     Offset newPosition = details.offset + Offset(_radius, _radius);
 
-    Options3<String, double, Offset> resp = _getState(newPosition);
+    Options3<String, double, Pair<String, Offset>> resp =
+        _getState(newPosition);
 
     _position = resp.fold<Offset>(
       (l) => prevPosition,
@@ -163,6 +163,5 @@ abstract class _StateWidgetController with Store {
   Offset get position => _position;
   Color get color => _color;
   bool get hover => _hover;
-  Function(Offset) get onStart => _onStart;
   Map<String, Offset> get pinPositions => _pinPositions;
 }
