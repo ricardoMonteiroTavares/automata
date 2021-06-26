@@ -5,7 +5,11 @@ import 'package:flutter_arrow_path/flutter_arrow_path.dart';
 class Arrow extends CustomPainter {
   late Offset finalPosition;
   late Offset initialPosition;
-  Arrow({required this.initialPosition, required this.finalPosition});
+  late String keyCode;
+  Arrow(
+      {required this.initialPosition,
+      required this.finalPosition,
+      required this.keyCode});
 
   final Paint _paint = Paint()
     ..color = Colors.black
@@ -27,7 +31,7 @@ class Arrow extends CustomPainter {
     canvas.drawPath(path, _paint..color = Colors.blue);
 
     TextSpan textSpan = TextSpan(
-      text: 'Single arrow',
+      text: keyCode,
       style: TextStyle(color: Colors.blue),
     );
     TextPainter textPainter = TextPainter(
@@ -36,7 +40,7 @@ class Arrow extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
     textPainter.layout(minWidth: size.width);
-    textPainter.paint(canvas, Offset(0, size.height * 0.06));
+    textPainter.paint(canvas, Offset((distance.dx / 2), size.height * 0.06));
   }
 
   @override
