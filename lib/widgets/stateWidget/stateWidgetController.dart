@@ -1,6 +1,7 @@
 import 'package:automata/elements/label.dart';
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/options3.dart';
+import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/finalState.dart';
 import 'package:automata/widgets/stateWidget/states/initialState.dart';
 import 'package:automata/widgets/stateWidget/states/normalState.dart';
@@ -102,14 +103,15 @@ abstract class _StateWidgetController with Store {
     _selectState(id);
   }
 
-  Options3<bool, double, Offset> pointIsInState(Offset point) {
+  Options3<bool, double, Pair<String, Offset>> pointIsInState(Offset point) {
     double distance = (point - position).distance.abs();
 
     Either<bool, Offset> resp = clickInPin(position, point);
 
     return resp.fold(
-        (l) => (distance < _radius) ? LeftOption(true) : MiddleOption(distance),
-        (r) => RightOption(r));
+      (l) => (distance < _radius) ? LeftOption(true) : MiddleOption(distance),
+      (r) => RightOption(Pair(id, r)),
+    );
   }
 
   Widget node({Color? color}) {

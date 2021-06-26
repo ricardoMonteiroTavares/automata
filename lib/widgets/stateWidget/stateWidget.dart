@@ -1,5 +1,6 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/options3.dart';
+import 'package:automata/models/pair.dart';
 import 'package:automata/widgets/stateWidget/states/hoverStateWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -34,7 +35,7 @@ class StateWidget extends StatelessWidget {
 
   Offset get position => _controller.position;
 
-  Options3<bool, double, Offset> pointIsInState(Offset point) =>
+  Options3<bool, double, Pair<String, Offset>> pointIsInState(Offset point) =>
       _controller.pointIsInState(point);
 
   @override
