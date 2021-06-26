@@ -21,27 +21,33 @@ class TransactionDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Observer(
-          builder: (_) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                "Informe o valor da transação",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                (_controller.key == null) ? "" : _controller.key!,
-                style: TextStyle(fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 22,
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: TextButton(
+          builder: (_) => Container(
+            width: 350,
+            height: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Informe o valor da transação",
+                  style: TextStyle(
+                      height: 1.5, fontSize: 20, fontWeight: FontWeight.normal),
+                ),
+                Text(
+                  (_controller.key == null) ? "" : _controller.key!,
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      fixedSize: Size(350, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop(_controller.key);
                     },
@@ -49,8 +55,8 @@ class TransactionDialog extends StatelessWidget {
                       "Fechar",
                       style: TextStyle(fontSize: 18),
                     )),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
