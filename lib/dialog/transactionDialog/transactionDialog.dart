@@ -40,7 +40,7 @@ class TransactionDialog extends StatelessWidget {
                 height: 22,
               ),
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.bottomCenter,
                 child: TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(_controller.key);
