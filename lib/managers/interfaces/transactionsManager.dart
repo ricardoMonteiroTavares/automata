@@ -9,6 +9,8 @@ abstract class TransactionsManager {
 
   void updateFinalPositionNewTransaction(Offset finalPosition);
 
+  set newTransactionCode(String code);
+
   Offset get finalPositionNewTransaction;
 
   void finishFinalPosition();

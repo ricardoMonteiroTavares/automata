@@ -91,6 +91,12 @@ abstract class _GraphicAutomataManagerImpl
   }
 
   @override
+  set newTransactionCode(String code) {
+    print("Executando: GraphicAutomataManager.set newTransactionCode");
+    _transactionsManager.newTransactionCode = code;
+  }
+
+  @override
   @action
   void deleteState() {
     print("Executando: GraphicAutomataManager.deleteState");

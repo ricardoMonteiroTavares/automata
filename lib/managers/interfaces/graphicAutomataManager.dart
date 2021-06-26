@@ -20,6 +20,8 @@ abstract class GraphicAutomataManager {
   /// Fim de posicionamento de uma nova Transação
   void finishFinalPosition();
 
+  set newTransactionCode(String code);
+
   /// Busco o ID em uma determinada posição [position], caso não a encontre
   /// retornará a distância entre o clique e o nó mais próximo
   /// e caso tenha clicado em algum objeto do tipo [Pin], retornará a posição

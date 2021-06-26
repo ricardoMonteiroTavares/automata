@@ -17,6 +17,7 @@ abstract class _TransactionsManagerImpl
 
   @observable
   TransactionWidget? _newTransaction;
+
   @override
   @action
   void createNewTransaction(Offset pos) {
@@ -45,6 +46,12 @@ abstract class _TransactionsManagerImpl
     if (_newTransaction != null) {
       _newTransaction = null;
     }
+  }
+
+  @override
+  set newTransactionCode(String code) {
+    print("Executando: TransactionsManager.set newTransactionCode");
+    _newTransaction!.keyCode = code;
   }
 
   @override
