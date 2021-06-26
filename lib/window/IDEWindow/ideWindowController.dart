@@ -56,6 +56,7 @@ abstract class _IDEWindowController with Store {
 
     String key = await showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) => TransactionDialog());
     _manager.newTransactionCode = key;
     _manager.finishFinalPosition();

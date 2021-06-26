@@ -33,7 +33,7 @@ class TransactionDialog extends StatelessWidget {
                       height: 1.5, fontSize: 20, fontWeight: FontWeight.normal),
                 ),
                 Text(
-                  (_controller.key == null) ? "" : _controller.key!,
+                  (_controller.key == null) ? "Vazio" : _controller.key!,
                   style: TextStyle(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
@@ -48,9 +48,11 @@ class TransactionDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(_controller.key);
-                    },
+                    onPressed: (_controller.key == null)
+                        ? null
+                        : () {
+                            Navigator.of(context).pop(_controller.key);
+                          },
                     child: Text(
                       "Fechar",
                       style: TextStyle(fontSize: 18),
