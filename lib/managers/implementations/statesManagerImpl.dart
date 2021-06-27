@@ -77,12 +77,13 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
   @action
   void select(String id) {
     print("Executando: StatesManager.select");
-    if (_selectedState == null) {
-      _selectedState = _states[id];
-    } else if (_selectedState != _states[id]) {
-      _selectedState!.unselect();
-      _selectedState = _states[id];
+    if (!_states.containsKey(id)) {
+      throw NotFoundStateException();
     }
+    if (_selectedState != _states[id]) {
+      _selectedState!.unselect();
+    }
+    _selectedState = _states[id];
     _selectedState!.select();
   }
 
