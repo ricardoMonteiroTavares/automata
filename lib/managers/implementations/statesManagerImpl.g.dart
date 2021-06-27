@@ -37,6 +37,12 @@ mixin _$StatesManagerImpl on _StatesManagerImpl, Store {
       (_$newUniqueIDComputed ??= Computed<String>(() => super.newUniqueID,
               name: '_StatesManagerImpl.newUniqueID'))
           .value;
+  Computed<int>? _$lenComputed;
+
+  @override
+  int get len => (_$lenComputed ??=
+          Computed<int>(() => super.len, name: '_StatesManagerImpl.len'))
+      .value;
   Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
@@ -44,6 +50,13 @@ mixin _$StatesManagerImpl on _StatesManagerImpl, Store {
       (_$objectsComputed ??= Computed<List<LayoutId>>(() => super.objects,
               name: '_StatesManagerImpl.objects'))
           .value;
+  Computed<Map<String, StateWidget>>? _$statesComputed;
+
+  @override
+  Map<String, StateWidget> get states => (_$statesComputed ??=
+          Computed<Map<String, StateWidget>>(() => super.states,
+              name: '_StatesManagerImpl.states'))
+      .value;
 
   final _$_statesAtom = Atom(name: '_StatesManagerImpl._states');
 
@@ -79,7 +92,7 @@ mixin _$StatesManagerImpl on _StatesManagerImpl, Store {
       ActionController(name: '_StatesManagerImpl');
 
   @override
-  void add(Offset position) {
+  String add(Offset position) {
     final _$actionInfo = _$_StatesManagerImplActionController.startAction(
         name: '_StatesManagerImpl.add');
     try {
@@ -140,7 +153,9 @@ selected: ${selected},
 selectStatePosition: ${selectStatePosition},
 selectStateType: ${selectStateType},
 newUniqueID: ${newUniqueID},
-objects: ${objects}
+len: ${len},
+objects: ${objects},
+states: ${states}
     ''';
   }
 }

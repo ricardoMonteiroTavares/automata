@@ -1,6 +1,7 @@
 import 'package:automata/enums/stateType.dart';
 import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
+import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:automata/managers/implementations/statesManagerImpl.dart';
@@ -9,7 +10,8 @@ abstract class StatesManager {
   factory StatesManager() = StatesManagerImpl;
 
   /// Adiciono um novo estado em uma determinada posição [position]
-  void add(Offset position);
+  ///  e retorno o ID do novo estado
+  String add(Offset position);
 
   /// Removo um estado selecionado
   void delete(String id);
@@ -36,11 +38,15 @@ abstract class StatesManager {
   /// Busco o tipo do estado selecionado
   StateType get selectStateType;
 
-  /// Modifico o tipo do estado selecionado
-  set selectStateType(StateType newType);
+  /// Modifico o tipo do estado informado [id]
+  void setStateType(String id, StateType newType);
 
   String get newUniqueID;
 
+  int get len;
+
   /// Comando que busca todos os objetos renderizáveis
   List<LayoutId> get objects;
+
+  Map<String, StateWidget> get states;
 }

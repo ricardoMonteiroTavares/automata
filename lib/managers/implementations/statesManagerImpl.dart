@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:automata/enums/stateType.dart';
+import 'package:automata/exceptions/exceptions.dart';
 import 'package:automata/managers/interfaces/statesManager.dart';
 import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
@@ -22,7 +23,7 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
 
   @override
   @action
-  void add(Offset position) {
+  String add(Offset position) {
     print("Executando: StatesManager.add");
     String id = newUniqueID;
 
@@ -34,12 +35,14 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
         getState: getState,
       )
     });
+
+    return id;
   }
 
   @override
   @action
   void delete(String id) {
-    print("Executando: StatesManager.deleteState");
+    print("Executando: StatesManager.delete");
     if (_selectedState != null) {
       String id = _selectedState!.id;
       _states.remove(id);
@@ -107,18 +110,21 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
       (selected != null) ? _selectedState!.type : StateType.error;
 
   @override
-  @computed
-  set selectStateType(StateType newType) {
-    assert(selectStateType != StateType.error,
-        "Não existe nenhum estado selecionado para trocar o tipo do estado");
-    assert(
-        newType != StateType.error, "O novo tipo do estado não deve ser error");
-    _selectedState!.type = newType;
+  void setStateType(String id, StateType newType) {
+    print("Executando: StatesManager.setStateType");
+    if (!_states.containsKey(id)) {
+      throw NotFoundStateException();
+    }
+    if (newType == StateType.error) {
+      throw StateTypeException();
+    }
+    _states[id]!.type = newType;
   }
 
   @override
   @computed
   String get newUniqueID {
+    print("Executando: StatesManager.newUniqueID");
     if (_states.isEmpty) {
       return "q0";
     } else {
@@ -129,6 +135,14 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
 
   @override
   @computed
+  int get len => _states.length;
+
+  @override
+  @computed
   List<LayoutId> get objects =>
       _states.entries.map((e) => LayoutId(id: e.key, child: e.value)).toList();
+
+  @override
+  @computed
+  Map<String, StateWidget> get states => _states;
 }
