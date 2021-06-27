@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:automata/enums/stateType.dart';
@@ -11,7 +10,6 @@ import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
-import 'package:automata/widgets/stateWidget/stateWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -49,14 +47,14 @@ abstract class _GraphicAutomataManagerImpl
   @action
   void addTransaction(Pair<String, Offset> startPosition) {
     print("Executando: GraphicAutomataManager.addTransaction");
-    _transactionsManager.createNewTransaction(startPosition);
+    _transactionsManager.create(startPosition);
   }
 
   @override
   @action
   void updateFinalPosition(Pair<String, Offset> finalPosition) {
     print("Executando: GraphicAutomataManager.updateFinalPosition");
-    _transactionsManager.updateFinalPositionNewTransaction(finalPosition);
+    _transactionsManager.updateFinalPosition(finalPosition);
   }
 
   @override
@@ -67,19 +65,19 @@ abstract class _GraphicAutomataManagerImpl
         obtain(_transactionsManager.finalPositionNewTransaction);
 
     if (resp.isRight()) {
-      _transactionsManager.updateFinalPositionNewTransaction(resp.right!);
-      Transaction t = _transactionsManager.generateNewTransactionModel;
+      updateFinalPosition(resp.right!);
+      Transaction t = _transactionsManager.model;
       _dfaManager.addTransaction(t);
-      _transactionsManager.finishFinalPosition();
+      _transactionsManager.finishCreate();
     } else {
-      _transactionsManager.deleteTransaction(null);
+      _transactionsManager.delete(null);
     }
   }
 
   @override
   set newTransactionCode(String code) {
     print("Executando: GraphicAutomataManager.set newTransactionCode");
-    _transactionsManager.newTransactionCode = code;
+    _transactionsManager.transactionCode = code;
   }
 
   @override
