@@ -138,7 +138,7 @@ abstract class _GraphicAutomataManagerImpl
   @override
   @computed
   String? get isSelected =>
-      _statesManager.selected; // TODO: Verificar se selecionei uma transação
+      _statesManager.selected ?? _transactionsManager.selected;
 
   @override
   @computed

@@ -37,6 +37,10 @@ abstract class TransactionsManager {
   /// Removo uma seleção
   void unselect();
 
+  /// Verifico se existe uma transação selecionada no manager, se for positivo
+  /// retorno o id, caso negativo, retorna null.
+  String? get selected;
+
   /// Gero um id único para a nova transação
   String get uniqueID;
 

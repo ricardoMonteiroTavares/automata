@@ -153,6 +153,10 @@ abstract class _TransactionsManagerImpl
 
   @override
   @computed
+  String? get selected => (_selected != null) ? _selected!.id : null;
+
+  @override
+  @computed
   List<LayoutId> get objects => _transactions.entries
       .map((e) => LayoutId(id: e.key, child: e.value))
       .toList();
