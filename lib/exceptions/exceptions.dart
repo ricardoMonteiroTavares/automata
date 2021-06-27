@@ -5,3 +5,4 @@ export 'notFoundAutomataException.dart';
 export 'notFoundTransactionException.dart';
 export 'existingFinalStateException.dart';
 export 'notFoundFinalStateException.dart';
+export 'stateTypeException.dart';
