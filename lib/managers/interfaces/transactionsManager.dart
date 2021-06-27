@@ -1,3 +1,4 @@
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
@@ -23,6 +24,8 @@ abstract class TransactionsManager {
 
   /// Gero um id único para a nova transação
   String get uniqueTransactionID;
+
+  Options3<String, double, Null> getTransaction(Offset pos);
 
   /// Comando que busca todos os objetos renderizáveis
   List<LayoutId> get objects;

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:automata/managers/interfaces/transactionsManager.dart';
+import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
@@ -20,6 +23,9 @@ abstract class _TransactionsManagerImpl
   @observable
   TransactionWidget? _newTransaction;
 
+  @observable
+  TransactionWidget? _selected;
+
   @override
   @action
   void createNewTransaction(Pair<String, Offset> pos) {
@@ -39,6 +45,38 @@ abstract class _TransactionsManagerImpl
     if (_newTransaction != null) {
       _newTransaction!.setFinalPosition(finalPosition);
     }
+  }
+
+  @override
+  @action
+  Options3<String, double, Null> getTransaction(Offset pos) {
+    if (_newTransaction == null) {
+      print("Executando: TransactionsManager.getTransaction");
+      double minAngle = double.infinity;
+      for (String key in _transactions.keys) {
+        Offset v1 = _transactions[key]!.finalPosition -
+            _transactions[key]!.initialPosition;
+
+        Offset v2 = pos - _transactions[key]!.initialPosition;
+
+        double resp = ((v1.dx * v2.dx) + (v1.dy * v2.dy)) /
+            (sqrt((pow(v1.dx, 2) + pow(v1.dy, 2))) *
+                sqrt((pow(v2.dx, 2) + pow(v2.dy, 2))));
+
+        resp = acos(resp);
+
+        if (resp >= 0 && resp <= 1) {
+          print("Identificou a key: $key");
+          return LeftOption(key);
+        } else {
+          minAngle = min(minAngle, resp);
+          print("Nova distância: $minAngle");
+        }
+      }
+
+      return MiddleOption(minAngle);
+    }
+    return RightOption(null);
   }
 
   @override

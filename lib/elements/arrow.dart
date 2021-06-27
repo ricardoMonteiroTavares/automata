@@ -21,7 +21,7 @@ class Arrow extends CustomPainter {
   late final TextPainter _textPainter = TextPainter(
     text: TextSpan(
       text: keyCode,
-      style: TextStyle(color: Colors.blue),
+      style: TextStyle(color: Colors.black),
     ),
     textDirection: TextDirection.ltr,
   );
@@ -37,7 +37,7 @@ class Arrow extends CustomPainter {
     path.relativeLineTo(distance.dx, distance.dy);
 
     path = ArrowPath.make(path: path);
-    canvas.drawPath(path, _paint..color = Colors.blue);
+    canvas.drawPath(path, _paint);
 
     _textPainter.layout(minWidth: size.width);
 

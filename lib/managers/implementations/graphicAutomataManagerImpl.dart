@@ -115,6 +115,15 @@ abstract class _GraphicAutomataManagerImpl
   @action
   Options3<String, double, Pair<String, Offset>> getState(Offset position) {
     print("Executando: GraphicAutomataManager.getState");
+
+    if (_states.length > 1) {
+      Options3<String, double, Null> response =
+          _transactionsManager.getTransaction(position);
+
+      if (response.isLeft()) {
+        return LeftOption(response.left!);
+      }
+    }
     double minDistance = double.infinity;
     for (String key in _states.keys) {
       Options3<bool, double, Pair<String, Offset>> resp =
