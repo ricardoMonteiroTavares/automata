@@ -65,7 +65,7 @@ abstract class _TransactionsManagerImpl
 
         resp = acos(resp);
 
-        if (resp >= 0 && resp <= 1) {
+        if (resp >= 0 && resp <= 0.01) {
           print("Identificou a key: $key");
           return LeftOption(key);
         } else {
