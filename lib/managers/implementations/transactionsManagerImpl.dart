@@ -63,9 +63,7 @@ abstract class _TransactionsManagerImpl
             (sqrt((pow(v1.dx, 2) + pow(v1.dy, 2))) *
                 sqrt((pow(v2.dx, 2) + pow(v2.dy, 2))));
 
-        resp = acos(resp);
-
-        if (resp >= 0 && resp <= 0.01) {
+        if (resp >= 0.98 && resp <= 1) {
           print("Identificou a key: $key");
           return LeftOption(key);
         } else {
