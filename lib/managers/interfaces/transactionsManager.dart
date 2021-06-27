@@ -22,6 +22,10 @@ abstract class TransactionsManager {
 
   void deleteTransaction(String? id);
 
+  void select(String id);
+
+  void unselect();
+
   /// Gero um id único para a nova transação
   String get uniqueTransactionID;
 

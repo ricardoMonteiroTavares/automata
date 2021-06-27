@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:automata/exceptions/exceptions.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
@@ -125,6 +126,30 @@ abstract class _TransactionsManagerImpl
       id = "t${int.parse(obj.toString().substring(1)) + 1}";
     }
     return id;
+  }
+
+  @override
+  @action
+  void select(String id) {
+    print("Executando: TransactionsManager.select");
+    if (!_transactions.containsKey(id)) {
+      throw NotFoundTransactionException();
+    }
+    if (_selected != _transactions[id]) {
+      _selected!.unselect();
+    }
+    _selected = _transactions[id];
+    _selected!.select();
+  }
+
+  @override
+  @action
+  void unselect() {
+    print("Executando: TransactionsManager.unselect");
+    if (_selected != null) {
+      _selected!.unselect();
+      _selected = null;
+    }
   }
 
   @override
