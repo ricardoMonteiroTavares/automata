@@ -6,13 +6,15 @@ class Arrow extends CustomPainter {
   late Offset finalPosition;
   late Offset initialPosition;
   late String keyCode;
+  late Color color;
   Arrow(
       {required this.initialPosition,
       required this.finalPosition,
-      required this.keyCode});
+      required this.keyCode,
+      required this.color});
 
-  final Paint _paint = Paint()
-    ..color = Colors.black
+  late final Paint _paint = Paint()
+    ..color = color
     ..style = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round
     ..strokeJoin = StrokeJoin.round
@@ -21,7 +23,7 @@ class Arrow extends CustomPainter {
   late final TextPainter _textPainter = TextPainter(
     text: TextSpan(
       text: keyCode,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: color),
     ),
     textDirection: TextDirection.ltr,
   );

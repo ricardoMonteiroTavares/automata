@@ -23,6 +23,12 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
       (_$finalPositionComputed ??= Computed<Offset>(() => super.finalPosition,
               name: '_TransactionWidgetController.finalPosition'))
           .value;
+  Computed<Color>? _$colorComputed;
+
+  @override
+  Color get color => (_$colorComputed ??= Computed<Color>(() => super.color,
+          name: '_TransactionWidgetController.color'))
+      .value;
   Computed<String>? _$keyCodeComputed;
 
   @override
@@ -85,6 +91,21 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
     });
   }
 
+  final _$_colorAtom = Atom(name: '_TransactionWidgetController._color');
+
+  @override
+  Color get _color {
+    _$_colorAtom.reportRead();
+    return super._color;
+  }
+
+  @override
+  set _color(Color value) {
+    _$_colorAtom.reportWrite(value, super._color, () {
+      super._color = value;
+    });
+  }
+
   final _$_TransactionWidgetControllerActionController =
       ActionController(name: '_TransactionWidgetController');
 
@@ -122,10 +143,33 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
+  void select() {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.select');
+    try {
+      return super.select();
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void unselect() {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.unselect');
+    try {
+      return super.unselect();
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 initialPosition: ${initialPosition},
 finalPosition: ${finalPosition},
+color: ${color},
 keyCode: ${keyCode},
 generateModel: ${generateModel}
     ''';

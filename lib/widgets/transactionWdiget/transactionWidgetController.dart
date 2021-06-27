@@ -1,5 +1,6 @@
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
@@ -17,6 +18,9 @@ abstract class _TransactionWidgetController with Store {
 
   @observable
   String _keyCode = "";
+
+  @observable
+  Color _color = Colors.black;
 
   @action
   void setInitialPosition(Pair<String, Offset> newInitialPosition) {
@@ -37,6 +41,19 @@ abstract class _TransactionWidgetController with Store {
   @action
   void setKeyCode(String newCode) {
     _keyCode = newCode;
+  }
+
+  @computed
+  Color get color => _color;
+
+  @action
+  void select() {
+    _color = Colors.blue;
+  }
+
+  @action
+  void unselect() {
+    _color = Colors.black;
   }
 
   @computed

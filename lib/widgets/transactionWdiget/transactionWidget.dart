@@ -34,11 +34,15 @@ class TransactionWidget extends StatelessWidget {
 
   Transaction get generateModel => _controller.generateModel;
 
+  void select() => _controller.select();
+  void unselect() => _controller.unselect();
+
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => CustomPaint(
         painter: Arrow(
+          color: _controller.color,
           initialPosition: initialPosition,
           finalPosition: finalPosition,
           keyCode: keyCode,

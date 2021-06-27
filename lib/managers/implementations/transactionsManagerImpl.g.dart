@@ -79,6 +79,21 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
     });
   }
 
+  final _$_selectedAtom = Atom(name: '_TransactionsManagerImpl._selected');
+
+  @override
+  TransactionWidget? get _selected {
+    _$_selectedAtom.reportRead();
+    return super._selected;
+  }
+
+  @override
+  set _selected(TransactionWidget? value) {
+    _$_selectedAtom.reportWrite(value, super._selected, () {
+      super._selected = value;
+    });
+  }
+
   final _$_TransactionsManagerImplActionController =
       ActionController(name: '_TransactionsManagerImpl');
 
@@ -99,6 +114,17 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
         name: '_TransactionsManagerImpl.updateFinalPositionNewTransaction');
     try {
       return super.updateFinalPositionNewTransaction(finalPosition);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Options3<String, double, Null> getTransaction(Offset pos) {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.getTransaction');
+    try {
+      return super.getTransaction(pos);
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
