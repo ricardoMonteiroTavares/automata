@@ -114,9 +114,9 @@ abstract class _GraphicAutomataManagerImpl
     print("Executando: GraphicAutomataManager.select");
     if (id[0] == "q") {
       _statesManager.select(id);
+    } else if (id[0] == "t") {
+      _transactionsManager.select(id);
     }
-
-    // TODO: Implementar a seleção de uma transação
   }
 
   @override
@@ -132,7 +132,7 @@ abstract class _GraphicAutomataManagerImpl
   void unselect() {
     print("Executando: GraphicAutomataManager.unselect");
     _statesManager.unselect();
-    // TODO: Implementar a deseleção de uma transação
+    _transactionsManager.unselect();
   }
 
   @override
