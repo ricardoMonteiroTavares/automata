@@ -80,7 +80,7 @@ abstract class _StatesManagerImpl with Store implements StatesManager {
     if (!_states.containsKey(id)) {
       throw NotFoundStateException();
     }
-    if (_selectedState != _states[id]) {
+    if (_selectedState != null && _selectedState != _states[id]) {
       _selectedState!.unselect();
     }
     _selectedState = _states[id];

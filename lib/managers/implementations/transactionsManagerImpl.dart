@@ -134,7 +134,7 @@ abstract class _TransactionsManagerImpl
     if (!_transactions.containsKey(id)) {
       throw NotFoundTransactionException();
     }
-    if (_selected != _transactions[id]) {
+    if (_selected != null && _selected != _transactions[id]) {
       _selected!.unselect();
     }
     _selected = _transactions[id];
