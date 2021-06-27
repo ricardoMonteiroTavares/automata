@@ -13,10 +13,10 @@ abstract class GraphicAutomataManager {
   void addState(Offset position);
 
   /// Crio uma nova transação a partir de uma determinada posição [startPosition]
-  void newTransaction(Pair<String, Offset> startPosition);
+  void addTransaction(Pair<String, Offset> startPosition);
 
   /// Modifica a posição final de uma nova transação
-  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition);
+  void updateFinalPosition(Pair<String, Offset> finalPosition);
 
   /// Fim de posicionamento de uma nova Transação
   void finishFinalPosition();
@@ -27,19 +27,19 @@ abstract class GraphicAutomataManager {
   /// retornará a distância entre o clique e o nó mais próximo
   /// e caso tenha clicado em algum objeto do tipo [Pin], retornará a posição
   /// do centro do pin a fim de se criar uma nova transação.
-  Options3<String, double, Pair<String, Offset>> getState(Offset position);
+  Options3<String, double, Pair<String, Offset>> obtain(Offset position);
 
   /// Guardo um estado selecionado [id]
-  void selectState(String id);
+  void select(String id);
 
   /// Removo o estado selecionado
-  void unselectState();
+  void unselect();
 
   /// Verifico se existe um estado selecionado no manager
-  bool get containsSelectState;
+  String? get isSelected;
 
   /// Removo um estado selecionado
-  void deleteState();
+  void delete();
 
   /// Comando que busca todos os objetos renderizáveis
   List<LayoutId> get objects;

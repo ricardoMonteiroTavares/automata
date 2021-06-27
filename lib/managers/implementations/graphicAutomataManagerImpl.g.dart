@@ -16,13 +16,13 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
       (_$objectsComputed ??= Computed<List<LayoutId>>(() => super.objects,
               name: '_GraphicAutomataManagerImpl.objects'))
           .value;
-  Computed<bool>? _$containsSelectStateComputed;
+  Computed<String?>? _$isSelectedComputed;
 
   @override
-  bool get containsSelectState => (_$containsSelectStateComputed ??=
-          Computed<bool>(() => super.containsSelectState,
-              name: '_GraphicAutomataManagerImpl.containsSelectState'))
-      .value;
+  String? get isSelected =>
+      (_$isSelectedComputed ??= Computed<String?>(() => super.isSelected,
+              name: '_GraphicAutomataManagerImpl.isSelected'))
+          .value;
   Computed<Offset>? _$selectStatePositionComputed;
 
   @override
@@ -45,18 +45,19 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
               name: '_GraphicAutomataManagerImpl.selectStateType'))
       .value;
 
-  final _$_statesAtom = Atom(name: '_GraphicAutomataManagerImpl._states');
+  final _$_statesManagerAtom =
+      Atom(name: '_GraphicAutomataManagerImpl._statesManager');
 
   @override
-  ObservableMap<String, StateWidget> get _states {
-    _$_statesAtom.reportRead();
-    return super._states;
+  StatesManager get _statesManager {
+    _$_statesManagerAtom.reportRead();
+    return super._statesManager;
   }
 
   @override
-  set _states(ObservableMap<String, StateWidget> value) {
-    _$_statesAtom.reportWrite(value, super._states, () {
-      super._states = value;
+  set _statesManager(StatesManager value) {
+    _$_statesManagerAtom.reportWrite(value, super._statesManager, () {
+      super._statesManager = value;
     });
   }
 
@@ -77,22 +78,6 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
     });
   }
 
-  final _$_selectedStateAtom =
-      Atom(name: '_GraphicAutomataManagerImpl._selectedState');
-
-  @override
-  StateWidget? get _selectedState {
-    _$_selectedStateAtom.reportRead();
-    return super._selectedState;
-  }
-
-  @override
-  set _selectedState(StateWidget? value) {
-    _$_selectedStateAtom.reportWrite(value, super._selectedState, () {
-      super._selectedState = value;
-    });
-  }
-
   final _$_GraphicAutomataManagerImplActionController =
       ActionController(name: '_GraphicAutomataManagerImpl');
 
@@ -108,24 +93,22 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void newTransaction(Pair<String, Offset> startPosition) {
+  void addTransaction(Pair<String, Offset> startPosition) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.newTransaction');
+        .startAction(name: '_GraphicAutomataManagerImpl.addTransaction');
     try {
-      return super.newTransaction(startPosition);
+      return super.addTransaction(startPosition);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
-    final _$actionInfo =
-        _$_GraphicAutomataManagerImplActionController.startAction(
-            name:
-                '_GraphicAutomataManagerImpl.updateFinalPositionNewTransaction');
+  void updateFinalPosition(Pair<String, Offset> finalPosition) {
+    final _$actionInfo = _$_GraphicAutomataManagerImplActionController
+        .startAction(name: '_GraphicAutomataManagerImpl.updateFinalPosition');
     try {
-      return super.updateFinalPositionNewTransaction(finalPosition);
+      return super.updateFinalPosition(finalPosition);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
@@ -143,44 +126,44 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   }
 
   @override
-  void deleteState() {
+  void delete() {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.deleteState');
+        .startAction(name: '_GraphicAutomataManagerImpl.delete');
     try {
-      return super.deleteState();
+      return super.delete();
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  Options3<String, double, Pair<String, Offset>> getState(Offset position) {
+  Options3<String, double, Pair<String, Offset>> obtain(Offset position) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.getState');
+        .startAction(name: '_GraphicAutomataManagerImpl.obtain');
     try {
-      return super.getState(position);
+      return super.obtain(position);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void selectState(String id) {
+  void select(String id) {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.selectState');
+        .startAction(name: '_GraphicAutomataManagerImpl.select');
     try {
-      return super.selectState(id);
+      return super.select(id);
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void unselectState() {
+  void unselect() {
     final _$actionInfo = _$_GraphicAutomataManagerImplActionController
-        .startAction(name: '_GraphicAutomataManagerImpl.unselectState');
+        .startAction(name: '_GraphicAutomataManagerImpl.unselect');
     try {
-      return super.unselectState();
+      return super.unselect();
     } finally {
       _$_GraphicAutomataManagerImplActionController.endAction(_$actionInfo);
     }
@@ -190,7 +173,7 @@ mixin _$GraphicAutomataManagerImpl on _GraphicAutomataManagerImpl, Store {
   String toString() {
     return '''
 objects: ${objects},
-containsSelectState: ${containsSelectState},
+isSelected: ${isSelected},
 selectStatePosition: ${selectStatePosition},
 positions: ${positions},
 selectStateType: ${selectStateType}

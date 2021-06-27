@@ -31,25 +31,25 @@ abstract class _IDEWindowController with Store {
     Offset position = details.localPosition;
 
     Options3<String, double, Pair<String, Offset>> resp =
-        _manager.getState(position);
+        _manager.obtain(position);
 
     resp.fold<void>(
       (l) => _select(l),
       (m) {
-        if (_manager.containsSelectState) {
+        if (_manager.isSelected != null) {
           _unselect();
         } else if (m > 60) {
           _add(position);
         }
       },
-      (r) => _manager.newTransaction(r),
+      (r) => _manager.addTransaction(r),
     );
   }
 
   @action
   void onUpdate(DragUpdateDetails details) {
     print("Executando: IDEWindowController.onUpdate");
-    _manager.updateFinalPositionNewTransaction(Pair("", details.localPosition));
+    _manager.updateFinalPosition(Pair("", details.localPosition));
   }
 
   @action
@@ -73,28 +73,26 @@ abstract class _IDEWindowController with Store {
   @action
   void _select(String id) {
     _unselect();
-    _manager.selectState(id);
+    _manager.select(id);
   }
 
   @action
   void _unselect() {
-    if (_manager.containsSelectState) {
-      _manager.unselectState();
-    }
+    _manager.unselect();
   }
 
   @action
   void delete() {
-    _manager.deleteState();
+    _manager.delete();
   }
 
   Future<void> contextMenu(TapDownDetails details, BuildContext context) async {
     Options3<String, double, Pair<String, Offset>> resp =
-        _manager.getState(details.localPosition);
+        _manager.obtain(details.localPosition);
 
     resp.fold(
       (l) async {
-        _manager.selectState(l);
+        _manager.select(l);
         StateType? newType = await ContextMenuWidget.show(
             context: context,
             position: details.globalPosition,
