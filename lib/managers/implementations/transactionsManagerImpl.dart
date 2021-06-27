@@ -29,11 +29,10 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  void createNewTransaction(Pair<String, Offset> pos) {
-    print("Executando: TransactionsManager.createNewTransaction");
+  void create(Pair<String, Offset> pos) {
+    print("Executando: TransactionsManager.create");
     if (_newTransaction == null) {
-      print("------------ Criado o objeto ------------");
-      String id = uniqueTransactionID;
+      String id = uniqueID;
       _newTransaction = TransactionWidget(id: id, initPosition: pos);
       _transactions.addAll({id: _newTransaction!});
     }
@@ -41,8 +40,8 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
-    print("Executando: TransactionsManager.updateFinalPositionNewTransaction");
+  void updateFinalPosition(Pair<String, Offset> finalPosition) {
+    print("Executando: TransactionsManager.updateFinalPosition");
     if (_newTransaction != null) {
       _newTransaction!.setFinalPosition(finalPosition);
     }
@@ -82,27 +81,27 @@ abstract class _TransactionsManagerImpl
 
   @override
   @computed
-  Transaction get generateNewTransactionModel => _newTransaction!.generateModel;
+  Transaction get model => _newTransaction!.generateModel;
 
   @override
   @action
-  void finishFinalPosition() {
-    print("Executando: TransactionsManager.finishFinalPosition");
+  void finishCreate() {
+    print("Executando: TransactionsManager.finishCreate");
     if (_newTransaction != null) {
       _newTransaction = null;
     }
   }
 
   @override
-  set newTransactionCode(String code) {
-    print("Executando: TransactionsManager.set newTransactionCode");
+  set transactionCode(String code) {
+    print("Executando: TransactionsManager.set transactionCode");
     _newTransaction!.keyCode = code;
   }
 
   @override
   @action
-  void deleteTransaction(String? id) {
-    print("Executando: TransactionsManager.deleteTransaction");
+  void delete(String? id) {
+    print("Executando: TransactionsManager.delete");
     if (id != null) {
       print("Removendo transação de id = $id");
       _transactions.remove(id);
@@ -116,7 +115,7 @@ abstract class _TransactionsManagerImpl
 
   @override
   @computed
-  String get uniqueTransactionID {
+  String get uniqueID {
     print("Executando: TransactionsManager.get uniqueTransactionID");
     String id;
     if (_transactions.isEmpty) {

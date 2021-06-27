@@ -5,29 +5,40 @@ import 'package:automata/widgets/transactionWdiget/transactionWidget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:automata/managers/implementations/transactionsManagerImpl.dart';
 
+/// Manipulador de transações
 abstract class TransactionsManager {
   factory TransactionsManager() = TransactionsManagerImpl;
 
-  void createNewTransaction(Pair<String, Offset> pos);
+  /// Cria uma transação com posição inicial no local especificado [pos]
+  void create(Pair<String, Offset> pos);
 
-  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition);
+  /// Atualiza a posição final de uma transação em um local especificado [finalPosition]
+  void updateFinalPosition(Pair<String, Offset> finalPosition);
 
-  set newTransactionCode(String code);
+  /// Modifica o código de uma transação
+  set transactionCode(String code);
 
+  /// Busca a posição final da nova transação
   Offset get finalPositionNewTransaction;
 
-  Transaction get generateNewTransactionModel;
+  /// Gera um model de uma transação
+  Transaction get model;
 
-  void finishFinalPosition();
+  /// Finaliza a criação de uma transação
+  void finishCreate();
 
-  void deleteTransaction(String? id);
+  /// Deleta uma transação através do [id], caso o valor do parâmetro seja [null],
+  /// remove-se então a transação que acabou de ser criada
+  void delete(String? id);
 
+  /// Seleciono uma transação [id]
   void select(String id);
 
+  /// Removo uma seleção
   void unselect();
 
   /// Gero um id único para a nova transação
-  String get uniqueTransactionID;
+  String get uniqueID;
 
   Options3<String, double, Null> getTransaction(Offset pos);
 

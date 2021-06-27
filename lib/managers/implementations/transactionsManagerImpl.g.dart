@@ -9,21 +9,20 @@ part of 'transactionsManagerImpl.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
-  Computed<Transaction>? _$generateNewTransactionModelComputed;
+  Computed<Transaction>? _$modelComputed;
 
   @override
-  Transaction get generateNewTransactionModel =>
-      (_$generateNewTransactionModelComputed ??= Computed<Transaction>(
-              () => super.generateNewTransactionModel,
-              name: '_TransactionsManagerImpl.generateNewTransactionModel'))
+  Transaction get model =>
+      (_$modelComputed ??= Computed<Transaction>(() => super.model,
+              name: '_TransactionsManagerImpl.model'))
           .value;
-  Computed<String>? _$uniqueTransactionIDComputed;
+  Computed<String>? _$uniqueIDComputed;
 
   @override
-  String get uniqueTransactionID => (_$uniqueTransactionIDComputed ??=
-          Computed<String>(() => super.uniqueTransactionID,
-              name: '_TransactionsManagerImpl.uniqueTransactionID'))
-      .value;
+  String get uniqueID =>
+      (_$uniqueIDComputed ??= Computed<String>(() => super.uniqueID,
+              name: '_TransactionsManagerImpl.uniqueID'))
+          .value;
   Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
@@ -98,22 +97,22 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
       ActionController(name: '_TransactionsManagerImpl');
 
   @override
-  void createNewTransaction(Pair<String, Offset> pos) {
+  void create(Pair<String, Offset> pos) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
-        name: '_TransactionsManagerImpl.createNewTransaction');
+        name: '_TransactionsManagerImpl.create');
     try {
-      return super.createNewTransaction(pos);
+      return super.create(pos);
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void updateFinalPositionNewTransaction(Pair<String, Offset> finalPosition) {
+  void updateFinalPosition(Pair<String, Offset> finalPosition) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
-        name: '_TransactionsManagerImpl.updateFinalPositionNewTransaction');
+        name: '_TransactionsManagerImpl.updateFinalPosition');
     try {
-      return super.updateFinalPositionNewTransaction(finalPosition);
+      return super.updateFinalPosition(finalPosition);
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
@@ -131,22 +130,44 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   }
 
   @override
-  void finishFinalPosition() {
+  void finishCreate() {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
-        name: '_TransactionsManagerImpl.finishFinalPosition');
+        name: '_TransactionsManagerImpl.finishCreate');
     try {
-      return super.finishFinalPosition();
+      return super.finishCreate();
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void deleteTransaction(String? id) {
+  void delete(String? id) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
-        name: '_TransactionsManagerImpl.deleteTransaction');
+        name: '_TransactionsManagerImpl.delete');
     try {
-      return super.deleteTransaction(id);
+      return super.delete(id);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void select(String id) {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.select');
+    try {
+      return super.select(id);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void unselect() {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.unselect');
+    try {
+      return super.unselect();
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
@@ -155,8 +176,8 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   @override
   String toString() {
     return '''
-generateNewTransactionModel: ${generateNewTransactionModel},
-uniqueTransactionID: ${uniqueTransactionID},
+model: ${model},
+uniqueID: ${uniqueID},
 objects: ${objects},
 transactions: ${transactions},
 finalPositionNewTransaction: ${finalPositionNewTransaction}
