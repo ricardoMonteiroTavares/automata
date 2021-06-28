@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:automata/exceptions/exceptions.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
+import 'package:automata/models/equation.dart';
 import 'package:automata/models/options3.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
@@ -54,16 +55,13 @@ abstract class _TransactionsManagerImpl
       print("Executando: TransactionsManager.getTransaction");
       double minAngle = double.infinity;
       for (String key in _transactions.keys) {
-        Offset v1 = _transactions[key]!.finalPosition -
-            _transactions[key]!.initialPosition;
+        Offset a = _transactions[key]!.initialPosition;
+        Offset b = _transactions[key]!.finalPosition;
 
-        Offset v2 = pos - _transactions[key]!.initialPosition;
+        Equation eq = Equation.create(xa: a.dx, ya: a.dy, xb: b.dx, yb: b.dy);
+        double resp = eq.y(x: pos.dx);
 
-        double resp = ((v1.dx * v2.dx) + (v1.dy * v2.dy)) /
-            (sqrt((pow(v1.dx, 2) + pow(v1.dy, 2))) *
-                sqrt((pow(v2.dx, 2) + pow(v2.dy, 2))));
-
-        if (resp >= 0.98 && resp <= 1) {
+        if (resp >= (pos.dy - 10) && resp <= (pos.dy + 10)) {
           print("Identificou a key: $key");
           return LeftOption(key);
         } else {
