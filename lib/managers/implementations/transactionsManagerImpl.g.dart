@@ -23,6 +23,13 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
       (_$uniqueIDComputed ??= Computed<String>(() => super.uniqueID,
               name: '_TransactionsManagerImpl.uniqueID'))
           .value;
+  Computed<String?>? _$selectedComputed;
+
+  @override
+  String? get selected =>
+      (_$selectedComputed ??= Computed<String?>(() => super.selected,
+              name: '_TransactionsManagerImpl.selected'))
+          .value;
   Computed<List<LayoutId>>? _$objectsComputed;
 
   @override
@@ -178,6 +185,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
     return '''
 model: ${model},
 uniqueID: ${uniqueID},
+selected: ${selected},
 objects: ${objects},
 transactions: ${transactions},
 finalPositionNewTransaction: ${finalPositionNewTransaction}

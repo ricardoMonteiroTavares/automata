@@ -77,7 +77,9 @@ abstract class _TransactionsManagerImpl
 
   @override
   @computed
-  Transaction get model => _newTransaction!.generateModel;
+  Transaction get model => (_newTransaction != null)
+      ? _newTransaction!.generateModel
+      : _selected!.generateModel;
 
   @override
   @action
@@ -112,7 +114,7 @@ abstract class _TransactionsManagerImpl
   @override
   @computed
   String get uniqueID {
-    print("Executando: TransactionsManager.get uniqueTransactionID");
+    print("Executando: TransactionsManager.get uniqueID");
     String id;
     if (_transactions.isEmpty) {
       id = "t0";

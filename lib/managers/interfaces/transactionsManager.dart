@@ -21,7 +21,7 @@ abstract class TransactionsManager {
   /// Busca a posição final da nova transação
   Offset get finalPositionNewTransaction;
 
-  /// Gera um model de uma transação
+  /// Gera um model de uma nova transação ou de uma transação selecionada
   Transaction get model;
 
   /// Finaliza a criação de uma transação
