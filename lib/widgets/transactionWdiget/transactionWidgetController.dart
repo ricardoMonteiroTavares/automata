@@ -56,6 +56,9 @@ abstract class _TransactionWidgetController with Store {
     _color = Colors.black;
   }
 
+  bool belongsState(String stateID) =>
+      (_initialPosition.left == stateID) || (_finalPosition.left == stateID);
+
   @computed
   String get keyCode => _keyCode;
 

@@ -37,6 +37,8 @@ class TransactionWidget extends StatelessWidget {
   void select() => _controller.select();
   void unselect() => _controller.unselect();
 
+  bool belongsState(String stateID) => _controller.belongsState(stateID);
+
   @override
   Widget build(BuildContext context) {
     return Observer(
