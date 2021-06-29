@@ -58,6 +58,7 @@ class StateWidget extends StatelessWidget {
                           onDragEnd: _controller.reposition,
                         )
                       : _controller.node(),
+                  // TODO: Ajuste do posicionamento dos conectores quando o estado é do tipo Inicial
                   HoverStateWidget(
                     hover: (_controller.hover &&
                         (_controller.color != Colors.blue)),
