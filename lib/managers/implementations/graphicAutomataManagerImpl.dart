@@ -84,12 +84,17 @@ abstract class _GraphicAutomataManagerImpl
   @action
   void delete() {
     print("Executando: GraphicAutomataManager.delete");
-    String? id = _statesManager.selected;
+    String? id = isSelected;
     if (id != null) {
-      _statesManager.delete(id);
-      _dfaManager.removeState(id);
+      if (id[0] == "q") {
+        _statesManager.delete(id);
+        _dfaManager.removeState(id);
+      } else if (id[0] == "t") {
+        _dfaManager.removeTransaction(_transactionsManager.model);
+        _transactionsManager.delete(id);
+      }
     }
-    // TODO: Implementar a remoção de uma transação
+    // TODO: Implementar a remoção de transações pertencentes a um estado
   }
 
   @override
