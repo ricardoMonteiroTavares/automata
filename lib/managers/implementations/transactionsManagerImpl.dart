@@ -55,6 +55,7 @@ abstract class _TransactionsManagerImpl
       print("Executando: TransactionsManager.getTransaction");
       double minAngle = double.infinity;
       for (String key in _transactions.keys) {
+        // TODO: Adicionar uma restrição de realizar o cálculo dentro das limitações
         Offset a = _transactions[key]!.initialPosition;
         Offset b = _transactions[key]!.finalPosition;
 
