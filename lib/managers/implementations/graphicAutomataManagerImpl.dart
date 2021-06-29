@@ -89,12 +89,12 @@ abstract class _GraphicAutomataManagerImpl
       if (id[0] == "q") {
         _statesManager.delete(id);
         _dfaManager.removeState(id);
+        _transactionsManager.deleteByID(id);
       } else if (id[0] == "t") {
         _dfaManager.removeTransaction(_transactionsManager.model);
         _transactionsManager.delete(id);
       }
     }
-    // TODO: Implementar a remoção de transações pertencentes a um estado
   }
 
   @override
