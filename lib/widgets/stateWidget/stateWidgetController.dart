@@ -101,6 +101,7 @@ abstract class _StateWidgetController with Store {
     );
 
     _selectState(id);
+    // TODO: Realizar o reposicionamento dos conectores das transações
   }
 
   Options3<bool, double, Pair<String, Offset>> pointIsInState(Offset point) {
