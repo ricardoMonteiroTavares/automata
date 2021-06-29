@@ -159,6 +159,17 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   }
 
   @override
+  List<Transaction> deleteByID(String stateID) {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.deleteByID');
+    try {
+      return super.deleteByID(stateID);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void select(String id) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
         name: '_TransactionsManagerImpl.select');

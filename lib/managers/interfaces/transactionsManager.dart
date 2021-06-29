@@ -31,6 +31,10 @@ abstract class TransactionsManager {
   /// remove-se então a transação que acabou de ser criada
   void delete(String? id);
 
+  /// Deleta todas as transações ligados aos estados [stateID].
+  /// Retorna uma lista de models de transações removidas.
+  List<Transaction> deleteByID(String stateID);
+
   /// Seleciono uma transação [id]
   void select(String id);
 

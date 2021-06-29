@@ -112,6 +112,21 @@ abstract class _TransactionsManagerImpl
   }
 
   @override
+  @action
+  List<Transaction> deleteByID(String stateID) {
+    List<Transaction> removed = [];
+    _transactions.removeWhere((key, value) {
+      if (value.belongsState(stateID)) {
+        removed.add(value.generateModel);
+        return true;
+      }
+      return false;
+    });
+
+    return removed;
+  }
+
+  @override
   @computed
   String get uniqueID {
     print("Executando: TransactionsManager.get uniqueID");
