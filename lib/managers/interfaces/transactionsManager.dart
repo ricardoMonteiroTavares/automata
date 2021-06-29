@@ -33,7 +33,7 @@ abstract class TransactionsManager {
 
   /// Deleta todas as transações ligados aos estados [stateID].
   /// Retorna uma lista de models de transações removidas.
-  List<Transaction> deleteByID(String stateID);
+  void deleteByID(String stateID);
 
   /// Seleciono uma transação [id]
   void select(String id);

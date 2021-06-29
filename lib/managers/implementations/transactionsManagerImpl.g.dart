@@ -159,7 +159,7 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
   }
 
   @override
-  List<Transaction> deleteByID(String stateID) {
+  void deleteByID(String stateID) {
     final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
         name: '_TransactionsManagerImpl.deleteByID');
     try {

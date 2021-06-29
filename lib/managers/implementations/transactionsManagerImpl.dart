@@ -113,17 +113,8 @@ abstract class _TransactionsManagerImpl
 
   @override
   @action
-  List<Transaction> deleteByID(String stateID) {
-    List<Transaction> removed = [];
-    _transactions.removeWhere((key, value) {
-      if (value.belongsState(stateID)) {
-        removed.add(value.generateModel);
-        return true;
-      }
-      return false;
-    });
-
-    return removed;
+  void deleteByID(String stateID) {
+    _transactions.removeWhere((key, value) => value.belongsState(stateID));
   }
 
   @override
