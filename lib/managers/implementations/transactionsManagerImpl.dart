@@ -55,19 +55,21 @@ abstract class _TransactionsManagerImpl
       print("Executando: TransactionsManager.getTransaction");
       double minAngle = double.infinity;
       for (String key in _transactions.keys) {
-        // TODO: Adicionar uma restrição de realizar o cálculo dentro das limitações
         Offset a = _transactions[key]!.initialPosition;
         Offset b = _transactions[key]!.finalPosition;
+        Rect r = Rect.fromPoints(a, b);
 
-        Equation eq = Equation.create(xa: a.dx, ya: a.dy, xb: b.dx, yb: b.dy);
-        double resp = eq.y(x: pos.dx);
+        if (r.contains(pos)) {
+          Equation eq = Equation.create(xa: a.dx, ya: a.dy, xb: b.dx, yb: b.dy);
+          double resp = eq.y(x: pos.dx);
 
-        if (resp >= (pos.dy - 10) && resp <= (pos.dy + 10)) {
-          print("Identificou a key: $key");
-          return LeftOption(key);
-        } else {
-          minAngle = min(minAngle, resp);
-          print("Nova distância: $minAngle");
+          if (resp >= (pos.dy - 10) && resp <= (pos.dy + 10)) {
+            print("Identificou a key: $key");
+            return LeftOption(key);
+          } else {
+            minAngle = min(minAngle, resp);
+            print("Nova distância: $minAngle");
+          }
         }
       }
 
