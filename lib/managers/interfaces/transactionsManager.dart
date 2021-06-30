@@ -38,6 +38,13 @@ abstract class TransactionsManager {
   /// Seleciono uma transação [id]
   void select(String id);
 
+  /// Seleciono todas as transações que poderão ser reposicionadas
+  void selectReposition(String stateID);
+
+  /// Reposiciono os conectores de todas as transações que foram selecionadas 
+  /// pela função [selectReposition]
+  void updatePosition(Offset delta);
+
   /// Removo uma seleção
   void unselect();
 

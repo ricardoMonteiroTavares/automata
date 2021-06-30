@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:automata/enums/repositionedConnector.dart';
 import 'package:automata/exceptions/exceptions.dart';
 import 'package:automata/managers/interfaces/transactionsManager.dart';
 import 'package:automata/models/equation.dart';
@@ -27,6 +28,9 @@ abstract class _TransactionsManagerImpl
 
   @observable
   TransactionWidget? _selected;
+
+  @observable
+  List<Pair<TransactionWidget, RepositionedConnector>> _reposition = [];
 
   @override
   @action
@@ -117,7 +121,8 @@ abstract class _TransactionsManagerImpl
   @override
   @action
   void deleteByID(String stateID) {
-    _transactions.removeWhere((key, value) => value.belongsState(stateID));
+    _transactions.removeWhere((key, value) =>
+        (value.belongsState(stateID) != RepositionedConnector.error));
   }
 
   @override
@@ -146,6 +151,30 @@ abstract class _TransactionsManagerImpl
     }
     _selected = _transactions[id];
     _selected!.select();
+  }
+
+  @override
+  @action
+  void selectReposition(String stateID) {
+    print("Executando: TransactionsManager.selectReposition");
+    for (String key in _transactions.keys) {
+      RepositionedConnector resp = _transactions[key]!.belongsState(stateID);
+      if (resp != RepositionedConnector.error) {
+        _reposition.add(Pair(_transactions[key]!, resp));
+      }
+    }
+  }
+
+  @override
+  @action
+  void updatePosition(Offset delta) {
+    print("Executando: TransactionsManager.selectReposition");
+    for (int index = 0; index < _reposition.length; index++) {
+      TransactionWidget t = _reposition[index].left;
+      Pair<RepositionedConnector, Offset> val =
+          Pair(_reposition[index].right, delta);
+      t.updatePosition(val);
+    }
   }
 
   @override

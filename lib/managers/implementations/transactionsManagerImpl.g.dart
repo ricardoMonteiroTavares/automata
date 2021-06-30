@@ -100,6 +100,21 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
     });
   }
 
+  final _$_repositionAtom = Atom(name: '_TransactionsManagerImpl._reposition');
+
+  @override
+  List<Pair<TransactionWidget, RepositionedConnector>> get _reposition {
+    _$_repositionAtom.reportRead();
+    return super._reposition;
+  }
+
+  @override
+  set _reposition(List<Pair<TransactionWidget, RepositionedConnector>> value) {
+    _$_repositionAtom.reportWrite(value, super._reposition, () {
+      super._reposition = value;
+    });
+  }
+
   final _$_TransactionsManagerImplActionController =
       ActionController(name: '_TransactionsManagerImpl');
 
@@ -175,6 +190,28 @@ mixin _$TransactionsManagerImpl on _TransactionsManagerImpl, Store {
         name: '_TransactionsManagerImpl.select');
     try {
       return super.select(id);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void selectReposition(String stateID) {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.selectReposition');
+    try {
+      return super.selectReposition(stateID);
+    } finally {
+      _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updatePosition(Offset delta) {
+    final _$actionInfo = _$_TransactionsManagerImplActionController.startAction(
+        name: '_TransactionsManagerImpl.updatePosition');
+    try {
+      return super.updatePosition(delta);
     } finally {
       _$_TransactionsManagerImplActionController.endAction(_$actionInfo);
     }
