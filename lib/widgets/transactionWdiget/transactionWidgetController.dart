@@ -1,3 +1,4 @@
+import 'package:automata/enums/repositionedConnector.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,21 @@ abstract class _TransactionWidgetController with Store {
     _finalPosition = newFinalPosition;
   }
 
+  @action
+  void updatePosition(Pair<RepositionedConnector, Offset> delta) {
+    switch (delta.left) {
+      case RepositionedConnector.start:
+        _initialPosition.right += delta.right;
+        break;
+      case RepositionedConnector.end:
+        _finalPosition.right += delta.right;
+        break;
+      case RepositionedConnector.error:
+        throw Exception(
+            "A transação $keyCode recebeu o conector RepositionedConnector.error");
+    }
+  }
+
   @computed
   Offset get finalPosition => _finalPosition.right;
 
@@ -56,8 +72,15 @@ abstract class _TransactionWidgetController with Store {
     _color = Colors.black;
   }
 
-  bool belongsState(String stateID) =>
-      (_initialPosition.left == stateID) || (_finalPosition.left == stateID);
+  RepositionedConnector belongsState(String stateID) {
+    if (_initialPosition.left == stateID) {
+      return RepositionedConnector.start;
+    } else if (_finalPosition.left == stateID) {
+      return RepositionedConnector.end;
+    } else {
+      return RepositionedConnector.error;
+    }
+  }
 
   @computed
   String get keyCode => _keyCode;

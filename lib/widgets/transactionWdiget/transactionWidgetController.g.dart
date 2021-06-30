@@ -132,6 +132,17 @@ mixin _$TransactionWidgetController on _TransactionWidgetController, Store {
   }
 
   @override
+  void updatePosition(Pair<RepositionedConnector, Offset> delta) {
+    final _$actionInfo = _$_TransactionWidgetControllerActionController
+        .startAction(name: '_TransactionWidgetController.updatePosition');
+    try {
+      return super.updatePosition(delta);
+    } finally {
+      _$_TransactionWidgetControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setKeyCode(String newCode) {
     final _$actionInfo = _$_TransactionWidgetControllerActionController
         .startAction(name: '_TransactionWidgetController.setKeyCode');

@@ -1,4 +1,5 @@
 import 'package:automata/elements/arrow.dart';
+import 'package:automata/enums/repositionedConnector.dart';
 import 'package:automata/models/pair.dart';
 import 'package:automata/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,9 @@ class TransactionWidget extends StatelessWidget {
     _controller.setKeyCode(newCode);
   }
 
+  void updatePosition(Pair<RepositionedConnector, Offset> delta) =>
+      _controller.updatePosition;
+
   String get keyCode => _controller.keyCode;
 
   String get id => _id;
@@ -37,7 +41,8 @@ class TransactionWidget extends StatelessWidget {
   void select() => _controller.select();
   void unselect() => _controller.unselect();
 
-  bool belongsState(String stateID) => _controller.belongsState(stateID);
+  RepositionedConnector belongsState(String stateID) =>
+      _controller.belongsState(stateID);
 
   @override
   Widget build(BuildContext context) {
